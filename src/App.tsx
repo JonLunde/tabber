@@ -1,11 +1,9 @@
 import React from 'react';
 
-const test = 'ss';
-function App(): React.FC {
+function App() {
   return (
     <div>
       <h1>TEST33</h1>
-
       <p>HiEI</p>
     </div>
   );
