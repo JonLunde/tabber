@@ -1,10 +1,12 @@
 import React from 'react';
 
-function App() {
+const test = 'ss';
+function App(): React.FC {
   return (
     <div>
-      <h1>TEST3333</h1>
-      <p>HEI</p>
+      <h1>TEST33</h1>
+
+      <p>HiEI</p>
     </div>
   );
 }
