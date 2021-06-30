@@ -1,7 +1,7 @@
 {
-  "name": "tabber",
+  "name": "setup",
   "version": "1.0.0",
-  "description": "Helps you make guitar tabs.",
+  "description": "Basic setup with Typescript, Webpack, ESLint, Prettier and Sass with reset etc.",
   "main": "index.tsx",
   "scripts": {
     "watch": "webpack --progress --watch",
