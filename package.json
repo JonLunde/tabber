@@ -1,0 +1,33 @@
+{
+  "name": "tabber",
+  "version": "1.0.0",
+  "description": "Helps you make guitar tabs.",
+  "main": "index.tsx",
+  "scripts": {
+    "watch": "webpack --progress --watch",
+    "start": "webpack serve --open",
+    "build": "webpack --progress --mode=production",
+    "compile:sass": "sass src/sass/main.scss public/css/style.comp.css",
+    "concat:css": "concat -o css/style.concat.css css/lineaicons.css css/style.comp.css",
+    "prefix:css": "postcss css/style.concat.css --use autoprefixer -o css/style.prefix.css",
+    "compress:css": "node-sass css/style.prefix.css css/style.css --output-style compressed",
+    "build:css": "npm-run-all compile:sass concat:css prefix:css compress:css"
+  },
+  "author": "Jon Lunde",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.5",
+    "@types/react": "^17.0.11",
+    "@types/react-dom": "^17.0.8",
+    "sass": "^1.35.1",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.4",
+    "webpack": "^5.41.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  }
+}

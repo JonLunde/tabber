@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "public",
+    "module": "ES6",
+    "jsx": "react",
+    "watch": true,
+    "target": "ES5",
+    "lib": ["es6", "dom"],
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "strict": true,
+    "sourceMap": true
+  },
+  "exclude": ["node_modules"]
+}
