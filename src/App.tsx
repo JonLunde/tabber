@@ -4,8 +4,7 @@ import GuitarNeck from './GuitarNeck';
 function App() {
   return (
     <div>
-      <h1>TEST33</h1>
-      <GuitarNeck />
+      <h1>Write your code here...</h1>
     </div>
   );
 }
