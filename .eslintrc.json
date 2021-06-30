@@ -23,13 +23,7 @@
   ],
   "rules": {
     "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": true,
-        "parser": "flow",
-        "printWidth": 100,
-        "endOfLine": "auto"
-      }
+      "error"
     ],
     "react/state-in-constructor": "off",
     "no-unused-vars": "warn",
