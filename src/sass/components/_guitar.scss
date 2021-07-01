@@ -1,0 +1,61 @@
+@use "../abstracts" as *;
+
+.guitar {
+
+    margin-top: 5rem;
+    &__neck {
+        position: relative;
+        display: block;
+        background-color: $color-neck;
+        height: $neck-height;
+        width: $neck-width;
+    }
+
+    &__container-strings {
+        position: absolute;
+        top: 10%;
+        left: 0%;
+        height: 80%;
+        width: 100%;
+        
+    }
+
+    &__container-frets {
+ 
+        
+    }
+
+    &__string {
+        background-color: $color-string;
+        width: 100%;
+        position: absolute;
+        z-index: 2;
+
+        // For looping 6 strings with proper spacing and size.
+        @for $i from 1 to 7 {
+            &--#{$i} {
+                top: calc(20% * #{$i} - 20%);
+                height: calc(0.6rem - 0.05rem * #{$i} + 0.05rem);
+                border-bottom: calc((0.6rem - 0.05rem * #{$i} + 0.05rem) / 2) solid $color-string-shadow;
+            }
+        }
+    }
+
+    // Each fret styled with for-loop
+    &__fret {
+        @for $i from 1 to 25 {
+            &--#{$i} {
+                position: absolute;
+                top: 0;
+                left: calc((100% / 24) * #{$i});
+                height: $neck-height;
+                width: 0.4rem;
+                z-index: 1;
+                background-color: $color-fret;
+                border-right: 2px solid $color-fret-shadow;
+            }
+        }
+
+    }
+
+}

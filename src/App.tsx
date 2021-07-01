@@ -1,10 +1,11 @@
 import React from 'react';
-import GuitarNeck from './GuitarNeck';
+import Guitar from './Guitar/Guitar';
+import TabContainer from './Tab/TabContainer';
 
 function App() {
   return (
     <div>
-      <GuitarNeck />
+      <TabContainer />
     </div>
   );
 }
