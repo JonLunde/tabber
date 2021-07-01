@@ -2,24 +2,23 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const devMode = true;
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  mode: 'development',
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
-    publicPath: '/public/',
   },
-  plugins: [new HtmlWebpackPlugin()],
+  devtool: 'eval-source-map',
   devServer: {
     port: '3000',
     watchContentBase: true,
   },
+  plugins: [new HtmlWebpackPlugin()],
   module: {
     rules: [
       {
@@ -27,10 +26,28 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'ts-loader',
       },
-
       {
         test: /\.(sa|sc|c)ss$/,
-        use: [devMode ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader', //  CSS -> JS
+          {
+            loader: 'postcss-loader', // Apply PostCSS 
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    'autoprefixer',
+                    {
+                      // Options
+                    },
+                  ],
+                ],
+              },
+            },
+          },
+          'sass-loader', // SASS -> CSS
+        ],
       },
     ],
   },
