@@ -23,7 +23,8 @@ function TabContainer() {
 
   const deleteTab = (i) => {
     setTabBars((prevTabBars) => {
-      return { ...prevTabBars }.splice(i, 1);
+      const tabBars = [...prevTabBars];
+      return tabBars.splice(i, 1);
     });
   };
 

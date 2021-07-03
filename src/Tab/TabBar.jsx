@@ -3,8 +3,8 @@ import TabString from './TabString';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function TabBar(props) {
-  const { deleteTab } = props;
-  console.log(props);
+  const { deleteTab, key } = props;
+
   return (
     <div className="tab-bar">
       <label htmlFor="title">
@@ -17,7 +17,7 @@ function TabBar(props) {
         <button className="btn btn--action">
           <FontAwesomeIcon icon="arrow-down" />
         </button>
-        <button className="btn btn--action" onClick={deleteTab}>
+        <button className="btn btn--action" onClick={() => deleteTab(key)}>
           <FontAwesomeIcon icon="trash" />
         </button>
       </div>
