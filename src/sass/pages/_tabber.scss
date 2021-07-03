@@ -1,0 +1,32 @@
+.container-tab {
+    text-align: center;
+    padding: 3rem 5rem;
+
+}
+
+.header-tab {
+    text-align: start;
+    margin-bottom: 10rem;
+    
+ 
+}
+
+
+.tab-info {
+
+    &__form-group {
+        margin-bottom: 10px;
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+        width: 70%;
+    }
+
+        
+    &__input {
+        // display: inline-block;
+        // margin-left: 3rem;
+        width: 40%;
+        font-size: 1.5rem;
+
+    }
+}

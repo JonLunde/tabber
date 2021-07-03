@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: './src/index.jsx',
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
@@ -17,14 +17,17 @@ module.exports = {
   devServer: {
     port: '3000',
     watchContentBase: true,
+    contentBase: 'public',
   },
   plugins: [new HtmlWebpackPlugin()],
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: 'ts-loader',
+        use: {
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.(sa|sc|c)ss$/,
@@ -32,7 +35,7 @@ module.exports = {
           devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader', //  CSS -> JS
           {
-            loader: 'postcss-loader', // Apply PostCSS 
+            loader: 'postcss-loader', // Apply PostCSS
             options: {
               postcssOptions: {
                 plugins: [
@@ -52,6 +55,6 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.js', '.json', '.jsx'],
   },
 };

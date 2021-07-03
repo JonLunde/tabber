@@ -1,17 +1,39 @@
 @use "../abstracts" as *;
 
+
 .tab-bar {
+    background-color: $color-white;
+    text-align: start;
+    height: 40rem;
+
+    &:not(:last-child) {
+        margin-bottom: 15rem;
+    }
+
+    &__title {
+        font-size: 2rem;       
+        display: inline-block;
+    }
+
+    &__action-buttons {
+        display: inline-block;
+        float: right;
+    }
+
+  &__string-container {
     position: relative;
-    height: 20rem;
-    background-color: $color-gray-100;
-    
-    margin: 10rem 5rem;
+    display: block;
+    height: 80%;
+    margin-top: 5.5rem;
+    }
 
     &__string {
         background-color: $color-black;
         width: 100%;
         position: absolute;
-        z-index: 2;
+        display: flex;
+        justify-content: space-evenly;
+
 
         // For looping 6 strings with proper spacing and size.
         @for $i from 1 to 7 {
@@ -22,13 +44,32 @@
         }
     }
 
+  
+
     &__note {
-        background-color: blue;
-        display: inline-block;
-        width: 3rem;
-        height: 3rem;
-        border-radius: 50%;
-        margin-left: 3rem;
-        transform: translateY(-1.5rem);
+        
+         width: 3rem;
+         height: 3rem;
+         border-radius: 50%;
+         transform: translateY(-1.5rem);
+
+        border: 1px solid $color-gray-500;
+        text-align: center;
+        background-color: $color-gray-100;
+        color: $color-black;
+        cursor: pointer;
+    
+        &::-webkit-inner-spin-button, 
+        &::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0; 
+        }
+
+        &:hover {
+            background-color: $color-gray-300;
+        }
+
     }
 }
