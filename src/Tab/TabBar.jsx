@@ -3,18 +3,18 @@ import TabString from './TabString';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function TabBar(props) {
-  const { deleteTab, id } = props;
+  const { deleteTab, moveUp, moveDown, id } = props;
 
   return (
     <div className="tab-bar">
-      <label htmlFor="title">
-        <input type="text" className="tab-bar__title" placeholder="untitled" id="title" />
+      <label htmlFor="heading">
+        <input type="text" className="tab-bar__title" placeholder="untitled" id="heading" />
       </label>
       <div className="tab-bar__action-buttons">
-        <button className="btn btn--action">
+        <button className="btn btn--action" onClick={() => moveUp(id)}>
           <FontAwesomeIcon icon="arrow-up" />
         </button>
-        <button className="btn btn--action">
+        <button className="btn btn--action" onClick={() => moveDown(id)}>
           <FontAwesomeIcon icon="arrow-down" />
         </button>
         <button className="btn btn--action" onClick={() => deleteTab(id)}>
