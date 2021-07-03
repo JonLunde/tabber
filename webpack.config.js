@@ -13,7 +13,7 @@ module.exports = {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
   },
-  devtool: 'eval-source-map',
+  devtool: 'inline-source-map',
   devServer: {
     port: '3000',
     watchContentBase: true,

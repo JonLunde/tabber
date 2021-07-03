@@ -8,7 +8,7 @@ const preventDefault = (e) => {
 };
 
 function TabContainer() {
-  const [tabBars, setTabBars] = useState([<TabBar key={0} deleteTab={deleteTab} />]);
+  const [tabBars, setTabBars] = useState([<TabBar key={0} deleteTab={deleteTab} id={0} />]);
   const btnRef = useRef();
 
   useEffect(() => {
@@ -17,16 +17,20 @@ function TabContainer() {
 
   const handleClick = () => {
     setTabBars((prevTabBars) => {
-      return [...prevTabBars, <TabBar key={prevTabBars.length + 1} deleteTab={deleteTab} />];
+      console.log([...prevTabBars, <TabBar key={prevTabBars.length} deleteTab={deleteTab} id={prevTabBars.length} />]);
+      return [...prevTabBars, <TabBar key={prevTabBars.length} deleteTab={deleteTab()} id={prevTabBars.length} />];
     });
   };
 
-  const deleteTab = (i) => {
+  function deleteTab(id) {
     setTabBars((prevTabBars) => {
-      const tabBars = [...prevTabBars];
-      return tabBars.splice(i, 1);
+      let newTabBars = [...prevTabBars];
+      console.log('newTabs: ', newTabBars);
+      console.log('prevTabs: ', prevTabBars);
+      return newTabBars.splice(id, 1);
     });
-  };
+    console.log(tabBars);
+  }
 
   return (
     <div className="u-mt-big container-tab">
