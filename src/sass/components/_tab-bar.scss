@@ -41,6 +41,45 @@
                 top: calc(20% * #{$i} - 20%);
                 height: calc(0.4rem - 0.02rem * #{$i})
             }
+            
+
+        }
+
+        &--1 {
+            &::before {
+                @include stringIndicator; 
+                content: 'e';
+            }
+        }
+        &--2 {
+            &::before {
+         @include stringIndicator;
+                content: 'B';  
+            }
+        }
+        &--3 {
+            &::before {
+                @include stringIndicator;
+                content: 'G';  
+            }
+        }
+        &--4 {
+            &::before {
+                @include stringIndicator;
+                content: 'D';  
+            }
+        }
+        &--5 {
+            &::before {
+                @include stringIndicator;
+                content: 'A';  
+            }
+        }
+        &--6 {
+            &::before {
+                @include stringIndicator;
+                content: 'E';  
+            }
         }
     }
 
@@ -50,12 +89,13 @@
         
          width: 3rem;
          height: 3rem;
-         border-radius: 50%;
+         border-radius: 2px;
          transform: translateY(-1.5rem);
+         font-size: 3rem;
 
-        border: 1px solid $color-gray-500;
+        border: 1px solid $color-gray-100;
         text-align: center;
-        background-color: $color-gray-100;
+        background-color: $color-white;
         color: $color-black;
         cursor: pointer;
     
