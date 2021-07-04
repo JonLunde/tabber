@@ -1,11 +1,12 @@
 @use "../abstracts" as *;
 
 .guitar {
-
+    
     margin-top: 5rem;
     &__neck {
         position: relative;
         display: block;
+        margin: 0 auto;
         background-color: $color-neck;
         height: $neck-height;
         width: $neck-width;
@@ -20,24 +21,102 @@
         
     }
 
-    &__container-frets {
- 
-        
-    }
-
     &__string {
-        background-color: $color-string;
         width: 100%;
         position: absolute;
         z-index: 2;
-
+        
         // For looping 6 strings with proper spacing and size.
         @for $i from 1 to 7 {
             &--#{$i} {
                 top: calc(20% * #{$i} - 20%);
-                height: calc(0.6rem - 0.05rem * #{$i} + 0.05rem);
-                border-bottom: calc((0.6rem - 0.05rem * #{$i} + 0.05rem) / 2) solid $color-string-shadow;
+                height: calc(0.35rem + 0.04rem * #{$i});
+                @if ($i < 3)  {
+                    background-color: $color-higher-string;
+                    border-bottom: calc((0.3rem + 0.05rem * #{$i}) / 2) solid  $color-higher-string-shadow;
+                } @else {
+                    background-color:  $color-lower-string;
+                    border-bottom: calc((0.3rem + 0.05rem * #{$i}) / 2) solid  $color-lower-string-shadow;
+                }
             }
+        }
+
+        // &--1 {
+        //     &::before {
+        //         @include stringIndicator; 
+        //         content: 'e';
+        //         color: $color-gray-900;
+        //     }
+        // }
+        // &--2 {
+        //     &::before {
+        //         @include stringIndicator;
+        //         content: 'B'; 
+        //         color: $color-gray-900; 
+        //     }
+        // }
+        // &--3 {
+        //     &::before {
+        //         @include stringIndicator;
+        //         content: 'G';  
+        //         color: $color-gray-900;
+        //     }
+        // }
+        // &--4 {
+        //     &::before {
+        //         @include stringIndicator;
+        //         content: 'D';  
+        //         color: $color-gray-900;
+        //     }
+        // }
+        // &--5 {
+        //     &::before {
+        //         @include stringIndicator;
+        //         content: 'A';
+        //         color: $color-gray-900;  
+        //     }
+        // }
+        // &--6 {
+        //     &::before {
+        //         @include stringIndicator;
+        //         content: 'E'; 
+        //         color: $color-gray-900; 
+        //     }
+        // }
+    }
+    
+    &__tuner {
+        width: 100%;
+        position: absolute;
+        left: -3.5rem;
+        
+        // For looping 6 tuners with proper spacing and size.
+        @for $i from 1 to 7 {
+            &--#{$i} {
+                top: calc(20% * #{$i} - 23.5%);
+                height: calc(0.35rem + 0.04rem * #{$i});
+            }
+        }
+        
+    }
+
+    &__note {
+        display: inline-block;
+        width: calc(100% / 24);
+        height: 3rem;
+        text-align: center;
+        color: transparent;
+        padding-top: 0.8rem;
+        
+        
+        transform: translateY(-1.4rem);
+        
+        
+        &:hover {
+            cursor: pointer;
+            background-color: rgba($color-gray-100,0.8);
+            border-radius: 10px;
+            color: $color-gray-900;
         }
     }
 
@@ -53,9 +132,97 @@
                 z-index: 1;
                 background-color: $color-fret;
                 border-right: 2px solid $color-fret-shadow;
+
+                &::before {
+                    content: '#{$i}';
+                    position: absolute;
+                    top: -2rem;
+                    left: -2.2rem;
+                    color: $color-gray-900;
+                }
             }
         }
 
     }
 
+    &__dot {
+        position: absolute;
+        top: 51.1%;
+        background-color: purple;
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+        z-index: 1;
+
+        transform: translate(-50%, -50%);
+        
+        
+        &--1 {
+            left: 10.7%;
+        }
+        &--2 {
+            left: 19%;
+            
+        }
+        &--3 {
+           left: 27.3%;
+        }
+        &--4 {
+            left: 35.6%;
+            
+        }
+        &--5 {
+            top: 80%;
+            left: 48.1%;
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: -14.7rem;
+                left: 0;
+                background-color: inherit;
+                width: inherit;
+                height: inherit;
+                border-radius: inherit;
+                z-index: inherit;
+
+            }
+
+        }
+        &--6 {
+            left: 60.5%;
+            
+        }
+        &--7 {
+            left: 68.9%;
+            
+        }
+        &--8 {
+            left: 77.2%;
+            
+        }
+        &--9 {
+            left: 85.5%;
+            
+        }
+        &--10 {
+            top: 80%;
+            left: 98%;
+    
+            &::after {
+                content: '';
+                position: absolute;
+                top: -14.7rem;
+                left: 0;
+                background-color: inherit;
+                width: inherit;
+                height: inherit;
+                border-radius: inherit;
+                z-index: inherit;
+    
+            }
+    
+        }
+    }
+    
 }

@@ -1,6 +1,7 @@
 @use '../abstracts' as *;
 
 body {
+  color: $color-gray-900;
   font-family: 'Lato', sans-serif;
   font-weight: 700;
   line-height: 1.7;

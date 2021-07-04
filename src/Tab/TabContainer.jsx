@@ -46,13 +46,16 @@ function TabContainer() {
   };
 
   const [tabBars, setTabBars] = useState([
-    <TabBar key={keyCount} deleteTab={deleteTab} moveUp={moveUp} moveDown={moveDown} id={0} />,
+    <TabBar key={keyCount} deleteTab={deleteTab} moveUp={moveUp} moveDown={moveDown} tabBarRef={tabBarRef} id={0} />,
   ]);
   const btnRef = useRef();
+  const tabBarRef = useRef();
 
-  useEffect(() => {
-    btnRef.current.scrollIntoView();
-  }, [tabBars]);
+  // useEffect(() => {
+  //   btnRef.current.scrollIntoView();
+  // }, [tabBars]);
+
+  const scrollToBtn = () => btnRef.current.scrollIntoView();
 
   useEffect(() => {
     console.log('Render tabBars: ', tabBars);
@@ -63,9 +66,19 @@ function TabContainer() {
     setTabBars((prevTabBars) => {
       return [
         ...prevTabBars,
-        <TabBar key={keyCount} deleteTab={deleteTab} moveUp={moveUp} moveDown={moveDown} id={prevTabBars.length} />,
+        <TabBar
+          key={keyCount}
+          deleteTab={deleteTab}
+          moveUp={moveUp}
+          moveDown={moveDown}
+          tabBarRef={tabBarRef}
+          id={prevTabBars.length}
+        />,
       ];
     });
+    setTimeout(() => {
+      btnRef.current.scrollIntoView();
+    }, 50);
   };
 
   return (

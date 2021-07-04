@@ -10,6 +10,7 @@ import TabContainer from './Tab/TabContainer';
 function App() {
   return (
     <div>
+      <Guitar />
       <TabContainer />
     </div>
   );

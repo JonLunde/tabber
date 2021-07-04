@@ -3,7 +3,7 @@ import TabString from './TabString';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function TabBar(props) {
-  const { deleteTab, moveUp, moveDown, id } = props;
+  const { deleteTab, moveUp, moveDown, tabBarRef, id } = props;
 
   return (
     <div className="tab-bar">

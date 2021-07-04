@@ -23,10 +23,12 @@ $color-neck: #4f3715;
 $color-fret: #d7d6d6;
 $color-fret-shadow: #777777;
 $color-dot: #383530;
-$color-string: #af9851;
-$color-string-shadow:rgb(87, 74, 32);
+$color-higher-string: #aca89e;
+$color-higher-string-shadow:rgb(56, 56, 52);
+$color-lower-string: #af9851;
+$color-lower-string-shadow:rgb(87, 74, 32);
 
 
 // GUITAR DIMENSIONS
 $neck-height: 25rem;
-$neck-width: 100%;
+$neck-width: 80%;
