@@ -2,10 +2,12 @@ import React from 'react';
 
 import GuitarNeck from './GuitarNeck';
 
-function Guitar() {
+function Guitar(props) {
+  const { dispatch } = props;
+
   return (
     <div className="guitar">
-      <GuitarNeck />
+      <GuitarNeck dispatch={dispatch} />
     </div>
   );
 }

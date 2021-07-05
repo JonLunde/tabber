@@ -40,55 +40,11 @@
                 }
             }
         }
-
-        // &--1 {
-        //     &::before {
-        //         @include stringIndicator; 
-        //         content: 'e';
-        //         color: $color-gray-900;
-        //     }
-        // }
-        // &--2 {
-        //     &::before {
-        //         @include stringIndicator;
-        //         content: 'B'; 
-        //         color: $color-gray-900; 
-        //     }
-        // }
-        // &--3 {
-        //     &::before {
-        //         @include stringIndicator;
-        //         content: 'G';  
-        //         color: $color-gray-900;
-        //     }
-        // }
-        // &--4 {
-        //     &::before {
-        //         @include stringIndicator;
-        //         content: 'D';  
-        //         color: $color-gray-900;
-        //     }
-        // }
-        // &--5 {
-        //     &::before {
-        //         @include stringIndicator;
-        //         content: 'A';
-        //         color: $color-gray-900;  
-        //     }
-        // }
-        // &--6 {
-        //     &::before {
-        //         @include stringIndicator;
-        //         content: 'E'; 
-        //         color: $color-gray-900; 
-        //     }
-        // }
     }
     
     &__tuner {
-        width: 100%;
         position: absolute;
-        left: -3.5rem;
+        left: -8rem;
         
         // For looping 6 tuners with proper spacing and size.
         @for $i from 1 to 7 {
@@ -101,8 +57,8 @@
     }
 
     &__note {
-        display: inline-block;
-        width: calc(100% / 24);
+        display:inline-block;
+        width: calc(95% / 23);
         height: 3rem;
         text-align: center;
         color: transparent;
@@ -118,6 +74,11 @@
             border-radius: 10px;
             color: $color-gray-900;
         }
+
+        &--first {
+            position: absolute;
+            transform:translate(-3.7rem, -1.4rem) ;
+        }
     }
 
     // Each fret styled with for-loop
@@ -126,7 +87,7 @@
             &--#{$i} {
                 position: absolute;
                 top: 0;
-                left: calc((100% / 24) * #{$i});
+                left: calc((95% / 23) * #{$i});
                 height: $neck-height;
                 width: 0.4rem;
                 z-index: 1;
@@ -145,10 +106,21 @@
 
     }
 
+    &__nut {
+        position: absolute;
+        top: 0;
+        left: 2;
+        height: $neck-height;
+        width: $nut-width;
+        background-color: $color-white;
+        border-left: 1.5px solid $color-gray-100;
+        z-index: 1;
+    }
+
     &__dot {
         position: absolute;
         top: 51.1%;
-        background-color: purple;
+        background-color: $color-dot;
         border-radius: 50%;
         width: 2.5rem;
         height: 2.5rem;
@@ -158,22 +130,22 @@
         
         
         &--1 {
-            left: 10.7%;
+            left: 10.5%;
         }
         &--2 {
-            left: 19%;
+            left: 18.7%;
             
         }
         &--3 {
-           left: 27.3%;
+           left: 27%;
         }
         &--4 {
-            left: 35.6%;
+            left: 35.3%;
             
         }
         &--5 {
             top: 80%;
-            left: 48.1%;
+            left: 47.7%;
 
             &::after {
                 content: '';
@@ -190,24 +162,24 @@
 
         }
         &--6 {
-            left: 60.5%;
+            left: 60.05%;
             
         }
         &--7 {
-            left: 68.9%;
+            left: 68.3%;
             
         }
         &--8 {
-            left: 77.2%;
+            left: 76.6%;
             
         }
         &--9 {
-            left: 85.5%;
+            left: 84.9%;
             
         }
         &--10 {
             top: 80%;
-            left: 98%;
+            left: 97.3%;
     
             &::after {
                 content: '';

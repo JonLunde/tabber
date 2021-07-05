@@ -1,38 +1,13 @@
-import React from 'react';
-import TabNote from './TabNote';
+import React, { useEffect } from 'react';
 
-const TabString = (props) => {
-  const { i } = props;
+function TabString(props) {
+  const { tabLine } = props;
+
   return (
-    <div className={`tab-bar__string tab-bar__string--${i}`}>
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
-      <TabNote />
+    <div>
+      <span>{tabLine}</span>
     </div>
   );
-};
+}
 
 export default TabString;
