@@ -1,27 +1,8 @@
 import React, { useState } from 'react';
 import GuitarString from './GuitarString';
-import GuitarTuner from './GuitarTuner';
 
 function GuitarNeck(props) {
-  const { dispatch } = props;
-  const [tuning, setTuning] = useState(['E', 'B', 'G', 'D', 'A', 'E']);
-
-  function changeTuning(tuningIdx) {
-    let chosenTuning = [];
-    switch (tuningIdx) {
-      case '1':
-        chosenTuning = ['E', 'B', 'G', 'D', 'A', 'E'];
-        console.log('Chosen:111 ', chosenTuning);
-        break;
-      case '2':
-        chosenTuning = ['D', 'A', 'F', 'C', 'G', 'D'];
-        break;
-      default:
-        console.log('GUITARNECK SWITCH ERROR!');
-        break;
-    }
-    setTuning(chosenTuning);
-  }
+  const { dispatch, tuning } = props;
 
   return (
     <div className="guitar__neck">
@@ -62,16 +43,6 @@ function GuitarNeck(props) {
       <div className="guitar__fret--22"> </div>
       <div className="guitar__fret--23"> </div>
       <div className="guitar__fret--24"> </div>
-
-      <div className="guitar__tuning">
-        <select name="tuning" id="tuning" onChange={(event) => changeTuning(event.target.value)}>
-          <option value="0" hidden>
-            Change Tuning
-          </option>
-          <option value="1">E Standard</option>
-          <option value="2">D Standard</option>
-        </select>
-      </div>
 
       <div className="guitar__container-strings">
         <GuitarString idx={1} key={1} dispatch={dispatch} tuning={tuning} />

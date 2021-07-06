@@ -1,19 +1,63 @@
 @use "../abstracts" as *;
 
 .guitar {
-    
+    position: relative;
     margin-top: 5rem;
+    height: $neck-height;
+    
     &__neck {
         position: relative;
-        display: block;
-        margin: 0 auto;
+        display: inline-block;
         background-color: $color-neck;
         height: $neck-height;
-        width: $neck-width;
+        width: 80%;
     }
-
+    
     ::selection {
         background-color: transparent;
+    }
+    
+    
+    &__tuning {
+        // position: absolute;
+        // top: -2rem;
+        // left: 0rem;
+        position: relative;
+        display: inline-block;
+        height: 100%;
+        width: 10%;
+        background-color: $color-primary-100;
+        vertical-align: top;
+        
+        
+        &__picker {
+            position: absolute;
+            top: -2rem;
+            left: 5rem;
+        }
+        
+        &__keys {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 100%;    
+            padding: 0.6rem 5rem;   
+        }
+
+        // For looping 6 tuningkeys with proper spacing and size.
+        @for $i from 0 to 6 {
+            &__key--#{$i} {
+                // top: calc(20% * #{$i} - 23.5%);
+            }
+        }
+    }
+    
+    &__legend {
+        display: inline-block;
+        height: $neck-height;
+        width: 10%;
+        background-color: $color-gray-700;
+        vertical-align: top;
     }
 
 
@@ -47,25 +91,7 @@
         }
     }
     
-    &__tuner {
-        position: absolute;
-        left: -11rem;
-        
-        // For looping 6 tuners with proper spacing and size.
-        @for $i from 1 to 7 {
-            &--#{$i} {
-                top: calc(20% * #{$i} - 23.5%);
-                height: calc(0.35rem + 0.04rem * #{$i});
-            }
-        }
-        
-    }
 
-    &__tuning {
-        position: absolute;
-        top: -2rem;
-        left: -11rem;
-    }
 
     &__note {
         display:inline-block;
@@ -88,9 +114,11 @@
 
         &--first {
             position: absolute;
-            transform:translate(-5.6rem, -1.4rem) ;
+            transform:translate(-6.6rem, -1.4rem) ;
         }
     }
+
+
 
     // Each fret styled with for-loop
     &__fret {
