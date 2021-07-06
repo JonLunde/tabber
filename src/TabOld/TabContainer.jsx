@@ -46,7 +46,15 @@ function TabContainer() {
   };
 
   const [tabBars, setTabBars] = useState([
-    <TabBar key={keyCount} deleteTab={deleteTab} moveUp={moveUp} moveDown={moveDown} tabBarRef={tabBarRef} id={0} />,
+    <TabBar
+      key={keyCount}
+      deleteTab={deleteTab}
+      moveUp={moveUp}
+      moveDown={moveDown}
+      tabBarRef={tabBarRef}
+      id={0}
+      setFocus={setFocus}
+    />,
   ]);
   const btnRef = useRef();
   const tabBarRef = useRef();
@@ -73,6 +81,7 @@ function TabContainer() {
           moveDown={moveDown}
           tabBarRef={tabBarRef}
           id={prevTabBars.length}
+          setFocus={setFocus}
         />,
       ];
     });
