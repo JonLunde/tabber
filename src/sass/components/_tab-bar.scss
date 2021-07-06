@@ -6,10 +6,14 @@
     text-align: start;
     height: 40rem;
 
-
     &__title {
         font-size: 2rem;       
         display: inline-block;
+
+        ::selection {
+            background-color: transparent;
+        }
+    
     }
 
     &__action-buttons {
@@ -23,6 +27,7 @@
     height: 80%;
     margin-top: 5.5rem;
     font-family:monospace;
+    font-size: 2rem;
     }
 
     &__string {

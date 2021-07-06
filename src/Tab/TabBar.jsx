@@ -10,10 +10,12 @@ function TabBar(props) {
       <label htmlFor="heading">
         <input
           type="text"
-          className="tab-bar__title"
+          className="tab-bar__title "
           placeholder="untitled"
           id="heading"
-          // onChange={(event) => dispatch({ type: 'rename', payload: event.value })}
+          defaultValue={title}
+          autoComplete="off"
+          onInput={(event) => dispatch({ type: 'rename', payload: { value: event.target.value, idx: idx } })}
         />
       </label>
       <div className="tab-bar__action-buttons">

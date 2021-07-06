@@ -35,13 +35,16 @@ function reducer(tabState, action) {
           id: keyCount,
           key: keyCount,
           idx: tabState.length,
+          title: '',
           tabLines: ['e |', 'B |', 'D |', 'G |', 'A |', 'E |'],
         },
       ];
       console.log('add: ', newTabState);
 
     case 'rename':
-      console.log('rename', action.payload);
+      console.log('Payload: ', action.payload);
+      if (action.payload === undefined) return newTabState;
+      newTabState[action.payload.idx].title = action.payload.value;
       return newTabState;
 
     case 'newNote':
@@ -58,17 +61,13 @@ function reducer(tabState, action) {
 }
 
 function App() {
-  // const [tabText, setTabText] = useState([{ id: 0, tabLines: ['e |--', 'B |--', 'D |--', 'G |--', 'A |--', 'E |--'] }]);
   const [focusTab, setFocusTab] = useState(0);
-  // const [tabState, setTabState] = useState([
-  //   { id: keyCount, key: keyCount, idx: 0, tabLines: ['e |--', 'B |--', 'D |--', 'G |--', 'A |--', 'E |--'] },
-  // ]);
-
   const [tabState, dispatch] = useReducer(reducer, [
     {
       id: keyCount,
       key: keyCount,
       idx: 0,
+      title: '',
       tabLines: ['e |', 'B |', 'D |', 'G |', 'A |', 'E |'],
     },
   ]);
@@ -76,35 +75,6 @@ function App() {
   useEffect(() => {
     console.log('App: Updated ', tabState);
   }, [tabState]);
-
-  // function addTabBar() {
-  //   keyCount++;
-
-  //   setTabState((prevtabState) => {
-  //     const newtabState = [...prevtabState];
-  //     newtabState.push([
-  //       (id = keyCount),
-  //       (key = keyCount),
-  //       (idx = prevtabState.length),
-  //       (tabLines = ['e |--', 'B |--', 'D |--', 'G |--', 'A |--', 'E |--']),
-  //     ]);
-  //     console.log(newtabState);
-  //     return newtabState;
-  //   });
-  // }
-
-  function noteClicked(stringIdx, noteIdx) {
-    setTabText((prevtabText) => {
-      let newTabText = [...prevtabText];
-      const idx = newTabText.findIndex((tab) => tab.id === focusTab);
-      console.log('IDX: ', idx);
-
-      for (let i = 0; i < 6; i++) {
-        newTabText[i] += 'TEST';
-      }
-      return newTabText;
-    });
-  }
 
   return (
     <div>

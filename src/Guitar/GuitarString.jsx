@@ -4,37 +4,15 @@ import GuitarNote from './GuitarNote';
 const notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 
 function GuitarString(props) {
-  const { idx, dispatch } = props;
-  const [tuning, setTuning] = useState(() => {
-    switch (idx) {
-      case 1:
-        return 'e';
-
-      case 2:
-        return 'b';
-
-      case 3:
-        return 'g';
-
-      case 4:
-        return 'd';
-
-      case 5:
-        return 'a';
-
-      case 6:
-        return 'e';
-
-      default:
-        console.log('TUNING ERROR!');
-        break;
-    }
-  });
-
-  const firstNote = notes.findIndex((note) => note === tuning.toUpperCase());
+  const { idx, dispatch, tuning } = props;
+  const firstNote = notes.findIndex((note) => tuning[idx - 1] === note);
 
   function handleChange(event) {
     setTuning(event.target.value);
+  }
+
+  function findFirstNote() {
+    return notes.findIndex((note) => tuning[idx] === note);
   }
 
   let guitarNotes = [];
@@ -47,10 +25,10 @@ function GuitarString(props) {
   return (
     <div>
       <div className={`guitar__tuner guitar__tuner--${idx}`}>
-        <select name="tuner" id="tuner" value={tuning.toUpperCase()} onChange={handleChange}>
+        <select name="tuner" id="tuner" onChange={handleChange}>
           {notes.map((note, i) => (
             <option value={note} key={i}>
-              {note}
+              {tuning[idx - 1]}
             </option>
           ))}
         </select>
