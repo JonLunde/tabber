@@ -2,13 +2,12 @@
 
 .guitar {
     position: relative;
-    margin-top: 5rem;
     height: $neck-height;
     
     &__neck {
         position: relative;
         display: inline-block;
-        background-color: $color-neck;
+        background-image: url("/src/assets/img/walnut.jpg");
         height: $neck-height;
         width: 80%;
     }
@@ -56,8 +55,17 @@
         display: inline-block;
         height: $neck-height;
         width: 10%;
-        background-color: $color-gray-700;
+        background-color: $color-gray-100;
         vertical-align: top;
+
+        &__buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: stretch;
+            margin-top: 1rem;
+
+        }
     }
 
 
@@ -137,7 +145,7 @@
                     content: '#{$i}';
                     position: absolute;
                     top: -2rem;
-                    left: -2.2rem;
+                    left: -3.6rem;
                     color: $color-gray-900;
                 }
             }

@@ -5,26 +5,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function TabBar(props) {
   const { dispatch, id, idx, tabLines, title, handleFocus, focus } = props;
   const [tabLine1, tabLine2, tabLine3, tabLine4, tabLine5, tabLine6] = tabLines;
+
+  const focusStyle = { transform: 'scale(1.02)', boxShadow: '0.5rem 2rem 3rem 0rem rgba(0,0,0,0.4)' };
   return (
-    <div className="tab-bar" onClick={() => handleFocus(idx, tabLine1.length)}>
+    <div
+      className="tab-bar"
+      onClick={() => handleFocus(idx, tabLine1.length)}
+      style={focus.tabIdx === idx ? focusStyle : {}}
+    >
       <div className="tab-bar__header">
         <input
           type="text"
           className="tab-bar__title "
-          placeholder="untitled"
+          placeholder="Give it a title..."
           id="heading"
           defaultValue={title}
           autoComplete="off"
           onInput={(event) => dispatch({ type: 'rename', payload: { value: event.target.value, idx: idx } })}
         />
-        <div>
-          <button className="btn btn--action" onClick={() => dispatch({ type: 'moveUp', payload: idx })}>
+        <div className="tab-bar__action-buttons">
+          <button className="btn btn--action btn--action--1" onClick={() => dispatch({ type: 'moveUp', payload: idx })}>
             <FontAwesomeIcon key={100} icon="arrow-up" />
           </button>
-          <button className="btn btn--action" onClick={() => dispatch({ type: 'moveDown', payload: idx })}>
+          <button
+            className="btn btn--action btn--action--2"
+            onClick={() => dispatch({ type: 'moveDown', payload: idx })}
+          >
             <FontAwesomeIcon key={101} icon="arrow-down" />
           </button>
-          <button className="btn btn--action" onClick={() => dispatch({ type: 'remove', payload: idx })}>
+          <button className="btn btn--action btn--action--3" onClick={() => dispatch({ type: 'remove', payload: idx })}>
             <FontAwesomeIcon key={102} icon="trash" />
           </button>
         </div>

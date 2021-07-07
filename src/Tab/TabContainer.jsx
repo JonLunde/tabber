@@ -16,7 +16,7 @@ function TabContainer(props) {
   ));
 
   return (
-    <div className="u-mt-big container-tab" onContextMenu={preventDefault}>
+    <div className=" container-tab" onContextMenu={preventDefault}>
       {/* <TabInfo key={998} songProgress="test" /> */}
       {tabState.map((tab, i) => {
         return (

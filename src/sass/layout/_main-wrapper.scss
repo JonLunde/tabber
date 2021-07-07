@@ -1,0 +1,6 @@
+@use "../abstracts/variables" as *;
+
+.main-wrapper {
+    background-color: $color-background;
+    margin: 10rem 3rem;
+}

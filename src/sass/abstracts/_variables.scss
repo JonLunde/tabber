@@ -8,13 +8,18 @@ $color-gray-100: rgb(211, 211, 211);
 $color-gray-300: rgb(153, 153, 153);
 $color-gray-500: rgb(116, 116, 116);
 $color-gray-700: rgb(67, 67, 67);
-$color-gray-900: rgb(41, 41, 41);
+$color-gray-900: #292929;
 
 $color-primary-100: rgb(160, 171, 255);
 $color-primary-300: rgb(40, 65, 255);
 $color-primary-500: rgb(0, 22, 192);
 $color-primary-700: rgb(0, 16, 136);
 $color-primary-900: rgb(0, 9, 73);
+
+$color-background: #fff4e5;
+$color-background-2: #e1b8a0;
+$color-background-3: #475f77;
+$color-background-4: #e97866;
 
 
 // GUITAR COLORS
@@ -30,6 +35,10 @@ $color-lower-string-shadow:rgb(87, 74, 32);
 
 
 // GUITAR DIMENSIONS
-$neck-height: 25rem;
+$neck-height: 35rem;
 $neck-width: 80%;
 $nut-width: 0.4rem;
+
+
+// LAYOUTS
+$border-radius: 2rem;
