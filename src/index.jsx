@@ -7,6 +7,7 @@ import img3 from './assets/img/olive-palisander.jpg';
 import img4 from './assets/img/satin-nuss.jpg';
 import img5 from './assets/img/teak.jpg';
 import img6 from './assets/img/walnut.jpg';
+import img7 from './assets/img/mahogany.jpg';
 import './sass/main.scss';
 
 ReactDom.render(<App />, document.getElementById('root'));

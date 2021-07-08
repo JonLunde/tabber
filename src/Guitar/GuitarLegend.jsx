@@ -1,21 +1,50 @@
 import React from 'react';
 
-function GuitarLegend() {
+const legendButtons = [
+  { id: 'pullOff', value: 'p' },
+  { id: 'hammerOn', value: 'h' },
+  { id: 'slideUp', value: '/' },
+  { id: 'slideDown', value: '\\' },
+];
+
+function GuitarLegend(props) {
+  const { handleLegendNotation, legendNotation } = props;
+
+  function handleClick(event) {
+    handleLegendNotation(event.target.value);
+  }
+
+  for (let i = 0; i < 6; i++) {}
+
   return (
     <div className="guitar__legend">
       <h3 className="heading-tertiary u-center-text">Legend</h3>
       <div className="guitar__legend__buttons">
-        <button className="btn btn--legend">Hammer on (h)</button>
-        <button className="btn btn--legend">Pull off (p)</button>
-        <button className="btn btn--legend">Slide up (/)</button>
-        <button className="btn btn--legend">Slide down (\)</button>
-        <button className="btn btn--legend">Vibrato (~)</button>
-        <button className="btn btn--legend">Muted note (x)</button>
-        <button className="btn btn--legend">Percussive slap (X)</button>
-        <button className="btn btn--legend">Harmonic (+)</button>
+        {legendButtons.map((button, i) => {
+          return (
+            <button
+              key={button.value}
+              className="btn btn--legend"
+              value={button.value}
+              id={button.id}
+              onClick={(event) => handleClick(event)}
+            >
+              {button.id} ({button.value})
+            </button>
+          );
+        })}
       </div>
     </div>
   );
 }
 
 export default GuitarLegend;
+
+// <div>
+//   <input type="checkbox" className="guitar__legend__checkbox" id={button.id} defaultValue={button.value} />
+//   <label htmlFor={button.id} className="guitar__legend__button" onClick={() => handleClick()}>
+//     <span className="navigation__icon">
+//       {button.id} ({button.value})
+//     </span>
+//   </label>
+// </div>

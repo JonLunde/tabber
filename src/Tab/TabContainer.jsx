@@ -9,26 +9,24 @@ const preventDefault = (e) => {
 };
 
 function TabContainer(props) {
-  const { dispatch, tabState, handleFocus, focus } = props;
+  const { dispatch, tabState, handleMarker, marker, tuning } = props;
   const btnRef = useRef();
-  let tabBars = tabState.map((tab, i) => (
-    <TabBar key={i} id={tab.id} idx={tab.idx} dispatch={dispatch} tabLines={tab.tabLines} title={tab.title} />
-  ));
 
   return (
-    <div className=" container-tab" onContextMenu={preventDefault}>
+    <div className="container-tab" onContextMenu={preventDefault}>
       {/* <TabInfo key={998} songProgress="test" /> */}
       {tabState.map((tab, i) => {
         return (
           <TabBar
             key={tab.key}
             id={tab.id}
-            idx={tab.idx}
+            tabIdx={tab.idx}
             dispatch={dispatch}
             tabLines={tab.tabLines}
             title={tab.title}
-            handleFocus={() => handleFocus(tab.idx, tab.tabLines[0].length)}
-            focus={focus}
+            handleMarker={() => handleMarker(tab.idx, tab.tabLines[0].length + 3)}
+            marker={marker}
+            tuning={tuning}
           />
         );
       })}

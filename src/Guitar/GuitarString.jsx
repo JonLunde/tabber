@@ -5,12 +5,12 @@ const notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 
 function GuitarString(props) {
   const { idx, dispatch, tuning } = props;
-  const firstNote = notes.findIndex((note) => tuning[idx - 1] === note);
+  const firstNote = notes.findIndex((note) => tuning[idx] === note);
 
   let guitarNotes = [];
   for (let i = 0; i < 25; i++) {
     guitarNotes.push(
-      <GuitarNote dispatch={dispatch} key={i} note={notes[(i + firstNote) % 12]} noteIdx={i} stringIdx={idx} />,
+      <GuitarNote dispatch={dispatch} key={i} note={notes[(i + firstNote) % 12]} fretIdx={i} stringIdx={idx} />,
     );
   }
 

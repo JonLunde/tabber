@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 
 function TabString(props) {
-  const { tabLine, tabIdx, handleFocus } = props;
+  const { tabLine, tabIdx, handleMarker, tuning, stringIdx } = props;
 
   return (
     <div>
-      <span>{tabLine}</span>
+      <span>
+        {tuning[stringIdx] + ' |'}
+        {tabLine}
+      </span>
     </div>
   );
 }

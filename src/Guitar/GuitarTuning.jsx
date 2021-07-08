@@ -5,8 +5,6 @@ let tuners = [];
 
 function GuitarTuning(props) {
   const { tuning, changeTuner, changeTuning } = props;
-  //   const firstNote = notes.findIndex((note) => tuning[i] === note);
-  console.log('TUNING: ', tuning);
 
   function findFirstNote(inNote) {
     return notes.findIndex((note) => inNote === note);

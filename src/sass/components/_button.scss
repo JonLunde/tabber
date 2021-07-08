@@ -56,7 +56,7 @@
         &:last-child:hover svg {
             transform: translate(-50%, -50%) scale(1.4);
         }
-
+        
         &:first-child {
             background-color: rgba($color-white,0.6);                                                                             
         }
@@ -65,16 +65,17 @@
             border-top-right-radius: $border-radius;
             background-color: rgba($color-white, 0.1);
         }
-
+        
     }
-
-
+    
+    
     &--legend {
         background-color: $color-gray-500;
         color: $color-gray-900;
-        font-size: 1rem;
+        font-size: 2rem;
         width: 40%;
         height: 6rem;
         margin-bottom: 1rem;
+        text-transform: none;
     }
-    }
+}

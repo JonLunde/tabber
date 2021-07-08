@@ -17,13 +17,15 @@ const initState = [
     key: keyCount,
     idx: 0,
     title: '',
-    tabLines: ['e |', 'B |', 'D |', 'G |', 'A |', 'E |'],
+    tabLines: ['', '', '', '', '', ''],
   },
 ];
 
 function Tabber() {
-  const [focus, setFocus] = useState({ tabIdx: 0, lineIdx: 3 }); // Decides which TabBar is focused. Also on the Y-axis.
+  const [legendNotation, setLegendNotation] = useState('');
+  const [marker, setMarker] = useState({ tabIdx: 0, yIdx: 3, stringIdx: 0 }); // Sets marker.
   const [tabState, dispatch] = useReducer(reducer, initState);
+  const [tuning, setTuning] = useState(['E', 'B', 'G', 'D', 'A', 'E']); // Chosen guitar tuning.
 
   // Reducer managing TabBar state.
   function reducer(tabState, action) {
@@ -34,9 +36,8 @@ function Tabber() {
     // User click on "move up"-button. Tab is moved one index backwards.
     switch (action.type) {
       case 'moveUp':
-        setFocus({
-          tabIdx: action.payload,
-          lineIdx: tabState[action.payload].tabLines[0].length,
+        setMarker((prevMarker) => {
+          return { ...prevMarker, tabIdx: action.payload, yIdx: tabState[action.payload].tabLines[0].length };
         });
         if (tabState.length <= 1) return tabState;
         index = tabState.findIndex((tab) => tab.id == action.payload);
@@ -47,9 +48,8 @@ function Tabber() {
 
       // User click on "move down"-button. Tab is moved one index forward.
       case 'moveDown':
-        setFocus({
-          tabIdx: action.payload,
-          lineIdx: tabState[action.payload].tabLines[0].length,
+        setMarker((prevMarker) => {
+          return { ...prevMarker, tabIdx: action.payload, yIdx: tabState[action.payload].tabLines[0].length };
         });
         if (tabState.length <= 1) return tabState;
         index = tabState.findIndex((tab) => tab.id == action.payload);
@@ -68,10 +68,9 @@ function Tabber() {
       // User clicks "add"-button. A new tab is added to the state.
       case 'add':
         keyCount++;
-        console.log(action.payload);
-        setFocus({
+        setMarker({
           tabIdx: tabState.length,
-          lineIdx: 3,
+          yIdx: 3,
         });
         newTabState = [
           ...tabState,
@@ -80,7 +79,7 @@ function Tabber() {
             key: keyCount,
             idx: tabState.length,
             title: '',
-            tabLines: ['e |', 'B |', 'D |', 'G |', 'A |', 'E |'],
+            tabLines: ['', '', '', '', '', ''],
           },
         ];
         return newTabState;
@@ -93,21 +92,56 @@ function Tabber() {
 
       // Update text in tabs whenever a note on the guitar is clicked.
       case 'newNote':
-        setFocus((prevFocus) => {
-          const dashes = action.payload.noteIdx < 10 ? 3 : 4; // If note is a double digit it will add an extra dash to the other tabLines.
-          const newFocus = {
-            ...prevFocus,
-            lineIdx: tabState[prevFocus.tabIdx].tabLines[0].length + dashes,
-          };
-          return newFocus;
-        });
-        newTabState[focus.tabIdx].tabLines = newTabState[focus.tabIdx].tabLines.map(
-          (line, i) =>
-            action.payload.noteIdx < 10
-              ? (line += i === action.payload.stringIdx - 1 ? '--' + action.payload.noteIdx : '---') // Puts a note on the string according to the note clicked and corresponding dashes on other strings.
-              : (line += i === action.payload.stringIdx - 1 ? '--' + action.payload.noteIdx : '----'), // Handles double digit notes.
-        );
+        console.log('Reduce newNote');
 
+        if (legendNotation !== '') {
+          console.log('TEST: ', tabState);
+          if (marker.stringIdx !== action.payload.stringIdx) return newTabState;
+          newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map(
+            (line, i) =>
+              action.payload.fretIdx < 10
+                ? (line += i === action.payload.stringIdx ? action.payload.fretIdx : '-') // Puts a note on the string according to the note clicked and corresponding dashes on other strings.
+                : (line += i === action.payload.stringIdx ? action.payload.fretIdx : '--'), // Handles double digit notes.
+          );
+        } else {
+          newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map(
+            (line, i) =>
+              action.payload.fretIdx < 10
+                ? (line += i === action.payload.stringIdx ? '--' + action.payload.fretIdx : '---') // Puts a note on the string according to the note clicked and corresponding dashes on other strings.
+                : (line += i === action.payload.stringIdx ? '--' + action.payload.fretIdx : '----'), // Handles double digit notes.
+          );
+        }
+
+        setMarker((prevMarker) => {
+          let dashes = action.payload.fretIdx < 10 ? 6 : 7; // Correct marker for double digit notes.
+          if (legendNotation !== '') dashes -= 2; // Handles marker for notations.
+
+          const newMarker = {
+            ...prevMarker,
+            yIdx: tabState[prevMarker.tabIdx].tabLines[0].length + dashes,
+            stringIdx: action.payload.stringIdx,
+          };
+          return newMarker;
+        });
+
+        setLegendNotation('');
+        return newTabState;
+
+      case 'notation':
+        console.log('Reduce notation: ', legendNotation, marker);
+        if (marker.yIdx < 4) {
+          setLegendNotation('');
+          console.log('testTabState: ', tabState);
+          return tabState;
+        }
+        if (legendNotation !== '') {
+          return tabState;
+        }
+        setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx + 1 }));
+        newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map(
+          (line, i) => (line += i === marker.stringIdx ? action.payload.notation : '-'), // Puts a note on the string according to the note clicked and corresponding dashes on other strings.
+        );
+        setLegendNotation(action.payload.notation);
         return newTabState;
 
       default:
@@ -116,24 +150,76 @@ function Tabber() {
     }
   }
 
-  // When user clicks a TabBar the focus is moved to the end of it.
-  function handleFocus(tabIdx, lineIdx) {
-    if (tabIdx === focus.tabIdx && lineIdx === focus.lineIdx) return;
-    setFocus({ tabIdx: tabIdx, lineIdx: lineIdx });
+  // When user clicks a TabBar the marker is moved to the end of it.
+  function handleMarker(tabIdx, lineIdx) {
+    if (tabIdx === marker.tabIdx && lineIdx === marker.yIdx) return;
+    setMarker({ tabIdx: tabIdx, yIdx: lineIdx });
   }
 
   useEffect(() => {
-    console.log('tabState Changed: ', tabState);
+    console.log('TabState Changed: ', tabState);
   }, [tabState]);
 
   useEffect(() => {
-    console.log('focus Changed: ', focus);
-  }, [focus]);
+    console.log('Marker Changed: ', marker);
+  }, [marker]);
+
+  useEffect(() => {
+    console.log('Tuning Changed: ', tuning);
+  }, [tuning]);
+
+  useEffect(() => {
+    console.log('Notation Changed: ', legendNotation);
+  }, [tuning]);
+
+  function changeTuning(tuningIdx) {
+    let chosenTuning = [];
+    switch (tuningIdx) {
+      case '1':
+        chosenTuning = ['E', 'B', 'G', 'D', 'A', 'E'];
+        break;
+      case '2':
+        chosenTuning = ['D', 'A', 'F', 'C', 'G', 'D'];
+        break;
+      default:
+        console.log('GUITARNECK SWITCH ERROR!');
+        break;
+    }
+    setTuning(chosenTuning);
+  }
+
+  function changeTuner(note, i) {
+    setTuning((prevTuning) => {
+      let newTuning = [...prevTuning];
+      newTuning[i] = note;
+      return newTuning;
+    });
+  }
+
+  function handleLegendNotation(notation) {
+    dispatch({ type: 'notation', payload: { notation: notation } });
+    console.log('handleNotation:  ', legendNotation);
+  }
 
   return (
     <div>
-      <Guitar key={0} dispatch={dispatch} />
-      <TabContainer key={1} tabState={tabState} dispatch={dispatch} handleFocus={handleFocus} focus={focus} />
+      <Guitar
+        key={0}
+        dispatch={dispatch}
+        tuning={tuning}
+        changeTuning={changeTuning}
+        changeTuner={changeTuner}
+        handleLegendNotation={handleLegendNotation}
+        legendNotation={legendNotation}
+      />
+      <TabContainer
+        key={1}
+        tabState={tabState}
+        dispatch={dispatch}
+        handleMarker={handleMarker}
+        marker={marker}
+        tuning={tuning}
+      />
     </div>
   );
 }

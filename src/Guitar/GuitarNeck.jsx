@@ -45,12 +45,12 @@ function GuitarNeck(props) {
       <div className="guitar__fret--24"> </div>
 
       <div className="guitar__container-strings">
+        <GuitarString idx={0} key={0} dispatch={dispatch} tuning={tuning} />
         <GuitarString idx={1} key={1} dispatch={dispatch} tuning={tuning} />
         <GuitarString idx={2} key={2} dispatch={dispatch} tuning={tuning} />
         <GuitarString idx={3} key={3} dispatch={dispatch} tuning={tuning} />
         <GuitarString idx={4} key={4} dispatch={dispatch} tuning={tuning} />
         <GuitarString idx={5} key={5} dispatch={dispatch} tuning={tuning} />
-        <GuitarString idx={6} key={6} dispatch={dispatch} tuning={tuning} />
       </div>
     </div>
   );
