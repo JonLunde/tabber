@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 
 function TabString(props) {
-  const { tabLine, tabIdx, handleMarker, tuning, stringIdx } = props;
+  const { tabLine, handleMarker, tuning, stringId, id } = props;
 
   return (
     <div>
       <span>
-        {tuning[stringIdx] + ' |'}
+        {tuning[stringId] + ' |'}
         {tabLine}
       </span>
     </div>

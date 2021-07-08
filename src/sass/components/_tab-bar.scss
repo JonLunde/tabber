@@ -12,14 +12,11 @@
     width: 90vw;
     border-radius: $border-radius;
     padding: 0 0.5rem;
-    box-shadow: 0rem 0.5rem 2rem 0rem rgba($color-black, 0.4);
+    @include shadow-2; 
     
     transition: all 0.4s;
     animation: createTab 0.6s;
 
-    &:target { 
-        background-color: red;
-    }
 
     &:not(:first-child) {
         

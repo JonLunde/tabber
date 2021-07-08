@@ -17,11 +17,11 @@
         height: 8rem;
         font-size: 3rem;
         transition: all 0.4s;
-        box-shadow: 0rem 0.5rem 2rem 0rem rgba($color-black, 0.4);
+        @include shadow-2;
 
         &:hover, &:focus {
             background-color: darken($color-background-4, 10);
-            box-shadow: 0rem 1.5rem 3rem 0rem rgba($color-black,0.4);
+            @include shadow-4;
             transform: scale(1.1);
 
             & svg {

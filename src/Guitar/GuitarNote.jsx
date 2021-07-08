@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { playChord } from '../Guitar/guitarPlayer';
+import { ACTIONS } from '../Tabber';
 
 function GuitarNote(props) {
-  const { note, stringIdx, fretIdx, dispatch } = props;
+  const { note, stringId, fretId, dispatch } = props;
   let chord = [null, null, null, null, null, null];
 
   return (
     <div
-      className={fretIdx === 0 ? 'guitar__note guitar__note--first' : 'guitar__note'}
+      className={fretId === 0 ? 'guitar__note guitar__note--first' : 'guitar__note'}
       onClick={() => {
-        // chord[6 - stringIdx] = noteIdx;
+        // chord[6 - stringId] = noteIdx;
         // playChord(chord);
-        dispatch({ type: 'newNote', payload: { stringIdx: stringIdx, fretIdx: fretIdx } });
+        dispatch({ type: ACTIONS.NEWNOTE, payload: { stringId: stringId, fretId: fretId } });
       }}
     >
       {note}

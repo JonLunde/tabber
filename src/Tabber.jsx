@@ -7,6 +7,16 @@ library.add(faPlus, faTrash, faArrowUp, faArrowDown);
 import Guitar from './Guitar/Guitar';
 import TabContainer from './Tab/TabContainer';
 
+export const ACTIONS = {
+  MOVEUP: 'moveUp',
+  MOVEDOWN: 'moveDown',
+  REMOVE: 'remove',
+  ADD: 'add',
+  RENAME: 'rename',
+  NEWNOTE: 'newNote',
+  NOTATION: 'notation',
+};
+
 // React-element keys.
 let keyCount = 0;
 
@@ -15,7 +25,6 @@ const initState = [
   {
     id: keyCount,
     key: keyCount,
-    idx: 0,
     title: '',
     tabLines: ['', '', '', '', '', ''],
   },
@@ -35,112 +44,138 @@ function Tabber() {
 
     // User click on "move up"-button. Tab is moved one index backwards.
     switch (action.type) {
-      case 'moveUp':
+      case ACTIONS.MOVEUP:
+        const iMoveUp = newTabState.findIndex((tab) => tab.id == action.payload);
+        if (tabState.length <= 1 || iMoveUp === 0) return tabState;
+        const [movingUp] = newTabState.splice(iMoveUp, 1);
+        newTabState.splice(iMoveUp - 1, 0, movingUp);
         setMarker((prevMarker) => {
-          return { ...prevMarker, tabIdx: action.payload, yIdx: tabState[action.payload].tabLines[0].length };
+          return { ...prevMarker, tabIdx: action.payload, yIdx: newTabState[iMoveUp].tabLines[0].length + 3 };
         });
-        if (tabState.length <= 1) return tabState;
-        index = tabState.findIndex((tab) => tab.id == action.payload);
-        if (index === 0) return tabState;
-        [shiftingTabBar] = newTabState.splice(index, 1);
-        newTabState.splice(index - 1, 0, shiftingTabBar);
         return newTabState;
 
       // User click on "move down"-button. Tab is moved one index forward.
-      case 'moveDown':
+      case ACTIONS.MOVEDOWN:
+        const iMoveDown = newTabState.findIndex((tab) => tab.id == action.payload);
+        if (tabState.length <= 1 || iMoveDown === newTabState.length) return tabState;
+        const [movingDown] = newTabState.splice(iMoveDown, 1);
+        newTabState.splice(iMoveDown + 1, 0, movingDown);
         setMarker((prevMarker) => {
-          return { ...prevMarker, tabIdx: action.payload, yIdx: tabState[action.payload].tabLines[0].length };
+          return { ...prevMarker, tabIdx: action.payload, yIdx: newTabState[iMoveDown].tabLines[0].length + 3 };
         });
-        if (tabState.length <= 1) return tabState;
-        index = tabState.findIndex((tab) => tab.id == action.payload);
-        if (index === tabState.length - 1) return tabState;
-        [shiftingTabBar] = newTabState.splice(index, 1);
-        newTabState.splice(index + 1, 0, shiftingTabBar);
         return newTabState;
 
       // User click "remove"-button. Tab is removed from state.
-      case 'remove':
-        if (tabState.length === 1) return [];
-        index = tabState.findIndex((tab) => tab.id == action.payload);
-        newTabState.splice(index, 1);
-        return newTabState;
+      case ACTIONS.REMOVE:
+        return newTabState.filter((tab) => tab.id !== action.payload);
 
       // User clicks "add"-button. A new tab is added to the state.
-      case 'add':
+      case ACTIONS.ADD:
         keyCount++;
-        setMarker({
-          tabIdx: tabState.length,
-          yIdx: 3,
+        setMarker((prevMarker) => {
+          return { ...prevMarker, tabIdx: newTabState.length, yIdx: 3 };
         });
-        newTabState = [
+        return (newTabState = [
           ...tabState,
           {
             id: keyCount,
             key: keyCount,
-            idx: tabState.length,
             title: '',
             tabLines: ['', '', '', '', '', ''],
           },
-        ];
-        return newTabState;
+        ]);
 
-      // Will update on TabBar "title"-input onChange.
-      case 'rename':
-        if (action.payload === undefined) return newTabState;
-        newTabState[action.payload.idx].title = action.payload.value;
-        return newTabState;
-
-      // Update text in tabs whenever a note on the guitar is clicked.
-      case 'newNote':
-        console.log('Reduce newNote');
-
-        if (legendNotation !== '') {
-          console.log('TEST: ', tabState);
-          if (marker.stringIdx !== action.payload.stringIdx) return newTabState;
-          newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map(
-            (line, i) =>
-              action.payload.fretIdx < 10
-                ? (line += i === action.payload.stringIdx ? action.payload.fretIdx : '-') // Puts a note on the string according to the note clicked and corresponding dashes on other strings.
-                : (line += i === action.payload.stringIdx ? action.payload.fretIdx : '--'), // Handles double digit notes.
-          );
-        } else {
-          newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map(
-            (line, i) =>
-              action.payload.fretIdx < 10
-                ? (line += i === action.payload.stringIdx ? '--' + action.payload.fretIdx : '---') // Puts a note on the string according to the note clicked and corresponding dashes on other strings.
-                : (line += i === action.payload.stringIdx ? '--' + action.payload.fretIdx : '----'), // Handles double digit notes.
-          );
-        }
-
-        setMarker((prevMarker) => {
-          let dashes = action.payload.fretIdx < 10 ? 6 : 7; // Correct marker for double digit notes.
-          if (legendNotation !== '') dashes -= 2; // Handles marker for notations.
-
-          const newMarker = {
-            ...prevMarker,
-            yIdx: tabState[prevMarker.tabIdx].tabLines[0].length + dashes,
-            stringIdx: action.payload.stringIdx,
-          };
-          return newMarker;
+      // Updates TabBar title on input-onChange.
+      case ACTIONS.RENAME:
+        return newTabState.map((tab) => {
+          if (tab.id === action.payload.id) return { ...tab, title: action.payload.title };
+          return tab;
         });
 
-        setLegendNotation('');
+      // Update text in tabs whenever a note on the guitar is clicked.
+      case ACTIONS.NEWNOTE:
+        //Handling notes following a notation.
+        if (legendNotation !== '') {
+          // If note is not on same string as the notation the notation is wiped.
+          if (action.payload.stringId !== marker.stringIdx) {
+            newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map((line, i) =>
+              line.substr(0, line.length - 1),
+            );
+            setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx - 1 }));
+          }
+
+          // If note is on the same string as the notation the note is added.
+          else {
+            //Handles double digit notes with extra dashes on the other strings. And correct marker.
+            if (action.payload.fretId < 10) {
+              newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map(
+                (line, i) => (line += i === action.payload.stringId ? action.payload.fretId : '-'),
+              );
+              setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx + 1 }));
+            } else {
+              newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map(
+                (line, i) => (line += i === action.payload.stringId ? action.payload.fretId : '--'),
+              );
+              setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx + 2 }));
+            }
+          }
+          setLegendNotation('');
+        }
+
+        // Handling notes without notation.
+        else {
+          // Handling double digit notes.
+          if (action.payload.fretId < 10) {
+            newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map(
+              (line, i) => (line += i === action.payload.stringId ? '--' + action.payload.fretId : '---'),
+            );
+            setMarker((prevMarker) => ({
+              ...prevMarker,
+              stringIdx: action.payload.stringId,
+              yIdx: newTabState[marker.tabIdx].tabLines[0].length + 3,
+            }));
+          } else {
+            newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map(
+              (line, i) => (line += i === action.payload.stringId ? '--' + action.payload.fretId : '----'),
+            );
+            setMarker((prevMarker) => ({
+              ...prevMarker,
+              stringIdx: action.payload.stringId,
+              yIdx: newTabState[marker.tabIdx].tabLines[0].length + 3,
+            }));
+          }
+        }
         return newTabState;
 
-      case 'notation':
-        console.log('Reduce notation: ', legendNotation, marker);
-        if (marker.yIdx < 4) {
+      case ACTIONS.NOTATION:
+        // Not allowed to add notation at the beginning of tabBar.
+        if (marker.yIdx <= 3) {
           setLegendNotation('');
-          console.log('testTabState: ', tabState);
-          return tabState;
+          return newTabState;
         }
-        if (legendNotation !== '') {
-          return tabState;
+
+        // If user clicks the same notationbutton again it will toggle off.
+        if (legendNotation === action.payload.notation) {
+          newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map((line, i) =>
+            line.substr(0, line.length - 1),
+          );
+          setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx - 1 }));
+          setLegendNotation('');
+          return newTabState;
         }
-        setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx + 1 }));
+
+        // If user clicks another notationbutton before adding the followup note the notations will swap.
+        if (legendNotation !== '' && action.payload.notation !== legendNotation) {
+          newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map((line, i) =>
+            line.substr(0, line.length - 1),
+          );
+          setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx - 1 }));
+        }
+        // Adds notation following previous note.
         newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map(
-          (line, i) => (line += i === marker.stringIdx ? action.payload.notation : '-'), // Puts a note on the string according to the note clicked and corresponding dashes on other strings.
+          (line, i) => (line += i === marker.stringIdx ? action.payload.notation : '-'),
         );
+        setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx + 1 }));
         setLegendNotation(action.payload.notation);
         return newTabState;
 
@@ -170,7 +205,7 @@ function Tabber() {
 
   useEffect(() => {
     console.log('Notation Changed: ', legendNotation);
-  }, [tuning]);
+  }, [legendNotation]);
 
   function changeTuning(tuningIdx) {
     let chosenTuning = [];
@@ -197,8 +232,7 @@ function Tabber() {
   }
 
   function handleLegendNotation(notation) {
-    dispatch({ type: 'notation', payload: { notation: notation } });
-    console.log('handleNotation:  ', legendNotation);
+    dispatch({ type: ACTIONS.NOTATION, payload: { notation: notation } });
   }
 
   return (

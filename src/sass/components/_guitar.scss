@@ -7,10 +7,14 @@
     &__neck {
         position: relative;
         display: inline-block;
-        background-color: $color-neck;
-        background-size: cover;
+        // background-color: $color-neck;
         height: $neck-height;
         width: 80%;
+        
+        // background-size: cover;
+
+        clip-path: polygon(0 5%, 0 95%, 100% 100%, 100% 0);
+        background-image: url("/src/assets/img/Mahogany-Wood.jpg");
     }
     
     ::selection {
@@ -165,10 +169,9 @@
                 top: 0;
                 left: calc((95% / 23) * #{$i});
                 height: $neck-height;
-                width: 0.4rem;
+                width: 0.5rem;
                 z-index: 1;
-                background-color: $color-fret;
-                border-right: 2px solid $color-fret-shadow;
+                background: linear-gradient( to right, $color-fret 0%, $color-black 90%);
 
                 &::before {
                     content: '#{$i}';
@@ -199,7 +202,7 @@
     &__dot {
         position: absolute;
         top: 51.1%;
-        background-color: $color-dot;
+        background: linear-gradient(to right bottom, $color-dot 40%, $color-black);
         border-radius: 50%;
         width: 2.5rem;
         height: 2.5rem;
@@ -231,7 +234,7 @@
                 position: absolute;
                 top: -19.2rem;
                 left: 0;
-                background-color: inherit;
+                background: inherit;
                 width: inherit;
                 height: inherit;
                 border-radius: inherit;

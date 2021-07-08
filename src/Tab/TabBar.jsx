@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import TabString from './TabString';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ACTIONS } from '../Tabber';
 
 function TabBar(props) {
   const {
     dispatch,
     id,
-    tabIdx,
     tabLines: [tabLine1, tabLine2, tabLine3, tabLine4, tabLine5, tabLine6],
     title,
     handleMarker,
@@ -14,12 +14,15 @@ function TabBar(props) {
     tuning,
   } = props;
 
-  const markerStyle = { transform: 'scale(1.02)', boxShadow: '0.5rem 2rem 3rem 0rem rgba(0,0,0,0.4)' };
+  const markerStyle = {
+    transform: 'scale(1.02)',
+    boxShadow: '8px 23px 23px 0 rgba(0,0,0, 0.30), 5px 15px 6px 0 rgba(0,0,0, 0.22)',
+  };
   return (
     <div
       className="tab-bar"
-      onClick={() => handleMarker(tabIdx, tabLine1.length)}
-      style={marker.tabIdx === tabIdx ? markerStyle : {}}
+      onClick={() => handleMarker(id, tabLine1.length)}
+      style={marker.tabIdx === id ? markerStyle : {}}
     >
       <div className="tab-bar__header">
         <input
@@ -29,24 +32,24 @@ function TabBar(props) {
           id="heading"
           defaultValue={title}
           autoComplete="off"
-          onInput={(event) => dispatch({ type: 'rename', payload: { value: event.target.value, idx: tabIdx } })}
+          onInput={(event) => dispatch({ type: ACTIONS.RENAME, payload: { value: event.target.value, id: id } })}
         />
         <div className="tab-bar__action-buttons">
           <button
             className="btn btn--action btn--action--1"
-            onClick={() => dispatch({ type: 'moveUp', payload: tabIdx })}
+            onClick={() => dispatch({ type: ACTIONS.MOVEUP, payload: id })}
           >
             <FontAwesomeIcon key={100} icon="arrow-up" />
           </button>
           <button
             className="btn btn--action btn--action--2"
-            onClick={() => dispatch({ type: 'moveDown', payload: tabIdx })}
+            onClick={() => dispatch({ type: ACTIONS.MOVEDOWN, payload: id })}
           >
             <FontAwesomeIcon key={101} icon="arrow-down" />
           </button>
           <button
             className="btn btn--action btn--action--3"
-            onClick={() => dispatch({ type: 'remove', payload: tabIdx })}
+            onClick={() => dispatch({ type: ACTIONS.REMOVE, payload: id })}
           >
             <FontAwesomeIcon key={102} icon="trash" />
           </button>
@@ -55,57 +58,15 @@ function TabBar(props) {
       <div className="tab-bar__string-container">
         <div
           className="tab-bar__string-container__marker"
-          hidden={marker.tabIdx !== tabIdx ? true : false}
+          hidden={marker.tabIdx !== id ? true : false}
           style={{ left: 0.6 * marker.yIdx + 0.5 + 'em' }}
         />
-        <TabString
-          key={0}
-          stringIdx={0}
-          tabLine={tabLine1}
-          tabIdx={tabIdx}
-          handleMarker={handleMarker}
-          tuning={tuning}
-        />
-        <TabString
-          key={1}
-          stringIdx={1}
-          tabLine={tabLine2}
-          tabIdx={tabIdx}
-          handleMarker={handleMarker}
-          tuning={tuning}
-        />
-        <TabString
-          key={2}
-          stringIdx={2}
-          tabLine={tabLine3}
-          tabIdx={tabIdx}
-          handleMarker={handleMarker}
-          tuning={tuning}
-        />
-        <TabString
-          key={3}
-          stringIdx={3}
-          tabLine={tabLine4}
-          tabIdx={tabIdx}
-          handleMarker={handleMarker}
-          tuning={tuning}
-        />
-        <TabString
-          key={4}
-          stringIdx={4}
-          tabLine={tabLine5}
-          tabIdx={tabIdx}
-          handleMarker={handleMarker}
-          tuning={tuning}
-        />
-        <TabString
-          key={5}
-          stringIdx={5}
-          tabLine={tabLine6}
-          tabIdx={tabIdx}
-          handleMarker={handleMarker}
-          tuning={tuning}
-        />
+        <TabString key={0} stringId={0} tabLine={tabLine1} id={id} handleMarker={handleMarker} tuning={tuning} />
+        <TabString key={1} stringId={1} tabLine={tabLine2} id={id} handleMarker={handleMarker} tuning={tuning} />
+        <TabString key={2} stringId={2} tabLine={tabLine3} id={id} handleMarker={handleMarker} tuning={tuning} />
+        <TabString key={3} stringId={3} tabLine={tabLine4} id={id} handleMarker={handleMarker} tuning={tuning} />
+        <TabString key={4} stringId={4} tabLine={tabLine5} id={id} handleMarker={handleMarker} tuning={tuning} />
+        <TabString key={5} stringId={5} tabLine={tabLine6} id={id} handleMarker={handleMarker} tuning={tuning} />
       </div>
     </div>
   );
