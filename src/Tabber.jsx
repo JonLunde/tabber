@@ -23,8 +23,8 @@ let keyCount = 0;
 // Init TabBar state.
 const initState = [
   {
-    id: keyCount,
-    key: keyCount,
+    id: 0,
+    key: 0,
     title: '',
     tabLines: ['', '', '', '', '', ''],
   },
@@ -39,14 +39,13 @@ function Tabber() {
   // Reducer managing TabBar state.
   function reducer(tabState, action) {
     let newTabState = JSON.parse(JSON.stringify(tabState)); // Deepcopy otherwise the tabLines get mutated, causing bugs.
-    let index;
-    let shiftingTabBar;
+    console.log('REDUCER RAN2: ', tabState, newTabState);
 
     // User click on "move up"-button. Tab is moved one index backwards.
     switch (action.type) {
       case ACTIONS.MOVEUP:
         const iMoveUp = newTabState.findIndex((tab) => tab.id == action.payload);
-        if (tabState.length <= 1 || iMoveUp === 0) return tabState;
+        if (tabState.length <= 1 || iMoveUp === 0) return newTabState;
         const [movingUp] = newTabState.splice(iMoveUp, 1);
         newTabState.splice(iMoveUp - 1, 0, movingUp);
         setMarker((prevMarker) => {
@@ -57,7 +56,7 @@ function Tabber() {
       // User click on "move down"-button. Tab is moved one index forward.
       case ACTIONS.MOVEDOWN:
         const iMoveDown = newTabState.findIndex((tab) => tab.id == action.payload);
-        if (tabState.length <= 1 || iMoveDown === newTabState.length) return tabState;
+        if (tabState.length <= 1 || iMoveDown === newTabState.length) return newTabState;
         const [movingDown] = newTabState.splice(iMoveDown, 1);
         newTabState.splice(iMoveDown + 1, 0, movingDown);
         setMarker((prevMarker) => {
@@ -72,6 +71,7 @@ function Tabber() {
       // User clicks "add"-button. A new tab is added to the state.
       case ACTIONS.ADD:
         keyCount++;
+        console.log('KEYCOUNT++');
         setMarker((prevMarker) => {
           return { ...prevMarker, tabIdx: newTabState.length, yIdx: 3 };
         });
@@ -94,6 +94,7 @@ function Tabber() {
 
       // Update text in tabs whenever a note on the guitar is clicked.
       case ACTIONS.NEWNOTE:
+        console.log('NEWNOTE');
         //Handling notes following a notation.
         if (legendNotation !== '') {
           // If note is not on same string as the notation the notation is wiped.
@@ -206,6 +207,10 @@ function Tabber() {
   useEffect(() => {
     console.log('Notation Changed: ', legendNotation);
   }, [legendNotation]);
+
+  useEffect(() => {
+    console.log('RERENDER TABBER');
+  });
 
   function changeTuning(tuningIdx) {
     let chosenTuning = [];

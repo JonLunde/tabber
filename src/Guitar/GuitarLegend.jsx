@@ -1,10 +1,10 @@
 import React from 'react';
 
 const legendButtons = [
-  { id: 'pullOff', value: 'p' },
-  { id: 'hammerOn', value: 'h' },
-  { id: 'slideUp', value: '/' },
-  { id: 'slideDown', value: '\\' },
+  { id: 'pullOff', value: 'p', text: 'Pull off' },
+  { id: 'hammerOn', value: 'h', text: 'Hammer on' },
+  { id: 'slideUp', value: '/', text: 'Slide up' },
+  { id: 'slideDown', value: '\\', text: 'Slide down' },
 ];
 
 function GuitarLegend(props) {
@@ -28,12 +28,15 @@ function GuitarLegend(props) {
               value={button.value}
               id={button.id}
               onClick={(event) => handleClick(event)}
-              style={{ backgroundColor: legendNotation === legendButtons[i].value ? 'green' : 'red' }}
+              style={{ backgroundColor: legendNotation === legendButtons[i].value && '#e97865' }}
             >
-              {button.id} ({button.value})
+              {button.text} <br /> ({button.value})
             </button>
           );
         })}
+        <button className="btn btn--legend" style={{ width: '100%' }}>
+          Chord (shift)
+        </button>
       </div>
     </div>
   );

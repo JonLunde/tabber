@@ -15,9 +15,10 @@ function TabBar(props) {
   } = props;
 
   const markerStyle = {
-    transform: 'scale(1.02)',
+    transform: 'scale(1.04)',
     boxShadow: '8px 23px 23px 0 rgba(0,0,0, 0.30), 5px 15px 6px 0 rgba(0,0,0, 0.22)',
   };
+
   return (
     <div
       className="tab-bar"

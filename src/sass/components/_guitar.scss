@@ -11,10 +11,10 @@
         height: $neck-height;
         width: 80%;
         
-        // background-size: cover;
-
-        clip-path: polygon(0 5%, 0 95%, 100% 100%, 100% 0);
+        // This hides notes outside of container. Won't work.
+        // clip-path: polygon(0 5%, 0 95%, 100% 100%, 100% 0); 
         background-image: url("/src/assets/img/Mahogany-Wood.jpg");
+        background-size:100% 100%; /* Change the 40px to control the angle*/
     }
     
     ::selection {
@@ -26,8 +26,8 @@
         position: relative;
         display: inline-block;
         height: 100%;
-        width: 10%;
-        background-color: $color-primary-100;
+        width: 7%;
+        background-color: $color-tuning;
         vertical-align: top;
         font-size: 2rem;
         
@@ -35,15 +35,18 @@
         &__picker {
             position: absolute;
             top: -4rem;
-            left: 5rem;
+            left: 0rem;
         }
         
         &__keys {
             display: flex;
             flex-direction: column;
             justify-content: space-around;
+            width: 100%;
+            align-items: flex-start;
             height: 100%;    
-            padding: 0.6rem 5rem;   
+            padding-left: 0.5rem;
+
         }
 
         // For looping 6 tuningkeys with proper spacing and size.
@@ -57,14 +60,16 @@
     &__legend {
         display: inline-block;
         height: $neck-height;
-        width: 10%;
-        background-color: $color-gray-100;
+        width: 13%;
+        background-color: $color-legend;
         vertical-align: top;
 
         &__buttons {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-evenly;
+            margin: 0 auto;
+            width: 90%;
+            justify-content: space-between;
             align-items: stretch;
             margin-top: 1rem;
 
@@ -117,13 +122,14 @@
         @for $i from 0 to 6 {
             &--#{$i} {
                 top: calc(20% * (#{$i} + 1) - 20%);
-                height: calc(0.35rem + 0.04rem * #{$i});
-                @if ($i < 3)  {
-                    background-color: $color-higher-string;
-                    border-bottom: calc((0.3rem + 0.05rem * #{$i}) / 2) solid  $color-higher-string-shadow;
+                height: calc(0.2rem + (0.1rem * #{$i}));
+                @if ($i < 2)  {
+                    background-image: linear-gradient(to bottom, $color-higher-string 20%, $color-black);
                 } @else {
-                    background-color:  $color-lower-string;
-                    border-bottom: calc((0.3rem + 0.05rem * #{$i}) / 2) solid  $color-lower-string-shadow;
+                    // background-image: linear-gradient(to bottom, $color-lower-string 20%, $color-black);
+                    background-size: stretch;
+                    background-color: #af9851;
+                    background-image: linear-gradient(to bottom, rgba($color-lower-string,0.8) 20%, rgba($color-black, 0.8) ), url("https://www.transparenttextures.com/patterns/black-twill.png");
                 }
             }
         }
@@ -136,13 +142,9 @@
         width: calc(95% / 23);
         height: 4rem;
         text-align: center;
-        vertical-align: center;
         color: transparent;
         padding-top: 0.3rem;
-       
         font-size: 2rem;
-        
-        
         transform: translate(0.2rem, -1.9rem);
         
         
@@ -155,7 +157,8 @@
 
         &--first {
             position: absolute;
-            transform:translate(-8rem, -1.9rem) ;
+            top: 0rem;
+            left: -4.2%; // % is more responsive here.
         }
     }
 
@@ -169,7 +172,7 @@
                 top: 0;
                 left: calc((95% / 23) * #{$i});
                 height: $neck-height;
-                width: 0.5rem;
+                width: $fret-width;
                 z-index: 1;
                 background: linear-gradient( to right, $color-fret 0%, $color-black 90%);
 
@@ -268,7 +271,7 @@
                 position: absolute;
                 top: -19.2rem;
                 left: 0;
-                background-color: inherit;
+                background: inherit;
                 width: inherit;
                 height: inherit;
                 border-radius: inherit;

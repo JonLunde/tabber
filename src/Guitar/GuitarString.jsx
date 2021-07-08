@@ -14,11 +14,7 @@ function GuitarString(props) {
     );
   }
 
-  return (
-    <div>
-      <div className={`guitar__string guitar__string--${id}`}>{guitarNotes}</div>
-    </div>
-  );
+  return <div className={`guitar__string guitar__string--${id}`}>{guitarNotes}</div>;
 }
 
 export default GuitarString;

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 function TabString(props) {
-  const { tabLine, handleMarker, tuning, stringId, id } = props;
+  const { tabLine, tuning, stringId, id } = props;
 
   return (
     <div>
