@@ -5,7 +5,7 @@ import GuitarLegend from './GuitarLegend';
 import GuitarTuning from './GuitarTuning';
 
 function Guitar(props) {
-  const { dispatch, tuning, changeTuner, changeTuning, handleLegendNotation, legendNotation } = props;
+  const { dispatch, tuning, changeTuner, changeTuning, handleLegendNotation, legendNotation, chordBuilder } = props;
 
   return (
     <div className="guitar">
@@ -16,6 +16,7 @@ function Guitar(props) {
         handleLegendNotation={handleLegendNotation}
         dispatch={dispatch}
         legendNotation={legendNotation}
+        chordBuilder={chordBuilder}
       />
     </div>
   );

@@ -13,10 +13,6 @@ function TabContainer(props) {
   const { dispatch, tabState, handleMarker, marker, tuning } = props;
   const btnRef = useRef();
 
-  useEffect(() => {
-    console.log('RERENDER CONTAINRER');
-  });
-
   return (
     <div className="container-tab" onContextMenu={preventDefault}>
       {/* <TabInfo key={998} songProgress="test" /> */}

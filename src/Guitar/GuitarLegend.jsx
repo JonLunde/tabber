@@ -5,10 +5,11 @@ const legendButtons = [
   { id: 'hammerOn', value: 'h', text: 'Hammer on' },
   { id: 'slideUp', value: '/', text: 'Slide up' },
   { id: 'slideDown', value: '\\', text: 'Slide down' },
+  { id: 'chord', value: 'shift', text: 'Chord' },
 ];
 
 function GuitarLegend(props) {
-  const { handleLegendNotation, legendNotation } = props;
+  const { handleLegendNotation, legendNotation, chordBuilder } = props;
 
   function handleClick(event) {
     handleLegendNotation(event.target.value);
@@ -28,15 +29,15 @@ function GuitarLegend(props) {
               value={button.value}
               id={button.id}
               onClick={(event) => handleClick(event)}
-              style={{ backgroundColor: legendNotation === legendButtons[i].value && '#e97865' }}
+              style={{
+                backgroundColor: (legendNotation || chordBuilder) === legendButtons[i].value && '#e97865',
+                width: button.id === 'chord' && '100%',
+              }}
             >
               {button.text} <br /> ({button.value})
             </button>
           );
         })}
-        <button className="btn btn--legend" style={{ width: '100%' }}>
-          Chord (shift)
-        </button>
       </div>
     </div>
   );
