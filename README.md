@@ -2,12 +2,14 @@
 
 
 ## Features
+* Interactive tabs
 * Notations
   * Hammer on, pull off, slide up, slide down
 * Chord-builder
   * With support for notations
 * Tuning
   * With corresponding fretboard notes
+
   
   
 ## Planned improvements 
