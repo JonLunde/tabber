@@ -10,7 +10,7 @@ const preventDefault = (e) => {
 };
 
 function TabContainer(props) {
-  const { dispatch, tabState, handleMarker, marker, tuning } = props;
+  const { dispatch, tabState,  marker, tuning } = props;
   const btnRef = useRef();
 
   return (
@@ -21,10 +21,10 @@ function TabContainer(props) {
           <TabBar
             key={tab.key}
             id={tab.id}
+            idx={i}
             dispatch={dispatch}
             tabLines={tab.tabLines}
             title={tab.title}
-            handleMarker={() => handleMarker(tab.id, tab.tabLines[0].length + 3)}
             marker={marker}
             tuning={tuning}
           />
