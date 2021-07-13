@@ -16,5 +16,4 @@
 * Visually build chords
 * Export tabs to txt-file and PDF
 * Save tabs to database with authentication
-
-
+* Locally save tabs for temporary backup
