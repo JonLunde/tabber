@@ -4,8 +4,13 @@ import { faPlus, faTrash, faArrowUp, faArrowDown } from '@fortawesome/free-solid
 
 library.add(faPlus, faTrash, faArrowUp, faArrowDown);
 
-import Guitar from './Guitar/Guitar';
 import TabContainer from './Tab/TabContainer';
+import GuitarTuning from './Guitar/GuitarTuning';
+import GuitarNeck from './Guitar/GuitarNeck';
+import GuitarLegend from './Guitar/GuitarLegend';
+import GuitarString from './Guitar/GuitarString';
+import GuitarDashboard from './Guitar/GuitarDashboard';
+import TabBar from './Tab/TabBar';
 
 export const ACTIONS = {
   MOVEUP: 'moveUp',
@@ -35,7 +40,7 @@ const initState = [
 function Tabber() {
   const [legendNotation, setLegendNotation] = useState('');
   const [chordBuilder, setChordBuilder] = useState({ active: false, string: ['', '', '', '', '', ''] });
-  const [marker, setMarker] = useState({ tabIdx: 0, yIdx: 3, stringIdx: 0 }); // Sets tab-marker.
+  const [marker, setMarker] = useState({ tabIdx: 0, yIdx: 0, stringIdx: 0 }); // Sets tab-marker.
   const [tabState, dispatch] = useReducer(reducer, initState);
   const [tuning, setTuning] = useState(['E', 'B', 'G', 'D', 'A', 'E']); // Chosen guitar tuning.
 
@@ -50,7 +55,7 @@ function Tabber() {
         const [movingUp] = newTabState.splice(action.payload, 1);
         newTabState.splice(action.payload - 1, 0, movingUp);
         setMarker((prevMarker) => {
-          return { ...prevMarker, tabIdx: action.payload, yIdx: newTabState[action.payload].tabLines[0].length + 3 };
+          return { ...prevMarker, tabIdx: action.payload, yIdx: newTabState[action.payload].tabLines[0].length };
         });
         return newTabState;
 
@@ -60,7 +65,7 @@ function Tabber() {
         const [movingDown] = newTabState.splice(action.payload, 1);
         newTabState.splice(action.payload + 1, 0, movingDown);
         setMarker((prevMarker) => {
-          return { ...prevMarker, tabIdx: action.payload, yIdx: newTabState[action.payload].tabLines[0].length + 3 };
+          return { ...prevMarker, tabIdx: action.payload, yIdx: newTabState[action.payload].tabLines[0].length };
         });
         return newTabState;
 
@@ -73,7 +78,7 @@ function Tabber() {
           setMarker((prevMarker) => ({
             ...prevMarker,
             tabIdx: prevMarker.tabIdx - 1,
-            yIdx: tabState[action.payload].tabLines[0].length + 3,
+            yIdx: tabState[action.payload].tabLines[0].length,
           }));
         // Deleting the tab marked will remove marker.
         else if (action.payload === marker.tabIdx) {
@@ -86,7 +91,7 @@ function Tabber() {
       case ACTIONS.ADD:
         keyCount++;
         setMarker((prevMarker) => {
-          return { ...prevMarker, tabIdx: tabState.length, yIdx: 3 };
+          return { ...prevMarker, tabIdx: tabState.length, yIdx: 0 };
         });
         return (newTabState = [
           ...tabState,
@@ -186,7 +191,7 @@ function Tabber() {
             setMarker((prevMarker) => ({
               ...prevMarker,
               stringIdx: action.payload.stringId,
-              yIdx: newTabState[marker.tabIdx].tabLines[0].length + 3,
+              yIdx: newTabState[marker.tabIdx].tabLines[0].length,
             }));
           } else {
             newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map(
@@ -195,7 +200,7 @@ function Tabber() {
             setMarker((prevMarker) => ({
               ...prevMarker,
               stringIdx: action.payload.stringId,
-              yIdx: newTabState[marker.tabIdx].tabLines[0].length + 3,
+              yIdx: newTabState[marker.tabIdx].tabLines[0].length,
             }));
           }
         }
@@ -203,7 +208,7 @@ function Tabber() {
 
       case ACTIONS.NOTATION:
         // Not allowed to add notation at the beginning of tabBar.
-        if (marker.yIdx <= 3) {
+        if (marker.yIdx <= 0) {
           setLegendNotation('');
           return newTabState;
         }
@@ -268,7 +273,7 @@ function Tabber() {
         const newTabIdx = tabState.findIndex((tab) => action.payload.tabId === tab.id);
         if (newTabIdx === -1) return tabState;
         console.log('SETTABIDX: ', newTabIdx);
-        setMarker({ tabIdx: newTabIdx, yIdx: tabState[newTabIdx].tabLines[0].length + 3 });
+        setMarker({ tabIdx: newTabIdx, yIdx: tabState[newTabIdx].tabLines[0].length });
         return tabState;
 
       // Function to align tabLines to latest digit.
@@ -342,17 +347,31 @@ function Tabber() {
 
   return (
     <div>
-      <Guitar
-        key={0}
-        dispatch={dispatch}
-        tuning={tuning}
-        changeTuning={changeTuning}
-        changeTuner={changeTuner}
-        handleLegendNotation={handleLegendNotation}
-        legendNotation={legendNotation}
-        chordBuilder={chordBuilder}
-      />
-      <TabContainer key={1} tabState={tabState} dispatch={dispatch} marker={marker} tuning={tuning} />
+      <GuitarDashboard>
+        <GuitarTuning key={0} tuning={tuning} changeTuning={changeTuning} changeTuner={changeTuner} />
+
+        <GuitarNeck key={1} dispatch={dispatch} tuning={tuning}>
+          {tuning.map((tuning, i) => (
+            <GuitarString key={i} id={i} dispatch={dispatch} tuning={tuning} />
+          ))}
+        </GuitarNeck>
+
+        <GuitarLegend
+          key={2}
+          handleLegendNotation={handleLegendNotation}
+          dispatch={dispatch}
+          legendNotation={legendNotation}
+          chordBuilder={chordBuilder}
+        />
+      </GuitarDashboard>
+
+      <TabContainer key={1} dispatch={dispatch}>
+        {/* <TabInfo key={1000} songProgress="test" /> */}
+        {tabState.map((tab, i) => (
+          <TabBar key={i} idx={i} tabState={tab} dispatch={dispatch} marker={marker} tuning={tuning} />
+        ))}
+      </TabContainer>
+
       <button onClick={() => dispatch({ type: 'alignTabLines' })}>Align</button>
       <button onClick={() => tabIndex(4)}>tabIndexTest</button>
     </div>

@@ -5,7 +5,7 @@ const notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 
 function GuitarString(props) {
   const { id, dispatch, tuning } = props;
-  const firstNote = notes.findIndex((note) => tuning[id] === note);
+  const firstNote = notes.findIndex((note) => tuning === note);
 
   let guitarNotes = [];
   for (let i = 0; i < 25; i++) {

@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import TabString from './TabString';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ACTIONS } from '../Tabber';
 
 function TabBar(props) {
   const {
-    dispatch,
-    id,
     idx,
-    tabLines: [tabLine1, tabLine2, tabLine3, tabLine4, tabLine5, tabLine6],
-    title,
+    tabState: { id, title, tabLines },
+    dispatch,
     marker,
     tuning,
   } = props;
@@ -60,14 +58,11 @@ function TabBar(props) {
         <div
           className="tab-bar__string-container__marker"
           hidden={marker.tabIdx !== idx ? true : false}
-          style={{ left: 0.6 * marker.yIdx + 0.5 + 'em' }}
+          style={{ left: 2.3 + 0.6 * marker.yIdx + 'em' }}
         />
-        <TabString key={0} stringId={0} tabLine={tabLine1} id={id} tuning={tuning} />
-        <TabString key={1} stringId={1} tabLine={tabLine2} id={id} tuning={tuning} />
-        <TabString key={2} stringId={2} tabLine={tabLine3} id={id} tuning={tuning} />
-        <TabString key={3} stringId={3} tabLine={tabLine4} id={id} tuning={tuning} />
-        <TabString key={4} stringId={4} tabLine={tabLine5} id={id} tuning={tuning} />
-        <TabString key={5} stringId={5} tabLine={tabLine6} id={id} tuning={tuning} />
+        {tabLines.map((tabLine, i) => (
+          <TabString key={i} id={i} tabLine={tabLine} tuning={tuning} />
+        ))}
       </div>
     </div>
   );
