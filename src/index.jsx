@@ -9,6 +9,7 @@ import img5 from './assets/img/teak.jpg';
 import img6 from './assets/img/walnut.jpg';
 import img7 from './assets/img/mahogany.jpg';
 import img8 from './assets/img/Mahogany-Wood.jpg';
+import img9 from './assets/img/black-twill.png';
 import './sass/main.scss';
 
 ReactDom.render(<App />, document.getElementById('root'));

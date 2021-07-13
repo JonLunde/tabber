@@ -1,4 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import TabBar from './TabBar';
+import TabInfo from './TabInfo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ACTIONS } from '../Tabber';
 
@@ -13,6 +15,7 @@ function TabContainer(props) {
   return (
     <div className="container-tab" onContextMenu={preventDefault}>
       {children}
+
       <button className="btn btn--add u-mt-huge" onClick={() => dispatch({ type: ACTIONS.ADD })} ref={btnRef}>
         <FontAwesomeIcon key={999} icon="plus" />
       </button>

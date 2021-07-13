@@ -1,5 +1,7 @@
 @use "../abstracts" as *;
 
+/* Background pattern for strings from Toptal Subtle Patterns */
+
 .guitar {
     position: relative;
     height: $neck-height;
@@ -129,7 +131,7 @@
                     // background-image: linear-gradient(to bottom, $color-lower-string 20%, $color-black);
                     background-size: stretch;
                     background-color: #af9851;
-                    background-image: linear-gradient(to bottom, rgba($color-lower-string,0.8) 20%, rgba($color-black, 0.8) ), url("https://www.transparenttextures.com/patterns/black-twill.png");
+                    background-image: linear-gradient(to bottom, rgba($color-lower-string,0.8) 20%, rgba($color-black, 0.8) ), url("/src/assets/img/black-twill.png");
                 }
             }
         }
