@@ -3,6 +3,7 @@
 
 ## Features
 * Interactive tabs
+  * Move up/down, delete, add new, give name
 * Notations
   * Hammer on, pull off, slide up, slide down
 * Chord-builder
