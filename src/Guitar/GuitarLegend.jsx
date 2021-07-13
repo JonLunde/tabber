@@ -30,7 +30,9 @@ function GuitarLegend(props) {
               id={button.id}
               onClick={(event) => handleClick(event)}
               style={{
-                backgroundColor: (legendNotation || chordBuilder) === legendButtons[i].value && '#e97865',
+                backgroundColor:
+                  (legendNotation === legendButtons[i].value || (button.id === 'chord' && chordBuilder.active)) &&
+                  '#e97865',
                 width: button.id === 'chord' && '100%',
               }}
             >

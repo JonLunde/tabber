@@ -34,8 +34,8 @@ const initState = [
 
 function Tabber() {
   const [legendNotation, setLegendNotation] = useState('');
-  const [chordBuilder, setChordBuilder] = useState('');
-  const [marker, setMarker] = useState({ tabIdx: 0, yIdx: 3, stringIdx: 0 }); // Sets marker.
+  const [chordBuilder, setChordBuilder] = useState({ active: false, string: ['', '', '', '', '', ''] });
+  const [marker, setMarker] = useState({ tabIdx: 0, yIdx: 3, stringIdx: 0 }); // Sets tab-marker.
   const [tabState, dispatch] = useReducer(reducer, initState);
   const [tuning, setTuning] = useState(['E', 'B', 'G', 'D', 'A', 'E']); // Chosen guitar tuning.
 
@@ -148,7 +148,6 @@ function Tabber() {
 
           //
 
-
           //If a note is chosen for that string already it will be swapped.
           const line = newTabState[marker.tabIdx].tabLines[action.payload.stringId];
           console.log('LENGTH ', action.payload.fretId.toString().length);
@@ -240,6 +239,10 @@ function Tabber() {
         // Chord skal være på helt til bruker trykker den av. (eller trykker to ganger på samme linje)
         // Marker skal ikke flytte seg før chord er av igjen.
 
+        setChordBuilder((prevChordBuilder) => ({
+          active: !prevChordBuilder.active,
+        }));
+
         // If another notation is chosen it will remove it and switch to chordBuilder.
         if (legendNotation !== '') {
           setLegendNotation('');
@@ -248,23 +251,15 @@ function Tabber() {
           );
           setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx - 1 }));
         }
-        setChordBuilder('shift');
 
         // User click on shift and chord-mode is turned off.
-        if (chordBuilder === 'shift') {
+        if (chordBuilder.active === false) {
           console.log('Chord Mode off.');
-          console.log('TEST', newTabState[0].tabLines[0].length, marker.yIdx);
-          newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map(
-            (line, i) => (line += line.length + 2 < marker.yIdx ? '-' : ''),
-          );
-          setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx + 1 }));
-          setChordBuilder('');
-          return newTabState;
         }
 
-        // Adding two lines to each tabLine before chordBuilding.
-        newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map((line, i) => (line += '--'));
-        setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx + 2 }));
+        // // Adding two lines to each tabLine before chordBuilding.
+        // newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map((line, i) => (line += '--'));
+        // setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx + 2 }));
 
         return newTabState;
 
@@ -311,6 +306,10 @@ function Tabber() {
     console.log('Notation Changed: ', legendNotation);
   }, [legendNotation]);
 
+  useEffect(() => {
+    console.log('ChordBuilder Changed: ', chordBuilder);
+  }, [chordBuilder]);
+
   function changeTuning(tuningIdx) {
     let chosenTuning = [];
     switch (tuningIdx) {
@@ -336,6 +335,7 @@ function Tabber() {
   }
 
   function handleLegendNotation(notation) {
+    // If the Chord legend button is clicked.
     if (notation === 'shift') dispatch({ type: ACTIONS.NEWCHORD });
     else dispatch({ type: ACTIONS.NOTATION, payload: { notation: notation } });
   }
