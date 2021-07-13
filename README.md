@@ -7,7 +7,7 @@
 * Chord-builder
   * With support for notations
 * Tuning
-* Note indication
+  * With corresponding fretboard notes
   
   
 ## Planned improvements 
