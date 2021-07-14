@@ -20,3 +20,8 @@
 * Export tabs to txt-file and PDF
 * Save tabs to database with authentication
 * Locally save tabs for temporary backup
+
+
+
+<br><br>
+**This project is licensed under the terms of the GNU GPLv3 license.*
