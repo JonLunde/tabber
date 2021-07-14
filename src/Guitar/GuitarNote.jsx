@@ -12,7 +12,7 @@ function GuitarNote(props) {
       onClick={() => {
         // chord[6 - stringId] = noteIdx;
         // playChord(chord);
-        dispatch({ type: ACTIONS.NEWNOTE, payload: { stringId: stringId, fretId: fretId } });
+        dispatch({ type: ACTIONS.ADD_NOTE, payload: { stringId: stringId, fretId: fretId } });
       }}
     >
       {note}

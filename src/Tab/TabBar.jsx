@@ -20,7 +20,7 @@ function TabBar(props) {
   return (
     <div
       className="tab-bar"
-      onClick={() => dispatch({ type: ACTIONS.SETTABINDEX, payload: { tabId: id } })}
+      onClick={() => dispatch({ type: ACTIONS.SET_TAB_INDEX, payload: { tabId: id } })}
       style={marker.tabIdx === idx ? markerStyle : {}}
     >
       <div className="tab-bar__header">
@@ -36,13 +36,16 @@ function TabBar(props) {
         <div className="tab-bar__action-buttons">
           <button
             className="btn btn--action btn--action--1"
-            onClick={() => dispatch({ type: ACTIONS.MOVEUP, payload: idx })}
+            onClick={() => {
+              console.log('MOVE UP DISPATCH!');
+              dispatch({ type: ACTIONS.MOVE_UP, payload: idx });
+            }}
           >
             <FontAwesomeIcon key={100} icon="arrow-up" />
           </button>
           <button
             className="btn btn--action btn--action--2"
-            onClick={() => dispatch({ type: ACTIONS.MOVEDOWN, payload: idx })}
+            onClick={() => dispatch({ type: ACTIONS.MOVE_DOWN, payload: idx })}
           >
             <FontAwesomeIcon key={101} icon="arrow-down" />
           </button>

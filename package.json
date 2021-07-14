@@ -9,7 +9,7 @@
     "build": "webpack --progress --mode=production"
   },
   "author": "Jon Lunde",
-  "license": "ISC",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",

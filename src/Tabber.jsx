@@ -13,15 +13,15 @@ import GuitarDashboard from './Guitar/GuitarDashboard';
 import TabBar from './Tab/TabBar';
 
 export const ACTIONS = {
-  MOVEUP: 'moveUp',
-  MOVEDOWN: 'moveDown',
+  MOVE_UP: 'moveUp',
+  MOVE_DOWN: 'moveDown',
   REMOVE: 'remove',
   ADD: 'add',
   RENAME: 'rename',
-  NEWNOTE: 'newNote',
+  ADD_NOTE: 'addNote',
   NOTATION: 'notation',
-  NEWCHORD: 'shift',
-  SETTABINDEX: 'setTabIndex',
+  CHORD: 'shift',
+  SET_TAB_INDEX: 'setTabIndex',
 };
 
 // Init TabBar state.
@@ -44,11 +44,13 @@ function Tabber() {
 
   // Reducer managing TabBar state.
   function reducer(tabState, action) {
+    console.log('REDUCER START: ', action);
     let newTabState = JSON.parse(JSON.stringify(tabState)); // Deepcopy otherwise the tabLines get mutated, causing bugs.
 
     // User click on "move up"-button. Tab is moved one index backwards.
     switch (action.type) {
-      case ACTIONS.MOVEUP:
+      case ACTIONS.MOVE_UP:
+        console.log('Reducer: MOVE UP');
         if (tabState.length <= 1 || action.payload === 0) return newTabState;
         const [movingUp] = newTabState.splice(action.payload, 1);
         newTabState.splice(action.payload - 1, 0, movingUp);
@@ -58,7 +60,8 @@ function Tabber() {
         return newTabState;
 
       // User click on "move down"-button. Tab is moved one index forward.
-      case ACTIONS.MOVEDOWN:
+      case ACTIONS.MOVE_DOWN:
+        console.log('Reducer: MOVE DOWN');
         if (tabState.length <= 1 || action.payload === newTabState.length) return newTabState;
         const [movingDown] = newTabState.splice(action.payload, 1);
         newTabState.splice(action.payload + 1, 0, movingDown);
@@ -69,7 +72,7 @@ function Tabber() {
 
       // User click "remove"-button. Tab is removed from state.
       case ACTIONS.REMOVE:
-        console.log('REMOVE!: ', action.payload);
+        console.log('Reducer: REMOVE');
 
         // Deleting tab indexed before marker will move marker to match the new index for the marked tab.
         if (action.payload < marker.tabIdx)
@@ -82,14 +85,11 @@ function Tabber() {
         else if (action.payload === marker.tabIdx) {
           setMarker({ tabIdx: -1, stringIdx: -1, yIdx: -1 });
         }
-        console.log(
-          'REMOVE TEST: ',
-          newTabState.filter((tab, i) => i !== action.payload),
-        );
         return newTabState.filter((tab, i) => i !== action.payload);
 
       // User clicks "add"-button. A new tab is added to the state.
       case ACTIONS.ADD:
+        console.log('Reducer: ADD');
         setKeyCounter((prevKeyCounter) => prevKeyCounter + 1);
 
         // Remove and toggle notation on previous marked tab off.
@@ -114,11 +114,12 @@ function Tabber() {
 
       // Updates TabBar title on input-onChange.
       case ACTIONS.RENAME:
+        console.log('Reducer: RENAME');
         return newTabState.map((tab) => (tab.id === action.payload.id ? { ...tab, title: action.payload.title } : tab));
 
       // Update text in tabs whenever a note on the guitar is clicked.
-      case ACTIONS.NEWNOTE:
-        console.log('NEWNOTE');
+      case ACTIONS.ADD_NOTE:
+        console.log('Reducer: NEWNOTE');
 
         // If no tab is marked no changes are done.
         if (marker.tabIdx === -1) return tabState;
@@ -174,6 +175,7 @@ function Tabber() {
         return newTabState;
 
       case ACTIONS.NOTATION:
+        console.log('Reducer: NOTATION');
         // Not allowed to add notation at the beginning of tabBar.
         if (marker.yIdx <= 0) {
           setLegendNotation('');
@@ -183,10 +185,6 @@ function Tabber() {
         // If user clicks the same notation-button again it will toggle off.
         if (legendNotation === action.payload.notation) {
           newTabState[marker.tabIdx] = removeTabStringY(newTabState[marker.tabIdx], 1);
-
-          // newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map((line) =>
-          //   line.substr(0, line.length - 1),
-          // );
           setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx - 1 }));
           setLegendNotation('');
           return newTabState;
@@ -206,11 +204,12 @@ function Tabber() {
         setLegendNotation(action.payload.notation);
         return newTabState;
 
-      case ACTIONS.NEWCHORD:
-        console.log('NEW CHORD');
+      case ACTIONS.CHORD:
+        console.log('Reducer: NEW CHORD');
         // Chord skal være på helt til bruker trykker den av. (eller trykker to ganger på samme linje)
         // Marker skal ikke flytte seg før chord er av igjen.
 
+        // Toggle ChordBuilder on and off.
         setChordBuilder((prevChordBuilder) => ({
           active: !prevChordBuilder.active,
         }));
@@ -222,11 +221,6 @@ function Tabber() {
           setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx - 1 }));
         }
 
-        // User click on shift and chord-mode is turned off.
-        if (chordBuilder.active === false) {
-          console.log('Chord Mode off.');
-        }
-
         // // Adding two lines to each tabLine before chordBuilding.
         // newTabState[marker.tabIdx].tabLines = newTabState[marker.tabIdx].tabLines.map((line, i) => (line += '--'));
         // setMarker((prevMarker) => ({ ...prevMarker, yIdx: prevMarker.yIdx + 2 }));
@@ -234,7 +228,8 @@ function Tabber() {
         return newTabState;
 
       // Helper method to find index off tab. CHECK IF THIS CAN BE MOVED OUTSIDE OF REDUCER!
-      case ACTIONS.SETTABINDEX:
+      case ACTIONS.SET_TAB_INDEX:
+        console.log('Reducer: SET TAB INDEX');
         const newTabIdx = tabState.findIndex((tab) => action.payload.tabId === tab.id);
         if (newTabIdx === -1) return tabState;
 
@@ -245,10 +240,9 @@ function Tabber() {
         }
 
         // Sets last edited string as marked string. THIS CODEBIT NEEDS REFACTORING.
-        let prevStringIdx = -1;
-        tabState[action.payload.tabId].tabLines.map((line, i) => {
+        let prevStringIdx;
+        tabState[newTabIdx].tabLines.map((line, i) => {
           if (!line.endsWith('-') && prevStringIdx === -1) prevStringIdx = i;
-          console.log(line.endsWith('-'));
         });
 
         setMarker({ tabIdx: newTabIdx, stringIdx: prevStringIdx, yIdx: tabState[newTabIdx].tabLines[0].length });
@@ -319,7 +313,7 @@ function Tabber() {
 
   function handleLegendNotation(notation) {
     // If the Chord legend button is clicked.
-    if (notation === 'shift') dispatch({ type: ACTIONS.NEWCHORD });
+    if (notation === 'shift') dispatch({ type: ACTIONS.CHORD });
     else dispatch({ type: ACTIONS.NOTATION, payload: { notation: notation } });
   }
 
@@ -346,7 +340,6 @@ function Tabber() {
   function removeTabStringY(tab, deleteCount) {
     let newTab = JSON.parse(JSON.stringify(tab)); // Deep clone for immutability.
     newTab.tabLines = newTab.tabLines.map((line) => line.substr(0, line.length - deleteCount));
-    console.log('RemoveFunc: ', newTab);
     return newTab;
   }
 
