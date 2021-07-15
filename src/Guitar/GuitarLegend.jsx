@@ -9,10 +9,10 @@ const legendButtons = [
 ];
 
 function GuitarLegend(props) {
-  const { handleLegendNotation, legendNotation, chordBuilder } = props;
+  const { handleNotation, notation, chordBuilder } = props;
 
   function handleClick(event) {
-    handleLegendNotation(event.target.value);
+    handleNotation(event.target.value);
   }
 
   for (let i = 0; i < 6; i++) {}
@@ -31,8 +31,7 @@ function GuitarLegend(props) {
               onClick={(event) => handleClick(event)}
               style={{
                 backgroundColor:
-                  (legendNotation === legendButtons[i].value || (button.id === 'chord' && chordBuilder.active)) &&
-                  '#e97865',
+                  (notation === legendButtons[i].value || (button.id === 'chord' && chordBuilder.active)) && '#e97865',
                 width: button.id === 'chord' && '100%',
               }}
             >

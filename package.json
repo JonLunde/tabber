@@ -10,11 +10,18 @@
   },
   "author": "Jon Lunde",
   "license": "GPL-3.0-or-later",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "body-scroll-lock": "^4.0.0-beta.0",
+    "browserlist": "^1.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },

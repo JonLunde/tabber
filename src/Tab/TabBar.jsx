@@ -6,9 +6,9 @@ import { ACTIONS } from '../Tabber';
 function TabBar(props) {
   const {
     idx,
-    tabState: { id, title, tabLines },
-    dispatch,
+    tabBar: { id, title, tabLines },
     marker,
+    dispatch,
     tuning,
   } = props;
 
@@ -20,7 +20,7 @@ function TabBar(props) {
   return (
     <div
       className="tab-bar"
-      onClick={() => dispatch({ type: ACTIONS.SET_TAB_INDEX, payload: { tabId: id } })}
+      onClick={() => dispatch({ type: ACTIONS.CLICK_TAB, payload: { tabIdx: idx } })}
       style={marker.tabIdx === idx ? markerStyle : {}}
     >
       <div className="tab-bar__header">
@@ -31,27 +31,36 @@ function TabBar(props) {
           id="heading"
           defaultValue={title}
           autoComplete="off"
-          onInput={(event) => dispatch({ type: ACTIONS.RENAME, payload: { value: event.target.value, id: id } })}
+          onInput={(event) => {
+            event.stopPropagation();
+            dispatch({ type: ACTIONS.RENAME, payload: { title: event.target.value, tabIdx: idx } });
+          }}
         />
         <div className="tab-bar__action-buttons">
           <button
             className="btn btn--action btn--action--1"
-            onClick={() => {
-              console.log('MOVE UP DISPATCH!');
-              dispatch({ type: ACTIONS.MOVE_UP, payload: idx });
+            onClick={(event) => {
+              event.stopPropagation();
+              dispatch({ type: ACTIONS.MOVE_UP, payload: { tabIdx: idx } });
             }}
           >
             <FontAwesomeIcon key={100} icon="arrow-up" />
           </button>
           <button
             className="btn btn--action btn--action--2"
-            onClick={() => dispatch({ type: ACTIONS.MOVE_DOWN, payload: idx })}
+            onClick={(event) => {
+              event.stopPropagation();
+              dispatch({ type: ACTIONS.MOVE_DOWN, payload: { tabIdx: idx } });
+            }}
           >
             <FontAwesomeIcon key={101} icon="arrow-down" />
           </button>
           <button
             className="btn btn--action btn--action--3"
-            onClick={() => dispatch({ type: ACTIONS.REMOVE, payload: idx })}
+            onClick={(event) => {
+              event.stopPropagation();
+              dispatch({ type: ACTIONS.REMOVE, payload: { tabIdx: idx } });
+            }}
           >
             <FontAwesomeIcon key={102} icon="trash" />
           </button>
