@@ -45,12 +45,3 @@ function GuitarLegend(props) {
 }
 
 export default GuitarLegend;
-
-// <div>
-//   <input type="checkbox" className="guitar__legend__checkbox" id={button.id} defaultValue={button.value} />
-//   <label htmlFor={button.id} className="guitar__legend__button" onClick={() => handleClick()}>
-//     <span className="navigation__icon">
-//       {button.id} ({button.value})
-//     </span>
-//   </label>
-// </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import TabString from './TabString';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ACTIONS } from '../Tabber';
+import { ACTIONS } from '../useTabStateReducer';
 
 function TabBar(props) {
   const {

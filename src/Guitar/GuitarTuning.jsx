@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 const notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
-let tuners = [];
 
 function GuitarTuning(props) {
   const { tuning, changeTuner, changeTuning } = props;

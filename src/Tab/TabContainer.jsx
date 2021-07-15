@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import TabBar from './TabBar';
 import TabInfo from './TabInfo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ACTIONS } from '../Tabber';
+import { ACTIONS } from '../useTabStateReducer';
 
 const preventDefault = (e) => {
   e.preventDefault();

@@ -63,6 +63,7 @@
         display: inline-block;
         height: $neck-height;
         width: 13%;
+        min-width: 20rem;
         background-color: $color-legend;
         vertical-align: top;
 
@@ -182,8 +183,9 @@
                     content: '#{$i}';
                     font-size: 2rem;
                     position: absolute;
-                    top: -4rem;
-                    left: -6.5rem;
+                    bottom: -4rem;
+                    left: -2.7vw;
+                    // left: -6.5rem;
                     width: 5rem;
                     text-align: center;
                     color: $color-gray-900;

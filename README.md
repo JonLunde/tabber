@@ -7,7 +7,6 @@
 * Notations
   * Hammer on, pull off, slide up, slide down
 * Chord-builder
-  * With support for notations
 * Tuning
   * With corresponding fretboard notes
 
@@ -20,7 +19,8 @@
 * Export tabs to txt-file and PDF
 * Save tabs to database with authentication
 * Locally save tabs for temporary backup
-
+* Preformed chords
+* Chords with notations
 
 
 <br><br>
