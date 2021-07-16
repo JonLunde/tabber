@@ -6,3 +6,12 @@
       transform: scale(1.04);
     }
   }
+
+@keyframes openTooltip {
+    from {
+      transform: scale(0) translate(0);
+    }
+    to {
+      transform: scale(1.0 translate(0));
+    }
+  }

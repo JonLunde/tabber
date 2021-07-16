@@ -1,21 +1,6 @@
 @use '../abstracts/variables' as *;
 
 
-// Containing reusable styling for string lettering.
-@mixin stringIndicator {
-    font-size: 1.5rem;
-    width: 2rem;
-    height: 2rem;
-    position: absolute;
-    top: -1.1rem;
-    left: -3rem;
-    text-align: center; 
-}
-
-@mixin subtleBorder {
-    border: 1px solid $color-gray-100;
-}
-
 @mixin shadow-1{
     box-shadow: 0 1px 1.5px 0 rgba($color-black, 0.12), 0 1px 1px 0 rgba($color-black, 0.24);
 } 
@@ -41,3 +26,62 @@
   0 41.8px 33.4px rgba(0, 0, 0, 0.086),
   0 100px 80px rgba(0, 0, 0, 0.12)
 }
+
+@mixin clearfix {
+    &::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+  }
+
+/*
+MEDIA QUERY MANAGER
+
+0-600px:    Phone
+600-900px:  Tablet portrait
+900-1200px: Tablet landscape
+[1200-1800px]: Our default styling (Desktop)
+1800px+ :      Large Desktop
+
+$breakpoint arguments:
+- phone
+- tab-port = tablet portrait
+- tab-land = tablet landscape
+- big-desktop
+
+rem doesn't work for breakpoints.
+1em = 16px.   =>    600px/16px = 37.5em
+
+Order:
+Base + typography
+General layout + grid (layout)
+Page layout (pages)
+Components
+*/
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+      //600px
+      @media only screen and (max-width: 37.5em) {
+        @content;
+      }
+    }
+    @if $breakpoint == tab-port {
+      //900px
+      @media only screen and (max-width: 56.25em) {
+        @content;
+      }
+    }
+    @if $breakpoint == tab-land {
+      //1200px
+      @media only screen and (max-width: 75em) {
+        @content;
+      }
+    }
+    @if $breakpoint == big-desktop {
+      //1800px
+      @media only screen and (min-width: 112.5em) {
+        @content;
+      }
+    }
+  }

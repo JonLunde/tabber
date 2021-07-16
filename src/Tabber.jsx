@@ -1,9 +1,9 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faTrash, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash, faArrowUp, faArrowDown, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import useTabStateReducer, { ACTIONS } from './useTabStateReducer';
 
-library.add(faPlus, faTrash, faArrowUp, faArrowDown);
+library.add(faPlus, faTrash, faArrowUp, faArrowDown, faInfoCircle);
 
 import TabContainer from './Tab/TabContainer';
 import GuitarTuning from './Guitar/GuitarTuning';
@@ -15,7 +15,8 @@ import TabBar from './Tab/TabBar';
 
 function Tabber() {
   const [tabState, dispatch] = useTabStateReducer();
-  const [tuning, setTuning] = useState(['E', 'B', 'G', 'D', 'A', 'E']); // Chosen guitar tuning.
+  const [tuning, setTuning] = useState({ name: 'E Standard', values: ['E', 'B', 'G', 'D', 'A', 'E'] }); // Chosen guitar tuning.
+  const active = true;
 
   useEffect(() => {
     console.log('TabBar Changed: ', tabState.tabBar);
@@ -41,26 +42,24 @@ function Tabber() {
     console.log('ChordBuilder Changed: ', tabState.chordBuilder);
   }, [tabState.chordBuilder]);
 
-  function changeTuning(tuningIdx) {
-    let chosenTuning = [];
-    switch (tuningIdx) {
+  function changeTuning(selected) {
+    switch (selected.value) {
       case '1':
-        chosenTuning = ['E', 'B', 'G', 'D', 'A', 'E'];
+        setTuning({ name: 'E Standard', values: ['E', 'B', 'G', 'D', 'A', 'E'] });
         break;
       case '2':
-        chosenTuning = ['D', 'A', 'F', 'C', 'G', 'D'];
+        setTuning({ name: 'D Standard', values: ['D', 'A', 'F', 'C', 'G', 'D'] });
         break;
       default:
         console.log('GUITARNECK SWITCH ERROR!');
         break;
     }
-    setTuning(chosenTuning);
   }
 
   function changeTuner(note, i) {
     setTuning((prevTuning) => {
-      let newTuning = [...prevTuning];
-      newTuning[i] = note;
+      let newTuning = { ...prevTuning };
+      newTuning.values[i] = note.value;
       return newTuning;
     });
   }
@@ -77,12 +76,12 @@ function Tabber() {
         <GuitarTuning key={0} tuning={tuning} changeTuning={changeTuning} changeTuner={changeTuner} />
 
         <GuitarNeck key={1} dispatch={dispatch} tuning={tuning}>
-          {tuning.map((tuning, i) => (
+          {tuning.values.map((stringTuning, i) => (
             <GuitarString
               key={i}
               id={i}
               dispatch={dispatch}
-              tuning={tuning}
+              stringTuning={stringTuning}
               activeNote={tabState.activeNote}
               activeString={tabState.activeString}
               chordStrings={tabState.chordBuilder.strings}

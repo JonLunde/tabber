@@ -1,6 +1,10 @@
-@use "../abstracts/variables" as *;
+@use "../abstracts" as *;
 
 .main-wrapper {
     background-color: $color-background;
-    margin: 10rem 3rem;
+    padding: 6rem 1rem;
+
+    @include respond(tab-land) {
+        padding: 5rem 0rem;
+    }
 }

@@ -4,8 +4,8 @@ import GuitarNote from './GuitarNote';
 const notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 
 function GuitarString(props) {
-  const { id, dispatch, tuning, activeNote, activeString, chordStrings, notation } = props;
-  const firstNote = notes.findIndex((note) => tuning === note);
+  const { id, dispatch, stringTuning, activeNote, activeString, chordStrings, notation } = props;
+  const firstNote = notes.findIndex((note) => stringTuning === note);
   const activeStyle = { backgroundColor: 'red' };
 
   let guitarNotes = [];

@@ -5,14 +5,18 @@
 .guitar {
     position: relative;
     height: $neck-height;
+    width: 100%;
+    border-radius: $border-radius-2;
+
     
     &__neck {
         position: relative;
         display: inline-block;
         // background-color: $color-neck;
         height: $neck-height;
-        width: 80%;
         
+        width: 82%;
+
         // This hides notes outside of container. Won't work.
         // clip-path: polygon(0 5%, 0 95%, 100% 100%, 100% 0); 
         background-image: url("/src/assets/img/Mahogany-Wood.jpg");
@@ -28,44 +32,58 @@
         position: relative;
         display: inline-block;
         height: 100%;
-        width: 7%;
         background-color: $color-tuning;
         vertical-align: top;
-        font-size: 2rem;
+        border-top-left-radius: $border-radius-2;
+        border-bottom-left-radius: $border-radius-2;
+        //Need width for open notes.
+        width: 7%;
         
-        
-        &__picker {
+        &__tuner {
             position: absolute;
-            top: -4rem;
+            top: -5rem;
             left: 0rem;
+            font-size: 1.2rem;
+            width: 12rem;
+            height: 2rem;
+            z-index: 100;
         }
         
         &__keys {
             display: flex;
             flex-direction: column;
             justify-content: space-around;
-            width: 100%;
             align-items: flex-start;
-            height: 100%;    
-            padding-left: 0.5rem;
-
-        }
-
-        // For looping 6 tuningkeys with proper spacing and size.
-        @for $i from 0 to 6 {
-            &__key--#{$i} {
-                // top: calc(20% * #{$i} - 23.5%);
-            }
+            padding: 0.4rem 0.5rem;
+            height: 100%;   
+            width: 20rem; 
+            z-index: 99;
         }
     }
     
     &__legend {
         display: inline-block;
         height: $neck-height;
-        width: 13%;
-        min-width: 20rem;
+        width: 11%;
+
         background-color: $color-legend;
         vertical-align: top;
+
+        border-top-right-radius: $border-radius-2;
+        border-bottom-right-radius: $border-radius-2;
+
+        &__tooltip {
+            position: absolute;
+            top: 0;
+            right: 0.5rem;
+
+            color: $color-tooltip;
+            font-size: 2rem;
+
+            &:hover {
+                color: $color-tooltip-hover;
+            }
+        }
 
         &__buttons {
             display: flex;
@@ -91,7 +109,7 @@
             background-color: $color-gray-500;
             min-height: 6rem;
             min-width: 6rem;
-            border-radius: $border-radius;
+            border-radius: $border-radius-1;
             text-align: center;
             cursor: pointer;
         
@@ -146,8 +164,8 @@
         height: 4rem;
         text-align: center;
         color: transparent;
-        padding-top: 0.3rem;
-        font-size: 2rem;
+        padding-top: 0.5rem;
+        font-size: 1.7rem;
         transform: translate(0.2rem, -1.9rem);
         
         
@@ -156,6 +174,7 @@
             background-color: rgba($color-gray-100,0.8);
             border-radius: 10px;
             color: $color-gray-900;
+            @include shadow-3;
         }
 
         &--first {
@@ -169,7 +188,7 @@
 
     // Each fret styled with for-loop
     &__fret {
-        @for $i from 1 to 25 {
+        @for $i from 1 to $fret-count + 1 {
             &--#{$i} {
                 position: absolute;
                 top: 0;
@@ -181,12 +200,12 @@
 
                 &::before {
                     content: '#{$i}';
-                    font-size: 2rem;
+                    font-size: 1.3rem;
+                    font-weight: 500;
                     position: absolute;
-                    bottom: -4rem;
-                    left: -2.7vw;
-                    // left: -6.5rem;
-                    width: 5rem;
+                    bottom: -3.5rem;
+                    left: -2.4vw;
+                    width: 3rem;
                     text-align: center;
                     color: $color-gray-900;
                 }
@@ -233,13 +252,13 @@
             
         }
         &--5 {
-            top: 78%;
+            top: 82%;
             left: 47.6%;
 
             &::after {
                 content: '';
                 position: absolute;
-                top: -19.2rem;
+                top: -19rem;
                 left: 0;
                 background: inherit;
                 width: inherit;
@@ -267,13 +286,13 @@
             
         }
         &--10 {
-            top: 78%;
+            top: 82%;
             left: 97.3%;
     
             &::after {
                 content: '';
                 position: absolute;
-                top: -19.2rem;
+                top: -19rem;
                 left: 0;
                 background: inherit;
                 width: inherit;

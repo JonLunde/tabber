@@ -284,7 +284,6 @@ function addChord(tabBar, chord) {
   } else {
     chord.strings.forEach((string, i) => {
       if (string.length > 0) {
-        console.log('test: ', string[0], i);
         newTabBar.tabLines[i] += string[0];
       } else {
         newTabBar.tabLines[i] += '-';

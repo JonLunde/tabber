@@ -6,8 +6,8 @@ function TabString(props) {
   return (
     <div>
       <span>
-        {tuning[id]}
-        {tuning[id].length === 2 ? '|' : ' |'}
+        {tuning.values[id]}
+        {tuning.values[id].length === 2 ? '|' : ' |'}
         {tabLine}
       </span>
     </div>
