@@ -1,0 +1,47 @@
+
+# Created by https://www.toptal.com/developers/gitignore/api/react,sass
+# Edit at https://www.toptal.com/developers/gitignore?templates=react,sass
+
+
+dist
+public
+
+### react ###
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
+node_modules
+bower_components
+
+*.sublime*
+
+psd
+thumb
+sketch
+
+### Sass ###
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# End of https://www.toptal.com/developers/gitignore/api/react,sass

@@ -1,0 +1,87 @@
+@use '../abstracts/variables' as *;
+
+
+@mixin shadow-1{
+    box-shadow: 0 1px 1.5px 0 rgba($color-black, 0.12), 0 1px 1px 0 rgba($color-black, 0.24);
+} 
+@mixin shadow-2{
+    box-shadow:  3px 3px 3px 0 rgba($color-black, 0.16), 3px 3px 3px 0 rgba($color-black, 0.23);
+} 
+@mixin shadow-3{
+    box-shadow: 0 10px 10px 0 rgba($color-black, 0.19), 0 6px 3px 0 rgba($color-black, 0.23);
+} 
+@mixin shadow-4{
+    box-shadow: 7px 14px 14px 0 rgba($color-black, 0.25), 4px 10px 5px 0 rgba($color-black, 0.22);
+} 
+@mixin shadow-5{
+    box-shadow: 8px 23px 23px 0 rgba($color-black, 0.30), 5px 15px 6px 0 rgba($color-black, 0.22);
+} 
+
+@mixin shadow-10 {
+     box-shadow:
+  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+  0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+  0 12.5px 10px rgba(0, 0, 0, 0.06),
+  0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+  0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+  0 100px 80px rgba(0, 0, 0, 0.12)
+}
+
+@mixin clearfix {
+    &::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+  }
+
+/*
+MEDIA QUERY MANAGER
+
+0-600px:    Phone
+600-900px:  Tablet portrait
+900-1200px: Tablet landscape
+[1200-1800px]: Our default styling (Desktop)
+1800px+ :      Large Desktop
+
+$breakpoint arguments:
+- phone
+- tab-port = tablet portrait
+- tab-land = tablet landscape
+- big-desktop
+
+rem doesn't work for breakpoints.
+1em = 16px.   =>    600px/16px = 37.5em
+
+Order:
+Base + typography
+General layout + grid (layout)
+Page layout (pages)
+Components
+*/
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+      //600px
+      @media only screen and (max-width: 37.5em) {
+        @content;
+      }
+    }
+    @if $breakpoint == tab-port {
+      //900px
+      @media only screen and (max-width: 56.25em) {
+        @content;
+      }
+    }
+    @if $breakpoint == tab-land {
+      //1200px
+      @media only screen and (max-width: 75em) {
+        @content;
+      }
+    }
+    @if $breakpoint == big-desktop {
+      //1800px
+      @media only screen and (min-width: 112.5em) {
+        @content;
+      }
+    }
+  }

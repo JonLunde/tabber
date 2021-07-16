@@ -1,0 +1,308 @@
+@use "../abstracts" as *;
+
+/* Background pattern for strings from Toptal Subtle Patterns */
+
+.guitar {
+    position: relative;
+    height: $neck-height;
+    width: 100%;
+    border-radius: $border-radius-2;
+
+    
+    &__neck {
+        position: relative;
+        display: inline-block;
+        // background-color: $color-neck;
+        height: $neck-height;
+        
+        width: 82%;
+
+        // This hides notes outside of container. Won't work.
+        // clip-path: polygon(0 5%, 0 95%, 100% 100%, 100% 0); 
+        background-image: url("/src/assets/img/Mahogany-Wood.jpg");
+        background-size:100% 100%; /* Change the 40px to control the angle*/
+    }
+    
+    ::selection {
+        background-color: transparent;
+    }
+    
+    
+    &__tuning {
+        position: relative;
+        display: inline-block;
+        height: 100%;
+        background-color: $color-tuning;
+        vertical-align: top;
+        border-top-left-radius: $border-radius-2;
+        border-bottom-left-radius: $border-radius-2;
+        //Need width for open notes.
+        width: 7%;
+        
+        &__tuner {
+            position: absolute;
+            top: -5rem;
+            left: 0rem;
+            font-size: 1.2rem;
+            width: 12rem;
+            height: 2rem;
+            z-index: 100;
+        }
+        
+        &__keys {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: flex-start;
+            padding: 0.4rem 0.5rem;
+            height: 100%;   
+            width: 20rem; 
+            z-index: 99;
+        }
+    }
+    
+    &__legend {
+        display: inline-block;
+        height: $neck-height;
+        width: 11%;
+
+        background-color: $color-legend;
+        vertical-align: top;
+
+        border-top-right-radius: $border-radius-2;
+        border-bottom-right-radius: $border-radius-2;
+
+        &__tooltip {
+            position: absolute;
+            top: 0;
+            right: 0.5rem;
+
+            color: $color-info-200;
+            font-size: 2rem;
+
+            &:hover {
+                color: $color-info-300;
+            }
+        }
+
+        &__buttons {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 auto;
+            width: 90%;
+            justify-content: space-between;
+            align-items: stretch;
+            margin-top: 3.5rem;
+
+        }
+
+        &__checkbox {
+            display: none;
+
+        }
+
+        &__checkbox:checked + &__button { 
+            background-color: green;
+        }
+        
+          &__button {
+            background-color: $color-gray-500;
+            min-height: 6rem;
+            min-width: 6rem;
+            border-radius: $border-radius-1;
+            text-align: center;
+            cursor: pointer;
+        
+            // @include respond(tab-port) {
+            //   top: 4rem;
+            //   right: 4rem;
+            // }
+            // @include respond(phone) {
+            //   top: 3rem;
+            //   right: 3rem;
+            // }
+          }
+    }
+
+
+    &__container-strings {
+        position: absolute;
+        top: 10%;
+        left: 0%;
+        height: 80%;
+        width: 100%;
+        
+    }
+
+    &__string {
+        width: 100%;
+        position: absolute;
+        z-index: 2;
+        
+        // For looping 6 strings with proper spacing and size.
+        @for $i from 0 to 6 {
+            &--#{$i} {
+                top: calc(20% * (#{$i} + 1) - 20%);
+                height: calc(0.2rem + (0.1rem * #{$i}));
+                @if ($i < 2)  {
+                    background-image: linear-gradient(to bottom, $color-higher-string 20%, $color-black);
+                } @else {
+                    // background-image: linear-gradient(to bottom, $color-lower-string 20%, $color-black);
+                    background-size: stretch;
+                    background-color: #af9851;
+                    background-image: linear-gradient(to bottom, rgba($color-lower-string,0.8) 20%, rgba($color-black, 0.8) ), url("/src/assets/img/black-twill.png");
+                }
+            }
+        }
+    }
+    
+
+
+    &__note {
+        display:inline-block;
+        width: calc(95% / 23);
+        height: 4rem;
+        text-align: center;
+        color: transparent;
+        padding-top: 0.5rem;
+        font-size: 1.7rem;
+        transform: translate(0.2rem, -1.9rem);
+        
+        
+        &:hover {
+            cursor: pointer;
+            background-color: rgba($color-gray-100,0.8);
+            border-radius: 10px;
+            color: $color-gray-900;
+            @include shadow-3;
+        }
+
+        &--first {
+            position: absolute;
+            top: 0rem;
+            left: -4.2%; // % is more responsive here.
+        }
+    }
+
+
+
+    // Each fret styled with for-loop
+    &__fret {
+        @for $i from 1 to $fret-count + 1 {
+            &--#{$i} {
+                position: absolute;
+                top: 0;
+                left: calc((95% / 23) * #{$i});
+                height: $neck-height;
+                width: $fret-width;
+                z-index: 1;
+                background: linear-gradient( to right, $color-fret 0%, $color-black 90%);
+
+                &::before {
+                    content: '#{$i}';
+                    font-size: 1.3rem;
+                    font-weight: 500;
+                    position: absolute;
+                    bottom: -3.5rem;
+                    left: -2.4vw;
+                    width: 3rem;
+                    text-align: center;
+                    color: $color-gray-900;
+                }
+            }
+        }
+
+    }
+
+    &__nut {
+        position: absolute;
+        top: 0;
+        left: 2;
+        height: $neck-height;
+        width: $nut-width;
+        background-color: $color-white;
+        border-left: 1.5px solid $color-gray-100;
+        z-index: 1;
+    }
+
+    &__dot {
+        position: absolute;
+        top: 51.1%;
+        background: linear-gradient(to right bottom, $color-dot 40%, $color-black);
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+        z-index: 1;
+
+        transform: translate(-50%, -50%);
+        
+        
+        &--1 {
+            left: 10.5%;
+        }
+        &--2 {
+            left: 18.7%;
+            
+        }
+        &--3 {
+           left: 27%;
+        }
+        &--4 {
+            left: 35.3%;
+            
+        }
+        &--5 {
+            top: 82%;
+            left: 47.6%;
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: -19rem;
+                left: 0;
+                background: inherit;
+                width: inherit;
+                height: inherit;
+                border-radius: inherit;
+                z-index: inherit;
+
+            }
+
+        }
+        &--6 {
+            left: 60.05%;
+            
+        }
+        &--7 {
+            left: 68.3%;
+            
+        }
+        &--8 {
+            left: 76.6%;
+            
+        }
+        &--9 {
+            left: 84.9%;
+            
+        }
+        &--10 {
+            top: 82%;
+            left: 97.3%;
+    
+            &::after {
+                content: '';
+                position: absolute;
+                top: -19rem;
+                left: 0;
+                background: inherit;
+                width: inherit;
+                height: inherit;
+                border-radius: inherit;
+                z-index: inherit;
+    
+            }
+    
+        }
+    }
+    
+}

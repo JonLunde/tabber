@@ -1,0 +1,29 @@
+@use '../abstracts' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  line-height: 1.7;
+  color: $color-gray-900;
+}
+
+.heading-primary {
+  font-size: 5rem;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+
+}
+
+.heading-secondary {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+}
+
+.heading-tertiary {
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+}
