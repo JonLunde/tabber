@@ -4,8 +4,9 @@
   "description": "* Interactive tabs\r   * Move up/down, delete, add new, give name\r * Audible notes\r * Notations\r   * Hammer on, pull off, slide up, slide down\r * Chord-builder\r * Tuning\r   * With corresponding fretboard notes",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "cd client && npm start",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/JonLunde/tabber#readme",
   "dependencies": {
     "concurrently": "^6.2.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1"
   },
   "devDependencies": {
