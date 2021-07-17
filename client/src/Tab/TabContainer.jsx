@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import TabBar from './TabBar';
-import TabInfo from './TabInfo';
+import TabExport from './TabExport';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ACTIONS } from '../useTabStateReducer';
 
@@ -9,7 +8,7 @@ const preventDefault = (e) => {
 };
 
 function TabContainer(props) {
-  const { dispatch, children } = props;
+  const { dispatch, children, tabState, tuning } = props;
   const btnRef = useRef();
 
   return (
@@ -19,6 +18,7 @@ function TabContainer(props) {
       <button className="btn btn--add u-mt-huge" onClick={() => dispatch({ type: ACTIONS.ADD })} ref={btnRef}>
         <FontAwesomeIcon key={999} icon="plus" />
       </button>
+      <TabExport key={1} tabState={tabState} tuning={tuning} />
     </div>
   );
 }

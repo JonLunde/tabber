@@ -110,6 +110,7 @@ function GuitarTuning(props) {
   function handleOnChange(event, i) {
     changeTuner(event, i);
   }
+  console.log('TUNING ', tuning);
 
   return (
     <div className="guitar__tuning">
@@ -118,7 +119,7 @@ function GuitarTuning(props) {
           key={100}
           options={options.tunings}
           styles={tunerStyle}
-          defaultValue={{ value: '1', label: 'E Standard' }}
+          value={tuning.name === null ? { label: 'Change tuning' } : { value: tuning.name, label: tuning.name }}
           theme={customTheme}
           isSearchable
           onChange={changeTuning}
@@ -131,7 +132,7 @@ function GuitarTuning(props) {
             <Select
               options={options.notes}
               styles={keyStyle}
-              defaultValue={{ value: tuner, label: tuner }}
+              value={{ value: tuner, label: tuner }}
               theme={customTheme}
               onChange={(event) => handleOnChange(event, i)}
               isSearchable={false}

@@ -69,7 +69,6 @@
     
     
     &--legend {
-        font-family: 'Roboto', sans-serif;
         font-weight: 700;
         background-color: $color-gray-300;
         color: $color-gray-900;
@@ -86,5 +85,9 @@
             @include shadow-1;
             transform: translateY(0.2rem)
         }
+    }
+
+    &--export {
+        
     }
 }

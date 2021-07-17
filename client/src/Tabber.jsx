@@ -12,38 +12,27 @@ import GuitarLegend from './Guitar/GuitarLegend';
 import GuitarString from './Guitar/GuitarString';
 import GuitarDashboard from './Guitar/GuitarDashboard';
 import TabBar from './Tab/TabBar';
+import TabExport from './Tab/TabExport';
+import TabDetails from './Tab/TabDetails';
 
 function Tabber() {
   const [tabState, dispatch] = useTabStateReducer();
   const [tuning, setTuning] = useState({ name: 'E Standard', values: ['E', 'B', 'G', 'D', 'A', 'E'] }); // Chosen guitar tuning.
-  const active = true;
+  console.log(tabState.tabBars);
 
   useEffect(() => {
-    console.log('TabBar Changed: ', tabState.tabBar);
-  }, [tabState.tabBar]);
-
-  useEffect(() => {
-    console.log('Marker Changed: ', tabState.marker);
-  }, [tabState.marker]);
+    console.log('TabState Changed: ', tabState);
+  }, [tabState]);
 
   useEffect(() => {
     console.log('Tuning Changed: ', tuning);
   }, [tuning]);
 
-  useEffect(() => {
-    console.log('Notation Changed: ', tabState.notation);
-  }, [tabState.notation]);
-
-  useEffect(() => {
-    console.log('ActiveNote Changed: ', tabState.activeNote);
-  }, [tabState.activeNote]);
-
-  useEffect(() => {
-    console.log('ChordBuilder Changed: ', tabState.chordBuilder);
-  }, [tabState.chordBuilder]);
-
   function changeTuning(selected) {
     switch (selected.value) {
+      case '0':
+        setTuning((prevTuning) => ({ ...prevTuning, name: null }));
+        break;
       case '1':
         setTuning({ name: 'E Standard', values: ['E', 'B', 'G', 'D', 'A', 'E'] });
         break;
@@ -57,6 +46,7 @@ function Tabber() {
   }
 
   function changeTuner(note, i) {
+    changeTuning({ value: '0' });
     setTuning((prevTuning) => {
       let newTuning = { ...prevTuning };
       newTuning.values[i] = note.value;
@@ -72,7 +62,7 @@ function Tabber() {
 
   return (
     <div>
-      <GuitarDashboard>
+      <GuitarDashboard key={0}>
         <GuitarTuning key={0} tuning={tuning} changeTuning={changeTuning} changeTuner={changeTuner} />
 
         <GuitarNeck key={1} dispatch={dispatch} tuning={tuning}>
@@ -99,9 +89,9 @@ function Tabber() {
         />
       </GuitarDashboard>
 
-      <TabContainer key={1} dispatch={dispatch}>
-        {/* <TabInfo key={1000} songProgress="test" /> */}
-        {tabState.tabBar.map((tabBar, i) => (
+      <TabContainer key={2} dispatch={dispatch} tabState={tabState} tuning={tuning}>
+        <TabDetails key={1000} tabDetails={tabState.tabDetails} dispatch={dispatch} />
+        {tabState.tabBars.map((tabBar, i) => (
           <TabBar
             key={tabBar.key}
             idx={i}
