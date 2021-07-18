@@ -24,7 +24,7 @@ const initState = {
       tabLines: ['', '', '', '', '', ''],
     },
   ],
-  notation: '',
+  notation: null,
   chordBuilder: { active: false, strings: [[], [], [], [], [], []] },
   marker: { tabIdx: 0, yIdx: 0, stringIdx: 0 },
   keyCounter: 1,
@@ -36,16 +36,16 @@ const initState = {
 function reducer(tabState, action) {
   console.log('REDUCER START: ', action);
   let newTabState = JSON.parse(JSON.stringify(tabState)); // Deepcopy otherwise the tabLines get mutated, causing bugs.
-  const { tabBars, notation, chordBuilder, marker, keyCounter } = newTabState;
+  const { tabBars, notation, chordBuilder, marker, keyCounter, activeNote, activeString } = newTabState;
   const { payload, type } = action;
 
   // User click on "move up"-button. Tab is moved one index backwards.
   switch (type) {
     case ACTIONS.MOVE_UP:
       if (tabState.tabBars.length <= 1 || payload.tabIdx === 0) return tabState;
-      if (notation !== '') {
+      if (notation !== null) {
         newTabState.tabBars[payload.tabIdx] = removeTabStringY(tabState.tabBars[payload.tabIdx], 1);
-        newTabState.notation = '';
+        newTabState.notation = null;
       }
       const [movingUp] = newTabState.tabBars.splice(payload.tabIdx, 1);
       newTabState.tabBars.splice(payload.tabIdx - 1, 0, movingUp);
@@ -59,9 +59,9 @@ function reducer(tabState, action) {
     // User click on "move down"-button. Tab is moved one index forward.
     case ACTIONS.MOVE_DOWN:
       if (tabState.tabBars.length <= 1 || payload.tabIdx === newTabState.tabBars.length - 1) return tabState;
-      if (notation !== '') {
+      if (notation !== null) {
         newTabState.tabBars[payload.tabIdx] = removeTabStringY(tabState.tabBars[payload.tabIdx], 1);
-        newTabState.notation = '';
+        newTabState.notation = null;
       }
       const [movingDown] = newTabState.tabBars.splice(payload.tabIdx, 1);
       newTabState.tabBars.splice(payload.tabIdx + 1, 0, movingDown);
@@ -74,8 +74,15 @@ function reducer(tabState, action) {
 
     // User click "remove"-button. Tab is removed from state.
     case ACTIONS.REMOVE:
-      if (notation !== '') {
-        newTabState.notation = '';
+      // Reset notation and activeNote if marked tab is removed.
+      if (payload.tabIdx === marker.tabIdx) {
+        if (notation !== null) {
+          newTabState.notation = null;
+        }
+
+        if (activeNote.string !== null) {
+          newTabState.activeNote = { string: null, fret: null };
+        }
       }
 
       // Deleting tab indexed before marker will move marker to match the new index for the marked tab.
@@ -95,10 +102,13 @@ function reducer(tabState, action) {
     case ACTIONS.ADD:
       newTabState.keyCounter++;
 
+      // Remove activeNote.
+      if (activeNote.string !== null) newTabState.activeNote = { string: null, fret: null };
+
       // Remove and toggle notation on previous marked tab off.
-      if (notation !== '') {
+      if (notation !== null) {
         newTabState.tabBars[marker.tabIdx] = removeTabStringY(newTabState.tabBars[marker.tabIdx], 1);
-        newTabState.notation = '';
+        newTabState.notation = null;
       }
       newTabState.marker = { ...marker, tabIdx: tabState.tabBars.length, yIdx: 0 };
       newTabState.tabBars.push({
@@ -124,7 +134,7 @@ function reducer(tabState, action) {
         // Om vi har en double digit og en single digit skal den line opp med siste digit i double.
         // --12--
         // ---2--
-        if (notation !== '') newTabState.notation = '';
+        if (notation !== null) newTabState.notation = null;
 
         if (newTabState.chordBuilder.strings[payload.stringId].length > 0) {
           newTabState.chordBuilder.strings[payload.stringId].splice(0, 1, payload.fretId);
@@ -135,12 +145,12 @@ function reducer(tabState, action) {
       }
 
       // Handling notes following a notation.
-      else if (notation !== '') {
+      else if (notation !== null) {
         // If note is NOT on same string as the notation the notation is wiped.
         if (payload.stringId !== marker.stringIdx) {
           newTabState.tabBars[marker.tabIdx] = removeTabStringY(newTabState.tabBars[marker.tabIdx], 1);
           newTabState.marker = { ...marker, yIdx: marker.yIdx - 1 };
-          newTabState.notation = '';
+          newTabState.notation = null;
         }
 
         newTabState.tabBars[marker.tabIdx] = addFretAndDashes(
@@ -155,7 +165,7 @@ function reducer(tabState, action) {
           stringIdx: payload.stringId,
           yIdx: newTabState.tabBars[marker.tabIdx].tabLines[0].length,
         };
-        newTabState.notation = '';
+        newTabState.notation = null;
       }
 
       // Handling notes without notation.
@@ -179,7 +189,7 @@ function reducer(tabState, action) {
     case ACTIONS.NOTATION:
       // Not allowed to add notation at the beginning of tabBar.
       if (marker.yIdx <= 0) {
-        newTabState.notation = '';
+        newTabState.notation = null;
         return newTabState;
       }
 
@@ -187,12 +197,12 @@ function reducer(tabState, action) {
       if (notation === payload.notation) {
         newTabState.tabBars[marker.tabIdx] = removeTabStringY(newTabState.tabBars[marker.tabIdx], 1);
         newTabState.marker = { ...marker, yIdx: marker.yIdx - 1 };
-        newTabState.notation = '';
+        newTabState.notation = null;
         return newTabState;
       }
 
       // If user clicks another notation before adding the followup note the notations will swap.
-      if (notation !== '' && payload.notation !== notation) {
+      if (notation !== null && payload.notation !== notation) {
         newTabState.tabBars[marker.tabIdx] = removeTabStringY(newTabState.tabBars[marker.tabIdx], 1);
         newTabState.tabBars[marker.tabIdx].tabLines = newTabState.tabBars[marker.tabIdx].tabLines.map(
           (line, i) => (line += i === marker.stringIdx ? payload.notation : '-'),
@@ -227,9 +237,9 @@ function reducer(tabState, action) {
       else {
         newTabState.activeNote = { string: null, fret: null };
         // If a notation is toggled on it will remove it.
-        if (notation !== '') {
+        if (notation !== null) {
           newTabState.tabBars[marker.tabIdx] = removeTabStringY(newTabState.tabBars[marker.tabIdx], 1);
-          newTabState.notation = '';
+          newTabState.notation = null;
           newTabState.marker = { ...marker, yIdx: marker.yIdx - 1 };
         }
       }
@@ -238,10 +248,15 @@ function reducer(tabState, action) {
 
     // Moves marker to the tab clicked.
     case ACTIONS.CLICK_TAB:
+      // Remove activeNote.
+      if (activeNote.string !== null && payload.tabIdx !== marker.tabIdx) {
+        newTabState.activeNote = { string: null, fret: null };
+      }
+
       // Remove and toggle notation on previous marked tab off.
-      if (notation !== '') {
+      if (notation !== null) {
         newTabState.tabBars[marker.tabIdx] = removeTabStringY(newTabState.tabBars[marker.tabIdx], 1);
-        newTabState.notation = '';
+        newTabState.notation = null;
       }
 
       // Sets last edited string as marked string. THIS CODEBIT NEEDS REFACTORING.
@@ -258,7 +273,6 @@ function reducer(tabState, action) {
       return newTabState;
 
     case ACTIONS.CHANGE_DETAILS:
-      console.log('DETAILS: ', payload);
       switch (payload.id) {
         case 'title':
           newTabState.tabDetails.title = payload.value;
@@ -317,7 +331,7 @@ function addChord(tabBar, chord) {
 }
 
 // Pure function. Adds fret of note to one string and matching dashes on others. Returns tabBar of tabState.
-function addFretAndDashes(tabBar, notation = '', noteFret = null, string = null) {
+function addFretAndDashes(tabBar, notation = null, noteFret = null, string = null) {
   let newTabBar = JSON.parse(JSON.stringify(tabBar)); // Deep clone for immutability.
 
   // If no note is provided it adds dashes only.
@@ -327,7 +341,7 @@ function addFretAndDashes(tabBar, notation = '', noteFret = null, string = null)
   }
 
   // If there is a notation it adds note directly after it.
-  if (notation !== '') {
+  if (notation !== null) {
     if (noteFret < 10) {
       newTabBar.tabLines = newTabBar.tabLines.map((line, i) => (line += i === string ? noteFret : '-'));
     } else {
@@ -335,7 +349,7 @@ function addFretAndDashes(tabBar, notation = '', noteFret = null, string = null)
     }
   }
   // Otherwise it adds two dashes before note for separation.
-  else if (notation === '') {
+  else if (notation === null) {
     if (noteFret < 10) {
       newTabBar.tabLines = newTabBar.tabLines.map((line, i) => (line += i === string ? '--' + noteFret : '---'));
     } else {

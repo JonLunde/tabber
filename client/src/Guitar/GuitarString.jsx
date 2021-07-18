@@ -28,7 +28,7 @@ function GuitarString(props) {
   return (
     <div
       className={`guitar__string guitar__string--${id}`}
-      style={activeString === id && notation !== '' ? activeStyle : null}
+      style={activeString === id && notation !== null ? activeStyle : null}
     >
       {guitarNotes}
     </div>
