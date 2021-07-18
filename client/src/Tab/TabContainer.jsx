@@ -12,13 +12,14 @@ function TabContainer(props) {
   const btnRef = useRef();
 
   return (
-    <div className="container-tab" onContextMenu={preventDefault}>
+    <div className="container__tabs" onContextMenu={preventDefault}>
       {children}
-
-      <button className="btn btn--add u-mt-huge" onClick={() => dispatch({ type: ACTIONS.ADD })} ref={btnRef}>
-        <FontAwesomeIcon key={999} icon="plus" />
-      </button>
-      <TabExport key={1} tabState={tabState} tuning={tuning} />
+      <div className="container__buttons u-mt-huge">
+        <button className="btn btn--add " onClick={() => dispatch({ type: ACTIONS.ADD })} ref={btnRef}>
+          <FontAwesomeIcon key={999} icon="plus" />
+        </button>
+        <TabExport key={1} tabState={tabState} tuning={tuning} />
+      </div>
     </div>
   );
 }

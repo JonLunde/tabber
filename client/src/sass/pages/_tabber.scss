@@ -1,27 +1,34 @@
-.container-tab {
-    text-align: center;
-    padding: 10rem 4rem;
+.container {
+    
+    &__tabs {
+        text-align: center;
+        padding: 10rem 4rem;
+    }
+    &__buttons {
+        position: relative;
+    }
 }
 
-.header-tab {
+.details {
     text-align: start;
     margin-bottom: 10rem;
-}
+    font-size: 2rem;
 
-
-.tab-info {
     &__form-group {
+        display: inline-block;
         margin-bottom: 10px;
         display: grid;
         grid-template-columns: 1fr 5fr;
-        width: 70%;
+        
+        & input[type='text'] {
+            font-size: 2rem;
+            width: 30rem;
+            // transform: translateX(-10rem);
+        }
     }
 
-    &__input {
-        // display: inline-block;
-        // margin-left: 3rem;
-        width: 40%;
-        font-size: 1.5rem;
-
+    &__label {
+        
     }
+
 }

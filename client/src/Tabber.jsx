@@ -62,6 +62,7 @@ function Tabber() {
 
   return (
     <div>
+      <TabDetails key={1000} tabDetails={tabState.tabDetails} dispatch={dispatch} />
       <GuitarDashboard key={0}>
         <GuitarTuning key={0} tuning={tuning} changeTuning={changeTuning} changeTuner={changeTuner} />
 
@@ -90,7 +91,6 @@ function Tabber() {
       </GuitarDashboard>
 
       <TabContainer key={2} dispatch={dispatch} tabState={tabState} tuning={tuning}>
-        <TabDetails key={1000} tabDetails={tabState.tabDetails} dispatch={dispatch} />
         {tabState.tabBars.map((tabBar, i) => (
           <TabBar
             key={tabBar.key}
