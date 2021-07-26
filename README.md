@@ -22,6 +22,7 @@
 * Locally save tabs for temporary backup
 * Preformed chords
 * Chords with notations
+* Capo placements
 
 
 <br><br>
