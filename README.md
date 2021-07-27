@@ -14,14 +14,11 @@
   
   
 ## Planned improvements 
-* Highlight last chosen note
-* Highlight notation string
-* Visually build chords
-* Export tabs to txt-file and PDF
 * Save tabs to database with authentication
 * Locally save tabs for temporary backup
 * Preformed chords
 * Chords with notations
+* Capo placements
 
 
 <br><br>
