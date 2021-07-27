@@ -39,7 +39,6 @@ function GuitarTuning(props) {
         neutral0: 'red',
         primary25: '#ff9f9e',
         primary: '#520504',
-        border: '1px solid red',
       },
     };
   }

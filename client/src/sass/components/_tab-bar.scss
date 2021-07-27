@@ -47,7 +47,8 @@
         }
 
         &::selection {
-            background-color: transparent;
+            background-color: $color-primary-500;
+            color: $color-off-white;
         }
 
     }
