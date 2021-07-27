@@ -14,10 +14,11 @@ module.exports = {
     filename: 'bundle.js',
   },
   devtool: 'inline-source-map',
+  target: 'web', // Only for dev
   devServer: {
     port: '3000',
     watchContentBase: true,
-    contentBase: 'public', // Changed from public
+    contentBase: 'public',
   },
   plugins: [new HtmlWebpackPlugin()],
   module: {

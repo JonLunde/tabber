@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faTrash, faArrowUp, faArrowDown, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlus,
+  faTrash,
+  faArrowUp,
+  faArrowDown,
+  faInfoCircle,
+  faAngleDoubleLeft,
+  faAngleDoubleRight,
+} from '@fortawesome/free-solid-svg-icons';
 import useTabStateReducer, { ACTIONS } from './useTabStateReducer';
 
-library.add(faPlus, faTrash, faArrowUp, faArrowDown, faInfoCircle);
+library.add(faPlus, faTrash, faArrowUp, faArrowDown, faInfoCircle, faAngleDoubleLeft, faAngleDoubleRight);
 
 import TabContainer from './Tab/TabContainer';
 import GuitarTuning from './Guitar/GuitarTuning';
@@ -12,8 +20,7 @@ import GuitarLegend from './Guitar/GuitarLegend';
 import GuitarString from './Guitar/GuitarString';
 import GuitarDashboard from './Guitar/GuitarDashboard';
 import TabBar from './Tab/TabBar';
-import TabExport from './Tab/TabExport';
-import TabDetails from './Tab/TabDetails';
+import TabSidebar from './Tab/TabSidebar';
 
 function Tabber() {
   const [tabState, dispatch] = useTabStateReducer();
@@ -62,7 +69,6 @@ function Tabber() {
 
   return (
     <div>
-      <TabDetails key={1000} tabDetails={tabState.tabDetails} dispatch={dispatch} />
       <GuitarDashboard key={0}>
         <GuitarTuning key={0} tuning={tuning} changeTuning={changeTuning} changeTuner={changeTuner} />
 
@@ -90,18 +96,21 @@ function Tabber() {
         />
       </GuitarDashboard>
 
-      <TabContainer key={2} dispatch={dispatch} tabState={tabState} tuning={tuning}>
-        {tabState.tabBars.map((tabBar, i) => (
-          <TabBar
-            key={tabBar.key}
-            idx={i}
-            tabBar={tabBar}
-            dispatch={dispatch}
-            marker={tabState.marker}
-            tuning={tuning}
-          />
-        ))}
-      </TabContainer>
+      <div className="flex-container">
+        <TabContainer key={2} dispatch={dispatch} tabState={tabState} tuning={tuning}>
+          {tabState.tabBars.map((tabBar, i) => (
+            <TabBar
+              key={tabBar.key}
+              idx={i}
+              tabBar={tabBar}
+              dispatch={dispatch}
+              marker={tabState.marker}
+              tuning={tuning}
+            />
+          ))}
+        </TabContainer>
+        <TabSidebar tabDetails={tabState.tabDetails} dispatch={dispatch} tabState={tabState} tuning={tuning} />
+      </div>
     </div>
   );
 }

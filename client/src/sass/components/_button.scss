@@ -48,8 +48,8 @@
     
     &--legend {
         font-weight: 700;
-        background-color: $color-gray-300;
-        color: $color-gray-900;
+        background-color: $color-secondary-700;
+        color: $color-gray-0;
         font-size: 1.8rem;
         line-height: 2.2rem;
         width: 48%;
@@ -66,7 +66,8 @@
     }
 
     &--add {
-        background-color: $color-background-4;
+        background-color: $color-primary-300;
+        color: $color-off-white;
         width: 8rem;
         height: 8rem;
         font-size: 3rem;
@@ -74,7 +75,6 @@
         @include shadow-2;
         
         &:hover, &:focus {
-            background-color: darken($color-background-4, 10);
             @include shadow-4;
             transform: scale(1.1);
             
@@ -86,21 +86,40 @@
     }
     
     &--export {
-        position: absolute;
-        top: 0;
-        right: 0rem;
-        background-color: $color-background-4;
+        align-self: center;
+
+        background-color: $color-secondary-300;
+        color: $color-off-black;
+
         padding: 1rem 3rem;
-        height: 8rem;
-        font-size: 3rem;
+        height: 6rem;
+        width: 65%;
+        font-size: 2.5rem;
         font-weight: 700;
         transition: all 0.4s;
         @include shadow-2;
 
         &:hover, &:focus {
-            background-color: darken($color-background-4, 10);
             @include shadow-4;
             transform: scale(1.1);
         }
+    }
+
+    &--sidebar {
+        position: absolute;
+        top: 50%;
+        left: 0rem;
+        transform: translateY(-50%) rotateY(0);
+        background-color: $color-secondary-300;
+        width: 2rem;
+        height: 5rem;
+
+
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: $border-radius-2;
+        border-bottom-right-radius: $border-radius-2;
+
+        transition: all 0.3s 0.3s;
     }
 }

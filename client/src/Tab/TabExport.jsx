@@ -5,6 +5,7 @@ function TabExport(props) {
   const {
     tabState: { tabBars, tabDetails },
     tuning,
+    exportButtonStyle,
   } = props;
 
   useEffect(() => {
@@ -63,7 +64,7 @@ function TabExport(props) {
   }
 
   return (
-    <button onClick={handleClick} className="btn btn--export">
+    <button onClick={handleClick} className="btn btn--export" style={exportButtonStyle}>
       Export
     </button>
   );

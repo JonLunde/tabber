@@ -1,8 +1,19 @@
-.container {
+@use '../abstracts/' as *;
+
+.flex-container {
+    margin: 10rem 0rem;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 2.5rem
+
+}
+
+.tab-container {
+    flex: 1 1 75%;
+    text-align: center;
+    padding: 0rem 4rem;
     
     &__tabs {
-        text-align: center;
-        padding: 10rem 4rem;
     }
     &__buttons {
         position: relative;
@@ -10,25 +21,26 @@
 }
 
 .details {
-    text-align: start;
-    margin-bottom: 10rem;
     font-size: 2rem;
-
+    
     &__form-group {
-        display: inline-block;
         margin-bottom: 10px;
-        display: grid;
-        grid-template-columns: 1fr 5fr;
-        
-        & input[type='text'] {
-            font-size: 2rem;
-            width: 30rem;
-            // transform: translateX(-10rem);
-        }
+        display: flex;
+        align-items: center;
+    }
+
+    &__input {
+        flex: 1;
+        border: 1px solid $color-gray-100;
+        border-radius: $border-radius-3;
+        padding: 0.5rem 1rem;
+        margin-right: 1rem;
+        width: 12rem;
+        background-color: $color-off-white;
     }
 
     &__label {
-        
+        flex: 0 0 7rem;
     }
 
 }

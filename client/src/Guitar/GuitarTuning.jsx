@@ -36,8 +36,10 @@ function GuitarTuning(props) {
       ...theme,
       colors: {
         ...theme.colors,
-        primary25: '#f4bcb3',
-        primary: '#e97866',
+        neutral0: 'red',
+        primary25: '#ff9f9e',
+        primary: '#520504',
+        border: '1px solid red',
       },
     };
   }
@@ -50,7 +52,7 @@ function GuitarTuning(props) {
     }),
     control: (provided, state) => ({
       ...provided,
-      backgroundColor: '#f4bcb3',
+      backgroundColor: '#ff9f9e',
       color: '#292929',
       cursor: 'pointer',
     }),
@@ -60,7 +62,7 @@ function GuitarTuning(props) {
     }),
     indicatorsContainer: (provided, state) => ({
       ...provided,
-      backgroundColor: '#e97866',
+      backgroundColor: '#520504',
     }),
     indicatorSeparator: (provided, state) => ({
       ...provided,
@@ -75,12 +77,12 @@ function GuitarTuning(props) {
   const keyStyle = {
     option: (provided, state) => ({
       ...provided,
-      color: '#292929',
+      color: state.isSelected ? '#fff' : '#292929',
       cursor: 'pointer',
     }),
     control: (provided, state) => ({
       ...provided,
-      backgroundColor: '#f4bcb3',
+      backgroundColor: '#ff9f9e',
       color: '#292929',
       cursor: 'pointer',
     }),
@@ -94,7 +96,7 @@ function GuitarTuning(props) {
     }),
     indicatorsContainer: (provided, state) => ({
       ...provided,
-      backgroundColor: '#e97866',
+      backgroundColor: '#520504',
       width: '55%',
     }),
     indicatorSeparator: (provided, state) => ({

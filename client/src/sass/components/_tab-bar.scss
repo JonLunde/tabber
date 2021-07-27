@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 
 .tab-bar {
-    background-color: $color-background-2;
+    background-color: $color-off-white;
     position: relative;
     margin: 0 auto;
     text-align: start;
@@ -28,14 +28,14 @@
         border-radius: 4px;
         border-top-left-radius: $border-radius-1;
         border-top-right-radius: $border-radius-1;
-        background-color: $color-background-4;
+        background-color: $color-primary-500;
     }
 
     &__title {
         font-size: 2rem;  
         padding-left: 1rem;
-        background-color: $color-background-5;
-        border: 1px solid $color-background-2;
+        background-color: rgba($color-white, 0.6);
+    
         border-radius: 4px;
         border-top-left-radius: 2rem;
         height: 6rem;
@@ -45,7 +45,6 @@
         &::placeholder { 
             color: $color-gray-500;
         }
-
 
         &::selection {
             background-color: transparent;
@@ -76,7 +75,7 @@
             left: 2.2em;
             height: 100%;
             width: 0.60em;
-            background-color: rgba($color-background-4,0.4);
+            background-color: rgba($color-primary-300,0.7);
         }
     }  
 

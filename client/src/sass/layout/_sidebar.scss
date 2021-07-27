@@ -1,0 +1,28 @@
+@use '../abstracts/' as *;
+
+.sidebar {
+    // flex: 1;
+    position: sticky;
+    top: 0;
+    
+    width: 25%;
+    height: 40rem;
+    padding: 2rem 0rem 2rem 3rem;
+    background-color: $color-secondary-900;
+    color: $color-gray-0;
+    
+    border-top: 1px solid $color-gray-300;
+    border-left: 1px solid $color-gray-300;
+    border-bottom: 1px solid $color-gray-300;
+   
+    border-top-left-radius: $border-radius-2;
+    border-bottom-left-radius: $border-radius-2;
+    
+    transition: all 0.5s;
+    perspective: 15rem;
+    -moz-perspective: 15rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}

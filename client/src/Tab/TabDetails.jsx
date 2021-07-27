@@ -9,6 +9,7 @@ function TabDetails(props) {
       <label htmlFor="title" className="details__form-group">
         <span className="details__label">Title</span>
         <input
+          className="details__input"
           type="text"
           id="title"
           autoComplete="off"
@@ -21,6 +22,7 @@ function TabDetails(props) {
       <label htmlFor="artist" className="details__form-group">
         <span className="details__label">Artist</span>
         <input
+          className="details__input"
           type="text"
           id="artist"
           autoComplete="off"
@@ -33,6 +35,7 @@ function TabDetails(props) {
       <label htmlFor="capo" className="details__form-group">
         <span className="details__label">Capo</span>
         <input
+          className="details__input"
           type="text"
           id="capo"
           autoComplete="off"
@@ -44,6 +47,7 @@ function TabDetails(props) {
       <label htmlFor="source" className="details__form-group">
         <span className="details__label">Source</span>
         <input
+          className="details__input"
           type="text"
           id="source"
           autoComplete="off"

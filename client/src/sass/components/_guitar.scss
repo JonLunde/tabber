@@ -5,14 +5,14 @@
 .guitar {
     position: relative;
     height: $neck-height;
-    width: 100%;
     border-radius: $border-radius-2;
+    width: 99%;
+    margin: 0 auto;
 
     
     &__neck {
         position: relative;
         display: inline-block;
-        // background-color: $color-neck;
         height: $neck-height;
         
         width: 82%;
@@ -32,7 +32,7 @@
         position: relative;
         display: inline-block;
         height: 100%;
-        background-color: $color-tuning;
+        background-color: $color-primary-700;
         vertical-align: top;
         border-top-left-radius: $border-radius-2;
         border-bottom-left-radius: $border-radius-2;
@@ -66,7 +66,7 @@
         height: $neck-height;
         width: 11%;
 
-        background-color: $color-legend;
+        background-color: $color-primary-700;
         vertical-align: top;
 
         border-top-right-radius: $border-radius-2;
