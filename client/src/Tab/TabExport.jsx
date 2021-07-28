@@ -32,7 +32,7 @@ function TabExport(props) {
   function handleClick() {
     const alignedTabs = alignTabs(tabBars);
     const textTab = { alignedTabs, tabDetails, tuning };
-    fetch('http://localhost:5000/export', {
+    fetch('/export', {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(textTab),
@@ -44,7 +44,7 @@ function TabExport(props) {
 
   // Get text file from server.
   function getTextFile() {
-    fetch('http://localhost:5000/export')
+    fetch('/export')
       .then((res) => res.blob())
       .then((data) => fileDownload(data))
       .catch((error) => console.log('Request failed: ', error));
