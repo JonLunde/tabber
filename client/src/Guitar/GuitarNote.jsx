@@ -24,8 +24,8 @@ function GuitarNote(props) {
       className={fretId === 0 ? 'guitar__note guitar__note--first' : 'guitar__note'}
       style={isChordNote || (string === stringId && fret === fretId) ? activeStyle : null}
       onClick={() => {
-        // chord[6 - stringId] = noteIdx;
-        // playChord(chord);
+        chord[5 - stringId] = fretId;
+        playChord(chord);
         dispatch({ type: ACTIONS.ADD_NOTE, payload: { stringId: stringId, fretId: fretId } });
       }}
     >
