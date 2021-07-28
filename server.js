@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const fs = require('fs');
 
 const app = express();
@@ -36,6 +37,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 // Handle JSON requests.
 app.use(express.json());
+// Serve static files from client.
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // // For Heroku, makes sure the react client instead of backend.
 // const path = require('path');
@@ -66,4 +69,9 @@ app.get('/export', (req, res) => {
     }
     fs.unlinkSync(file);
   });
+});
+
+// Wildcard rerouting.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
