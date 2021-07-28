@@ -5,6 +5,7 @@ const fs = require('fs');
 
 const app = express();
 const port = process.env.PORT || 5000;
+var router = express.Router();
 
 // Heroku CORS options.
 // const whitelist = [
@@ -38,7 +39,7 @@ app.use(express.urlencoded({ extended: false }));
 // Handle JSON requests.
 app.use(express.json());
 // Serve static files from client.
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, 'client/public')));
 
 // // For Heroku, makes sure the react client instead of backend.
 // const path = require('path');
@@ -73,5 +74,9 @@ app.get('/export', (req, res) => {
 
 // Wildcard rerouting.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+  res.sendFile(path.join(__dirname + '/client/public/index.html'));
+});
+
+router.get('/', (req, res, next) => {
+  res.render('index', { Title: 'Express' });
 });
