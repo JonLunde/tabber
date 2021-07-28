@@ -9,6 +9,9 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "build": "cd client && npm run build"
   },
+  "engines": {
+    "node": "14.x"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JonLunde/tabber.git"
