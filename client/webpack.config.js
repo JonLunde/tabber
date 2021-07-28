@@ -20,7 +20,7 @@ module.exports = {
     watchContentBase: true,
     contentBase: 'public',
   },
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [new HtmlWebpackPlugin(), new MiniCssExtractPlugin()],
   module: {
     rules: [
       {

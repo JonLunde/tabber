@@ -1,7 +1,6 @@
 const fs = require('fs');
 
 const createDataString = (textTab) => {
-  console.log('create: ', textTab);
   let dataString = '';
   dataString += textTab.tabDetails.title + ' - ';
   dataString += textTab.tabDetails.artist + '\n\n';
@@ -42,9 +41,7 @@ const addNotationLegend = (dataString) => {
 };
 
 const writeTextTab = (textTab) => {
-  console.log('write: ', textTab);
   const dataString = createDataString(textTab);
-  console.log('DATASTRING: ', dataString);
   fs.writeFile('./tmp/test.txt', dataString, (err) => {
     if (err) return console.log(err);
   });
