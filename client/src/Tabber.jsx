@@ -77,7 +77,7 @@ function Tabber() {
           content="Create guitar tabs for your favorite songs and save them to your computer."
         />
       </Helmet>
-      DEPLOY SERVER
+      DEPLOY SERVER DEPLOY SERVER DEPLOY SERVER DEPLOY SERVER
       <GuitarDashboard key={0}>
         <GuitarTuning key={0} tuning={tuning} changeTuning={changeTuning} changeTuner={changeTuner} />
 
