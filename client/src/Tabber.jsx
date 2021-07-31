@@ -77,7 +77,7 @@ function Tabber() {
           content="Create guitar tabs for your favorite songs and save them to your computer."
         />
       </Helmet>
-
+      DEPLOY SERVER
       <GuitarDashboard key={0}>
         <GuitarTuning key={0} tuning={tuning} changeTuning={changeTuning} changeTuner={changeTuner} />
 
@@ -104,7 +104,6 @@ function Tabber() {
           chordBuilder={tabState.chordBuilder}
         />
       </GuitarDashboard>
-
       <div className="flex-container">
         <TabContainer key={2} dispatch={dispatch} tabState={tabState} tuning={tuning}>
           {tabState.tabBars.map((tabBar, i) => (
