@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
+const serverless = require('serverless-http');
+const router = express.Router();
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -15,6 +17,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 // Handle JSON requests.
 app.use(express.json());
+// Router for Netlify
+app.use('/.netlify/functions/api', router);
 
 // ENDPOINTS
 app.post('/export', (req, res) => {
@@ -35,3 +39,5 @@ app.get('/export', (req, res) => {
     fs.unlinkSync(file);
   });
 });
+
+module.exports.handler = serverless(app);

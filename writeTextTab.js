@@ -24,6 +24,7 @@ const createDataString = (textTab) => {
 
   dataString = addNotationLegend(dataString);
 
+  console.log('server return: ', dataString);
   return dataString;
 };
 
