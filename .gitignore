@@ -8,3 +8,5 @@ functions
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+# Local Netlify folder
+.netlify

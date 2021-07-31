@@ -1,2 +1,11 @@
 [build]
     functions = "function"
+    publish = "public"
+
+# [dev]
+#     command = "npm run build"
+
+[[redirect]]
+    from = "api/*"
+    to = "/.netlify/functions/:splat"
+    status = "200"
