@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faPlus,
@@ -69,6 +70,14 @@ function Tabber() {
 
   return (
     <div>
+      <Helmet>
+        <title>Tabber, the easiest way to create guitar tabs!</title>
+        <meta
+          name="description content"
+          content="Create guitar tabs for your favorite songs and save them to your computer."
+        />
+      </Helmet>
+
       <GuitarDashboard key={0}>
         <GuitarTuning key={0} tuning={tuning} changeTuning={changeTuning} changeTuner={changeTuner} />
 
