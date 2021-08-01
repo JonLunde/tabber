@@ -10,15 +10,13 @@ const devMode = process.env.NODE_ENV !== 'production';
 module.exports = {
   entry: './src/index.jsx',
   output: {
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
   devtool: 'inline-source-map',
-  target: 'web', // Only for dev
+  target: 'web', // Only for dev, fix hot reloading browserList problem.
   devServer: {
     port: '3000',
-    watchContentBase: true,
-    contentBase: 'public',
   },
   plugins: [new HtmlWebpackPlugin(), new MiniCssExtractPlugin()],
   module: {
