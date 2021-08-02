@@ -1,6 +1,26 @@
-const fs = require('fs');
+export default function generateTextFile(textTab) {
+  const alignedTab = { ...textTab, tabBars: alignTabs(textTab.tabBars) };
+  return createDataString(alignedTab);
+}
 
-const createDataString = (textTab) => {
+// Align all tabs to the according to the widest tab.
+function alignTabs(tabBars) {
+  let widestTabBar = 0;
+
+  tabBars.forEach((tabBar) => {
+    if (tabBar.tabLines[0].length > widestTabBar) widestTabBar = tabBar.tabLines[0].length;
+  });
+
+  tabBars.forEach((tabBar) => {
+    const dashesToAdd = widestTabBar - tabBar.tabLines[0].length;
+    tabBar.tabLines = tabBar.tabLines.map((line) => (line += '-'.repeat(dashesToAdd)));
+  });
+
+  return tabBars;
+}
+
+// Adds the dynamic part of the text file. Derived from the state provided.
+function createDataString(textTab) {
   let dataString = '';
   dataString += textTab.tabDetails.title + ' - ';
   dataString += textTab.tabDetails.artist + '\n\n';
@@ -14,7 +34,7 @@ const createDataString = (textTab) => {
     dataString += textTab.tabDetails.source + '\n\n';
   } else dataString += '\n';
 
-  textTab.alignedTabs.forEach((tabBar) => {
+  textTab.tabBars.forEach((tabBar) => {
     dataString += tabBar.title + '\n';
     tabBar.tabLines.forEach((line) => {
       dataString += line + '\n';
@@ -25,9 +45,10 @@ const createDataString = (textTab) => {
   dataString = addNotationLegend(dataString);
 
   return dataString;
-};
+}
 
-const addNotationLegend = (dataString) => {
+// Adds legend for notations at the bottom of the file.
+function addNotationLegend(dataString) {
   dataString += '\nh - Hammer on\n';
   dataString += 'p - Pull off\n';
   dataString += '/ - Slide up\n';
@@ -38,13 +59,4 @@ const addNotationLegend = (dataString) => {
   dataString += 'x - Mute string\n';
 
   return dataString;
-};
-
-const writeTextTab = (textTab) => {
-  const dataString = createDataString(textTab);
-  fs.writeFile('./tmp/test.txt', dataString, (err) => {
-    if (err) return console.log(err);
-  });
-};
-
-module.exports = writeTextTab;
+}
