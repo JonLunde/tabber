@@ -5,6 +5,7 @@
 
 dist
 public
+build
 
 ### react ###
 .DS_*
