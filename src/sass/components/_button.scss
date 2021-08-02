@@ -108,10 +108,11 @@
         position: absolute;
         top: 50%;
         left: 0rem;
-        transform: translateY(-50%) rotateY(0);
+        transform: translateY(-50%);
         background-color: $color-secondary-300;
         width: 2rem;
         height: 5rem;
+        font-size: 2rem;
 
 
         border-top-left-radius: 0;
@@ -120,5 +121,23 @@
         border-bottom-right-radius: $border-radius-2;
 
         transition: all 0.3s 0.3s;
+    }
+
+    &--info-panel {
+        position: absolute;
+        left: 50%;
+        bottom: 0rem;
+        transform: translate(-50%, 0) ;
+        background-color: $color-secondary-300;
+        width: 10rem;
+        height: 5rem;
+        font-size: 2rem;
+
+
+        border-radius: 0;
+        border-top-left-radius: $border-radius-2;
+        border-top-right-radius: $border-radius-2;
+
+        transition: all 0.3s 0.4s;
     }
 }

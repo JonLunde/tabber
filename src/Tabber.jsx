@@ -7,12 +7,12 @@ import {
   faArrowUp,
   faArrowDown,
   faInfoCircle,
-  faAngleDoubleLeft,
-  faAngleDoubleRight,
+  faAngleLeft,
+  faAngleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import useTabStateReducer, { ACTIONS } from './useTabStateReducer';
 
-library.add(faPlus, faTrash, faArrowUp, faArrowDown, faInfoCircle, faAngleDoubleLeft, faAngleDoubleRight);
+library.add(faPlus, faTrash, faArrowUp, faArrowDown, faInfoCircle, faAngleLeft, faAngleRight);
 
 import TabContainer from './Tab/TabContainer';
 import GuitarTuning from './Guitar/GuitarTuning';
@@ -22,6 +22,7 @@ import GuitarString from './Guitar/GuitarString';
 import GuitarDashboard from './Guitar/GuitarDashboard';
 import TabBar from './Tab/TabBar';
 import TabSidebar from './Tab/TabSidebar';
+import InfoPanel from './InfoPanel';
 
 function Tabber() {
   const [tabState, dispatch] = useTabStateReducer();
@@ -76,47 +77,55 @@ function Tabber() {
           content="Create guitar tabs for your favorite songs and save them to your computer."
         />
       </Helmet>
-      <GuitarDashboard key={0}>
-        <GuitarTuning key={0} tuning={tuning} changeTuning={changeTuning} changeTuner={changeTuner} />
 
-        <GuitarNeck key={1} dispatch={dispatch} tuning={tuning}>
-          {tuning.values.map((stringTuning, i) => (
-            <GuitarString
-              key={i}
-              id={i}
-              dispatch={dispatch}
-              stringTuning={stringTuning}
-              activeNote={tabState.activeNote}
-              activeString={tabState.activeString}
-              chordStrings={tabState.chordBuilder.strings}
-              notation={tabState.notation}
-            />
-          ))}
-        </GuitarNeck>
+      <header className="header">
+        <h1 className="heading-primary header__title ">Tabber - Create Guitar Tabs</h1>
+        <InfoPanel />
+      </header>
 
-        <GuitarLegend
-          key={2}
-          handleNotation={handleNotation}
-          dispatch={dispatch}
-          notation={tabState.notation}
-          chordBuilder={tabState.chordBuilder}
-        />
-      </GuitarDashboard>
-      <div className="flex-container">
-        <TabContainer key={2} dispatch={dispatch} tabState={tabState} tuning={tuning}>
-          {tabState.tabBars.map((tabBar, i) => (
-            <TabBar
-              key={tabBar.key}
-              idx={i}
-              tabBar={tabBar}
-              dispatch={dispatch}
-              marker={tabState.marker}
-              tuning={tuning}
-            />
-          ))}
-        </TabContainer>
-        <TabSidebar tabDetails={tabState.tabDetails} dispatch={dispatch} tabState={tabState} tuning={tuning} />
-      </div>
+      <main>
+        <GuitarDashboard key={0}>
+          <GuitarTuning key={0} tuning={tuning} changeTuning={changeTuning} changeTuner={changeTuner} />
+
+          <GuitarNeck key={1} dispatch={dispatch} tuning={tuning}>
+            {tuning.values.map((stringTuning, i) => (
+              <GuitarString
+                key={i}
+                id={i}
+                dispatch={dispatch}
+                stringTuning={stringTuning}
+                activeNote={tabState.activeNote}
+                activeString={tabState.activeString}
+                chordStrings={tabState.chordBuilder.strings}
+                notation={tabState.notation}
+              />
+            ))}
+          </GuitarNeck>
+
+          <GuitarLegend
+            key={2}
+            handleNotation={handleNotation}
+            dispatch={dispatch}
+            notation={tabState.notation}
+            chordBuilder={tabState.chordBuilder}
+          />
+        </GuitarDashboard>
+        <div className="flex-container">
+          <TabContainer key={2} dispatch={dispatch} tabState={tabState} tuning={tuning}>
+            {tabState.tabBars.map((tabBar, i) => (
+              <TabBar
+                key={tabBar.key}
+                idx={i}
+                tabBar={tabBar}
+                dispatch={dispatch}
+                marker={tabState.marker}
+                tuning={tuning}
+              />
+            ))}
+          </TabContainer>
+          <TabSidebar tabDetails={tabState.tabDetails} dispatch={dispatch} tabState={tabState} tuning={tuning} />
+        </div>
+      </main>
     </div>
   );
 }
