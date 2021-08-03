@@ -27,14 +27,14 @@ export default function InfoPanel() {
         <ul className="info-panel__list">
           <li className="info-panel__list-item">Click on the guitar neck to add a fret to the tab.</li>
           <li className="info-panel__list-item">
-            Add notation: Click on a fret, then on desired notation and then the follow up fret on the same string.
+            Add notation: Click on a fret, then on desired notation, and then the follow-up fret on the same string.
           </li>
           <li className="info-panel__list-item">
             Add chord: Click on the Chord button and form your chord on the neck, then click the chord button again to
             add it to the tab.
           </li>
           <li className="info-panel__list-item">
-            Tuning can be change at each string, or from the tuning drop-down in the top left corner.
+            Tuning can be changed at each string, or from the tuning drop-down in the top left corner.
           </li>
           <li className="info-panel__list-item"></li>
           <li className="info-panel__list-item">
@@ -43,12 +43,12 @@ export default function InfoPanel() {
           <li className="info-panel__list-item">
             Export your tab to a text file with the 'EXPORT' button in the sidebar.
           </li>
-          <li className="info-panel__list-item">Click the '+' button to add a new row of tab.</li>
-          <li className="info-panel__list-item">Each tab row can be renamed, reordered and deleted.</li>
+          <li className="info-panel__list-item">Click the '+' button to add a new tab row.</li>
+          <li className="info-panel__list-item">Each tab row can be renamed, reordered, and deleted.</li>
           <li className="info-panel__list-item">
             The focused tab row will have a marker and be slightly larger than the others.
           </li>
-        </ul>{' '}
+        </ul>
       </div>
       <div className="info-panel__button-container"></div>
       <button className="btn btn--info-panel" onClick={handleClick} style={collapseButtonStyle}>
