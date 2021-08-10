@@ -22,6 +22,7 @@ function TabBar(props) {
       className="tab-bar"
       role="button"
       tabIndex={0}
+      // Moves focus marker to clicked tab.
       onClick={() => dispatch({ type: ACTIONS.CLICK_TAB, payload: { tabIdx: idx } })}
       onKeyPress={() => dispatch({ type: ACTIONS.CLICK_TAB, payload: { tabIdx: idx } })}
       style={marker.tabIdx === idx ? markerStyle : {}}

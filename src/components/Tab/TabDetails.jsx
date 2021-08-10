@@ -1,9 +1,10 @@
 import React from 'react';
 import { ACTIONS } from '../../utils/useTabStateReducer';
 
+// A form for adding details about your tab. It's found in the app sidepanel.
 function TabDetails(props) {
   const { tabDetails, dispatch } = props;
-  console.log('tabDetails ', tabDetails);
+  if (process.env.NODE_ENV !== 'production') console.log('tabDetails ', tabDetails);
   return (
     <div className="details">
       <label htmlFor="title" className="details__form-group">

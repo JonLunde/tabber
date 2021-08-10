@@ -28,11 +28,11 @@ function Tabber() {
   const [tuning, setTuning] = useState({ name: 'E Standard', values: ['E', 'B', 'G', 'D', 'A', 'E'] }); // Chosen guitar tuning.
 
   useEffect(() => {
-    console.log('TabState Changed: ', tabState);
+    if (process.env.NODE_ENV !== 'production') console.log('TabState Changed: ', tabState);
   }, [tabState]);
 
   useEffect(() => {
-    console.log('Tuning Changed: ', tuning);
+    if (process.env.NODE_ENV !== 'production') console.log('Tuning Changed: ', tuning);
   }, [tuning]);
 
   function changeTuning(selected) {
@@ -47,7 +47,7 @@ function Tabber() {
         setTuning({ name: 'D Standard', values: ['D', 'A', 'F', 'C', 'G', 'D'] });
         break;
       default:
-        console.log('GUITARNECK SWITCH ERROR!');
+        if (process.env.NODE_ENV !== 'production') console.log('GUITARNECK SWITCH ERROR!');
         break;
     }
   }

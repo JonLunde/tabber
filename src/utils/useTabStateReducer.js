@@ -123,7 +123,7 @@ function removeTabStringY(tabBar, deleteCount) {
 
 // Reducer managing TabBar state.
 function reducer(tabState, action) {
-  console.log('REDUCER START: ', action);
+  if (process.env.NODE_ENV !== 'production') console.log('REDUCER START: ', action);
   const newTabState = JSON.parse(JSON.stringify(tabState)); // Deepcopy otherwise the tabLines get mutated, causing bugs.
   const { tabBars, notation, chordBuilder, marker, keyCounter, activeNote, activeString } = newTabState;
   const { payload, type } = action;
@@ -384,7 +384,7 @@ function reducer(tabState, action) {
       }
 
     default:
-      console.log('REDUCER ERROR!', action);
+      if (process.env.NODE_ENV !== 'production') console.log('REDUCER ERROR!', action);
       return tabState;
   }
 }

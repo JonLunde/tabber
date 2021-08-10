@@ -111,7 +111,7 @@ function GuitarTuning(props) {
   function handleOnChange(event, i) {
     changeTuner(event, i);
   }
-  console.log('TUNING ', tuning);
+  if (process.env.NODE_ENV !== 'production') console.log('TUNING ', tuning);
 
   return (
     <div className="guitar__tuning">
