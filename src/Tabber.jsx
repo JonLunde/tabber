@@ -11,9 +11,6 @@ import {
   faAngleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import useTabStateReducer, { ACTIONS } from './useTabStateReducer';
-
-library.add(faPlus, faTrash, faArrowUp, faArrowDown, faInfoCircle, faAngleLeft, faAngleRight);
-
 import TabContainer from './Tab/TabContainer';
 import GuitarTuning from './Guitar/GuitarTuning';
 import GuitarNeck from './Guitar/GuitarNeck';
@@ -23,6 +20,8 @@ import GuitarDashboard from './Guitar/GuitarDashboard';
 import TabBar from './Tab/TabBar';
 import TabSidebar from './Tab/TabSidebar';
 import InfoPanel from './InfoPanel';
+
+library.add(faPlus, faTrash, faArrowUp, faArrowDown, faInfoCircle, faAngleLeft, faAngleRight);
 
 function Tabber() {
   const [tabState, dispatch] = useTabStateReducer();
@@ -56,7 +55,7 @@ function Tabber() {
   function changeTuner(note, i) {
     changeTuning({ value: '0' });
     setTuning((prevTuning) => {
-      let newTuning = { ...prevTuning };
+      const newTuning = { ...prevTuning };
       newTuning.values[i] = note.value;
       return newTuning;
     });
@@ -65,7 +64,7 @@ function Tabber() {
   function handleNotation(notation) {
     // If the Chord legend button is clicked.
     if (notation === 'shift') dispatch({ type: ACTIONS.CHORD });
-    else dispatch({ type: ACTIONS.NOTATION, payload: { notation: notation } });
+    else dispatch({ type: ACTIONS.NOTATION, payload: { notation } });
   }
 
   return (
@@ -90,6 +89,7 @@ function Tabber() {
           <GuitarNeck key={1} dispatch={dispatch} tuning={tuning}>
             {tuning.values.map((stringTuning, i) => (
               <GuitarString
+                // eslint-disable-next-line react/no-array-index-key
                 key={i}
                 id={i}
                 dispatch={dispatch}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TabDetails from './TabDetails';
 import TabExport from './TabExport';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function TabSidebar(props) {
   const { tabDetails, dispatch, tabState, tuning } = props;
@@ -27,8 +27,8 @@ export default function TabSidebar(props) {
 
   return (
     <div className="sidebar" style={collapseStyle}>
-      <button className="btn btn--sidebar" onClick={handleClick} style={collapseButtonStyle}>
-        {<FontAwesomeIcon key={100} icon={expanded ? 'angle-right' : 'angle-left'} />}
+      <button className="btn btn--sidebar" type="button" onClick={handleClick} style={collapseButtonStyle}>
+        <FontAwesomeIcon key={100} icon={expanded ? 'angle-right' : 'angle-left'} />
       </button>
       <TabDetails key={1000} tabDetails={tabDetails} dispatch={dispatch} />
       <TabExport key={1} tabState={tabState} tuning={tuning} exportButtonStyle={exportButtonStyle} />

@@ -129,6 +129,7 @@ function GuitarTuning(props) {
       </div>
       <div className="guitar__tuning__keys">
         {tuning.values.map((tuner, i) => (
+          // eslint-disable-next-line react/no-array-index-key
           <div key={i}>
             <Select
               options={options.notes}

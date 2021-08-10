@@ -36,22 +36,22 @@ export default function InfoPanel() {
           <li className="info-panel__list-item">
             Tuning can be changed at each string, or from the tuning drop-down in the top left corner.
           </li>
-          <li className="info-panel__list-item"></li>
+          <li className="info-panel__list-item" />
           <li className="info-panel__list-item">
             Tab details added in the sidebar will be printed to the exported file.
           </li>
           <li className="info-panel__list-item">
-            Export your tab to a text file with the 'EXPORT' button in the sidebar.
+            Export your tab to a text file with the &apos;EXPORT&apos; button in the sidebar.
           </li>
-          <li className="info-panel__list-item">Click the '+' button to add a new tab row.</li>
+          <li className="info-panel__list-item">Click the &apos;+&apos; button to add a new tab row.</li>
           <li className="info-panel__list-item">Each tab row can be renamed, reordered, and deleted.</li>
           <li className="info-panel__list-item">
             The focused tab row will have a marker and be slightly larger than the others.
           </li>
         </ul>
       </div>
-      <div className="info-panel__button-container"></div>
-      <button className="btn btn--info-panel" onClick={handleClick} style={collapseButtonStyle}>
+      <div className="info-panel__button-container" />
+      <button className="btn btn--info-panel" type="button" onClick={handleClick} style={collapseButtonStyle}>
         HELP
       </button>
     </div>

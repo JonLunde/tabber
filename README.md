@@ -1,5 +1,6 @@
 # Tabber - create guitar tabs
 
+### Netlify Site - https://tabber.netlify.app/
 
 ## Features
 * Interactive tabs
@@ -10,6 +11,7 @@
 * Chord-builder
 * Tuning
   * With corresponding fretboard notes
+* Export tab to a text-file.
 
   
   

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import TooltipPanel from '../Shared/TooltipPanel';
+import TooltipPanel from './TooltipPanel';
 
 const legendButtons = [
   { id: 'hammerOn', value: 'h', text: 'Hammer on' },
@@ -13,7 +13,6 @@ const legendButtons = [
 function GuitarLegend(props) {
   const { handleNotation, notation, chordBuilder } = props;
   const [tooltipHovered, setTooltipHovered] = useState(false);
-  const [tooltipStyle, setTooltipStyle] = useState({ display: 'none' });
 
   function handleClick(event) {
     handleNotation(event.target.value);
@@ -21,15 +20,11 @@ function GuitarLegend(props) {
 
   function handleEnter() {
     setTooltipHovered(true);
-    setTooltipStyle({ display: 'block', backgroundColor: 'red' });
   }
 
   function handleLeave() {
     setTooltipHovered(false);
-    setTooltipStyle({ display: 'none' });
   }
-
-  for (let i = 0; i < 6; i++) {}
 
   return (
     <div className="guitar__legend">
@@ -38,25 +33,24 @@ function GuitarLegend(props) {
       </div>
 
       <div className="guitar__legend__buttons">
-        {legendButtons.map((button, i) => {
-          return (
-            <button
-              key={button.value}
-              className="btn btn--legend"
-              value={button.value}
-              id={button.id}
-              onClick={(event) => handleClick(event)}
-              style={{
-                backgroundColor:
-                  (notation === legendButtons[i].value || (button.id === 'chord' && chordBuilder.active)) && '#e97865',
-                width: button.id === 'chord' && '100%',
-                fontWeight: button.id === 'slideDown' ? '500' : '700',
-              }}
-            >
-              {button.id === 'chord' ? button.text + ' (' + button.value + ')' : button.value}
-            </button>
-          );
-        })}
+        {legendButtons.map((button, i) => (
+          <button
+            key={button.value}
+            type="button"
+            className="btn btn--legend"
+            value={button.value}
+            id={button.id}
+            onClick={(event) => handleClick(event)}
+            style={{
+              backgroundColor:
+                (notation === legendButtons[i].value || (button.id === 'chord' && chordBuilder.active)) && '#e97865',
+              width: button.id === 'chord' && '100%',
+              fontWeight: button.id === 'slideDown' ? '500' : '700',
+            }}
+          >
+            {button.id === 'chord' ? `${button.text} (${button.value})` : button.value}
+          </button>
+        ))}
       </div>
       {tooltipHovered && <TooltipPanel />}
     </div>

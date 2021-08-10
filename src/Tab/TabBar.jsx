@@ -1,12 +1,12 @@
 import React from 'react';
-import TabString from './TabString';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import TabString from './TabString';
 import { ACTIONS } from '../useTabStateReducer';
 
 function TabBar(props) {
   const {
     idx,
-    tabBar: { id, title, tabLines },
+    tabBar: { title, tabLines },
     marker,
     dispatch,
     tuning,
@@ -20,7 +20,10 @@ function TabBar(props) {
   return (
     <div
       className="tab-bar"
+      role="button"
+      tabIndex={0}
       onClick={() => dispatch({ type: ACTIONS.CLICK_TAB, payload: { tabIdx: idx } })}
+      onKeyPress={() => dispatch({ type: ACTIONS.CLICK_TAB, payload: { tabIdx: idx } })}
       style={marker.tabIdx === idx ? markerStyle : {}}
     >
       <div className="tab-bar__header">
@@ -39,6 +42,7 @@ function TabBar(props) {
         <div className="tab-bar__action-buttons">
           <button
             className="btn btn--action btn--action--1"
+            type="button"
             onClick={(event) => {
               event.stopPropagation();
               dispatch({ type: ACTIONS.MOVE_UP, payload: { tabIdx: idx } });
@@ -48,6 +52,7 @@ function TabBar(props) {
           </button>
           <button
             className="btn btn--action btn--action--2"
+            type="button"
             onClick={(event) => {
               event.stopPropagation();
               dispatch({ type: ACTIONS.MOVE_DOWN, payload: { tabIdx: idx } });
@@ -57,6 +62,7 @@ function TabBar(props) {
           </button>
           <button
             className="btn btn--action btn--action--3"
+            type="button"
             onClick={(event) => {
               event.stopPropagation();
               dispatch({ type: ACTIONS.REMOVE, payload: { tabIdx: idx } });
@@ -69,10 +75,11 @@ function TabBar(props) {
       <div className="tab-bar__string-container">
         <div
           className="tab-bar__string-container__marker"
-          hidden={marker.tabIdx !== idx ? true : false}
-          style={{ left: 2.3 + 0.6 * marker.yIdx + 'em' }}
+          hidden={marker.tabIdx !== idx}
+          style={{ left: `${2.3 + 0.6 * marker.yIdx}em` }}
         />
         {tabLines.map((tabLine, i) => (
+          // eslint-disable-next-line react/no-array-index-key
           <TabString key={i} id={i} tabLine={tabLine} tuning={tuning} />
         ))}
       </div>

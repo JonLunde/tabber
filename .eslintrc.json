@@ -1,30 +1,33 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+    "env": {
+        "browser": true,
+        "es2021": true
     },
-    "ecmaVersion": 12,
-    "sourceType": "module"
-  },
-  "plugins": ["react", "prettier", "react-hooks"],
-  "extends": [
-    "plugin:react/recommended",
-    "airbnb",
-    "prettier"
-  ],
-  "rules": {
-    "prettier/prettier": [
-      "error"
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "prettier"
     ],
-    "react/state-in-constructor": "off",
-    "no-unused-vars": "warn",
-    "react/prop-types": 0,
-    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
-    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
-  }
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react","prettier", "react-hooks"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error"
+      ],
+      "react/state-in-constructor": "off",
+      "no-unused-vars": "warn",
+      "react/prop-types": 0,
+      "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+      "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+      "no-plusplus": "off",
+      "no-else-return": "off"
+    }
 }

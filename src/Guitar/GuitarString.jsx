@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import GuitarNote from './GuitarNote';
 
 const notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
@@ -8,9 +8,9 @@ function GuitarString(props) {
   const firstNote = notes.findIndex((note) => stringTuning === note);
   const activeStyle = { backgroundColor: 'red' };
 
-  let guitarNotes = [];
+  const guitarNotes = [];
 
-  //Find a more efficient solution.
+  // Find a more efficient solution.
   for (let i = 0; i < 25; i++) {
     guitarNotes.push(
       <GuitarNote

@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { useReducer } from 'react';
 
 export const ACTIONS = {
@@ -32,10 +33,98 @@ const initState = {
   activeString: null,
 };
 
+function addChord(tabBar, chord) {
+  const newTabBar = JSON.parse(JSON.stringify(tabBar)); // Deep clone for immutability.
+
+  // Checks if any of the chordNotes are double digit.
+  let isDoubleDigit = false;
+  chord.strings.forEach((string) => {
+    string.forEach((chordNote) => {
+      if (chordNote > 10) isDoubleDigit = true;
+    });
+  });
+
+  if (isDoubleDigit) {
+    // Gå gjennom array og skrive verdi til tabLine med --
+    chord.strings.forEach((string, i) => {
+      if (string.length > 0) {
+        newTabBar.tabLines[i] += string[0] < 10 ? `-${string[0]}` : string[0];
+      } else {
+        newTabBar.tabLines[i] += '--';
+      }
+    });
+  } else {
+    chord.strings.forEach((string, i) => {
+      if (string.length > 0) {
+        newTabBar.tabLines[i] += string[0];
+      } else {
+        newTabBar.tabLines[i] += '-';
+      }
+    });
+  }
+  return newTabBar;
+}
+
+// Pure function. Adds fret of note to one string and matching dashes on others. Returns tabBar of tabState.
+function addFretAndDashes(tabBar, notation = null, noteFret = null, string = null) {
+  const newTabBar = JSON.parse(JSON.stringify(tabBar)); // Deep clone for immutability.
+
+  // If no note is provided it adds dashes only.
+  if (noteFret === null || undefined || string === null || undefined) {
+    newTabBar.tabLines = newTabBar.tabLines.map((line, i) => {
+      let newLine = line;
+      newLine += i === string ? noteFret : '--';
+      return newLine;
+    });
+    return newTabBar;
+  }
+
+  // If there is a notation it adds note directly after it.
+  if (notation !== null) {
+    if (noteFret < 10) {
+      newTabBar.tabLines = newTabBar.tabLines.map((line, i) => {
+        let newLine = line;
+        newLine += i === string ? noteFret : '-';
+        return newLine;
+      });
+    } else {
+      newTabBar.tabLines = newTabBar.tabLines.map((line, i) => {
+        let newLine = line;
+        newLine += i === string ? noteFret : '--';
+        return newLine;
+      });
+    }
+  }
+  // Otherwise it adds two dashes before note for separation.
+  else if (notation === null) {
+    if (noteFret < 10) {
+      newTabBar.tabLines = newTabBar.tabLines.map((line, i) => {
+        let newLine = line;
+        newLine += i === string ? `--${noteFret}` : '---';
+        return newLine;
+      });
+    } else {
+      newTabBar.tabLines = newTabBar.tabLines.map((line, i) => {
+        let newLine = line;
+        newLine += i === string ? `--${noteFret}` : '----';
+        return newLine;
+      });
+    }
+  }
+  return newTabBar;
+}
+
+// Pure function. Removes n-chars from each string of selected tab. Returns tab of tabState
+function removeTabStringY(tabBar, deleteCount) {
+  const newTabBar = JSON.parse(JSON.stringify(tabBar)); // Deep clone for immutability.
+  newTabBar.tabLines = newTabBar.tabLines.map((line) => line.substr(0, line.length - deleteCount));
+  return newTabBar;
+}
+
 // Reducer managing TabBar state.
 function reducer(tabState, action) {
   console.log('REDUCER START: ', action);
-  let newTabState = JSON.parse(JSON.stringify(tabState)); // Deepcopy otherwise the tabLines get mutated, causing bugs.
+  const newTabState = JSON.parse(JSON.stringify(tabState)); // Deepcopy otherwise the tabLines get mutated, causing bugs.
   const { tabBars, notation, chordBuilder, marker, keyCounter, activeNote, activeString } = newTabState;
   const { payload, type } = action;
 
@@ -204,17 +293,21 @@ function reducer(tabState, action) {
       // If user clicks another notation before adding the followup note the notations will swap.
       if (notation !== null && payload.notation !== notation) {
         newTabState.tabBars[marker.tabIdx] = removeTabStringY(newTabState.tabBars[marker.tabIdx], 1);
-        newTabState.tabBars[marker.tabIdx].tabLines = newTabState.tabBars[marker.tabIdx].tabLines.map(
-          (line, i) => (line += i === marker.stringIdx ? payload.notation : '-'),
-        );
+        newTabState.tabBars[marker.tabIdx].tabLines = newTabState.tabBars[marker.tabIdx].tabLines.map((line, i) => {
+          let newLine = line;
+          newLine += i === marker.stringIdx ? payload.notation : '-';
+          return newLine;
+        });
         newTabState.notation = payload.notation;
         return newTabState;
       }
 
       // Adds notation following previous note.
-      newTabState.tabBars[marker.tabIdx].tabLines = newTabState.tabBars[marker.tabIdx].tabLines.map(
-        (line, i) => (line += i === marker.stringIdx ? payload.notation : '-'),
-      );
+      newTabState.tabBars[marker.tabIdx].tabLines = newTabState.tabBars[marker.tabIdx].tabLines.map((line, i) => {
+        let newLine = line;
+        newLine += i === marker.stringIdx ? payload.notation : '-';
+        return newLine;
+      });
       newTabState.marker = { ...marker, yIdx: marker.yIdx + 1 };
       newTabState.notation = payload.notation;
       newTabState.activeString = marker.stringIdx;
@@ -290,80 +383,10 @@ function reducer(tabState, action) {
           return tabState;
       }
 
-      return newTabState;
-
     default:
       console.log('REDUCER ERROR!', action);
       return tabState;
   }
-}
-
-function addChord(tabBar, chord) {
-  let newTabBar = JSON.parse(JSON.stringify(tabBar)); // Deep clone for immutability.
-
-  // Checks if any of the chordNotes are double digit.
-  let isDoubleDigit = false;
-  chord.strings.forEach((string) => {
-    string.forEach((chordNote) => {
-      if (chordNote > 10) isDoubleDigit = true;
-    });
-  });
-
-  if (isDoubleDigit) {
-    // Gå gjennom array og skrive verdi til tabLine med --
-    chord.strings.forEach((string, i) => {
-      if (string.length > 0) {
-        newTabBar.tabLines[i] += string[0] < 10 ? '-' + string[0] : string[0];
-      } else {
-        newTabBar.tabLines[i] += '--';
-      }
-    });
-  } else {
-    chord.strings.forEach((string, i) => {
-      if (string.length > 0) {
-        newTabBar.tabLines[i] += string[0];
-      } else {
-        newTabBar.tabLines[i] += '-';
-      }
-    });
-  }
-  return newTabBar;
-}
-
-// Pure function. Adds fret of note to one string and matching dashes on others. Returns tabBar of tabState.
-function addFretAndDashes(tabBar, notation = null, noteFret = null, string = null) {
-  let newTabBar = JSON.parse(JSON.stringify(tabBar)); // Deep clone for immutability.
-
-  // If no note is provided it adds dashes only.
-  if (noteFret === null || undefined || string === null || undefined) {
-    newTabBar.tabLines = newTabBar.tabLines.map((line, i) => (line += i === string ? noteFret : '--'));
-    return newTabBar;
-  }
-
-  // If there is a notation it adds note directly after it.
-  if (notation !== null) {
-    if (noteFret < 10) {
-      newTabBar.tabLines = newTabBar.tabLines.map((line, i) => (line += i === string ? noteFret : '-'));
-    } else {
-      newTabBar.tabLines = newTabBar.tabLines.map((line, i) => (line += i === string ? noteFret : '--'));
-    }
-  }
-  // Otherwise it adds two dashes before note for separation.
-  else if (notation === null) {
-    if (noteFret < 10) {
-      newTabBar.tabLines = newTabBar.tabLines.map((line, i) => (line += i === string ? '--' + noteFret : '---'));
-    } else {
-      newTabBar.tabLines = newTabBar.tabLines.map((line, i) => (line += i === string ? '--' + noteFret : '----'));
-    }
-  }
-  return newTabBar;
-}
-
-// Pure function. Removes n-chars from each string of selected tab. Returns tab of tabState
-function removeTabStringY(tabBar, deleteCount) {
-  let newTabBar = JSON.parse(JSON.stringify(tabBar)); // Deep clone for immutability.
-  newTabBar.tabLines = newTabBar.tabLines.map((line) => line.substr(0, line.length - deleteCount));
-  return newTabBar;
 }
 
 export default function useTabStateReducer() {
