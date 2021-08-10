@@ -1,6 +1,6 @@
 // Align all tabs to the according to the widest tab.
 function alignTabs(tabBars) {
-  let alignedTabs = tabBars;
+  const alignedTabs = tabBars;
   let widestTabBar = 0;
 
   alignedTabs.forEach((tabBar) => {
@@ -8,8 +8,13 @@ function alignTabs(tabBars) {
   });
 
   alignedTabs.forEach((tabBar) => {
-    const dashesToAdd = widestTabBar - tabBar.tabLines[0].length;
-    tabBar.tabLines = tabBar.tabLines.map((line) => (line += '-'.repeat(dashesToAdd)));
+    const alignedTabBar = tabBar;
+    const dashesToAdd = widestTabBar - alignedTabBar.tabLines[0].length;
+    alignedTabBar.tabLines = alignedTabBar.tabLines.map((line) => {
+      let newLine = line;
+      newLine += '-'.repeat(dashesToAdd);
+      return newLine;
+    });
   });
 
   return alignedTabs;
